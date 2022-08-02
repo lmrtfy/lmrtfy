@@ -1,1 +1,17 @@
 site_name: lmrtfy - Let Me Run That For You
+theme:
+  name: readthedocs
+  highlight_js: true
+plugins:
+  - search
+  - mkdocstring:
+      handlers:
+        python:
+          options:
+            docstring_style: sphinx
+
+markdown_extensions:
+  - markdown_include.include:
+      base_path: .
+  - admonition
+
