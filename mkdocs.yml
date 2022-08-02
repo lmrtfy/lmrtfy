@@ -2,6 +2,7 @@ site_name: lmrtfy - Let Me Run That For You
 theme:
   name: readthedocs
   highlight_js: true
+
 plugins:
   - search
   - mkdocstrings:
@@ -14,4 +15,10 @@ markdown_extensions:
   - markdown_include.include:
       base_path: .
   - admonition
+  - toc:
+      baselevel: 2
+      permalink: "#"
 
+nav:
+  - 'index.md'
+  - 'about.md'
