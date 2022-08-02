@@ -1,7 +1,14 @@
 site_name: lmrtfy - Let Me Run That For You
+site_url: https://www.lmrt.fyi
+repo_url: https://github.com/lmrtfy/lmrtfy
+site_author: lmrtfy
+
+docs_dir: 'docs'
+
 theme:
   name: readthedocs
   highlight_js: true
+
 
 plugins:
   - search
