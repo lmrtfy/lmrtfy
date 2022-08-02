@@ -4,7 +4,7 @@ theme:
   highlight_js: true
 plugins:
   - search
-  - mkdocstring:
+  - mkdocstrings:
       handlers:
         python:
           options:
