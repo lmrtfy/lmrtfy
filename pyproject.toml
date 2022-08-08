@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "lmrtfy"
-version = "0.0.2"
+version = "0.0.3"
 description = "Turn variables into program arguments. Auto-generates a CLI interface and an API using lmrtfy.de."
 readme = "README.md"
 authors = [{ name = "lmrtfy.de", email = "hello@lmrtfy.de" }]
@@ -29,7 +29,7 @@ Homepage = "https://github.com/lmrtfy/lmrtfy"
 lmrtfy = "lmrtfy.__main__:main"
 
 [tool.bumpver]
-current_version = "0.0.2"
+current_version = "0.0.3"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true
