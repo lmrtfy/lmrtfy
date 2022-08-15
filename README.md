@@ -1,2 +1,1 @@
-version
-This is a test for now.
+![Linter](https://github.com/lmrtfy/lmrtfy/workflows/linter.yml/badge.svg) [![Documentation Status](https://readthedocs.org/projects/lmrtfy/badge/?version=latest)](https://lmrtfy.readthedocs.io/en/latest/?badge=latest)
