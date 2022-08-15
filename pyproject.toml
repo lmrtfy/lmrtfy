@@ -27,6 +27,3 @@ Homepage = "https://github.com/lmrtfy/lmrtfy"
 
 [project.scripts]
 lmrtfy = "lmrtfy.__main__:main"
-
-
-
