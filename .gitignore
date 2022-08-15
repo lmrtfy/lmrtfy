@@ -116,3 +116,5 @@ venv.bak/
 
 # vim-swap
 *.swp
+
+examples/example1/dummy_data
