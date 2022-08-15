@@ -1,0 +1,29 @@
+# pyproject.toml
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "lmrtfy"
+version = "0.0.3"
+description = "Turn variables into program arguments. Auto-generates a CLI interface and an API using lmrtfy.de."
+readme = "README.md"
+authors = [{ name = "lmrtfy.de", email = "hello@lmrtfy.de" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["api", "generator", "cli"]
+#dependencies = []
+requires-python = ">=3.9"
+
+[project.optional-dependencies]
+dev = ["black", "bumpver", "isort", "pip-tools", "pytest", "numpy"]
+
+[project.urls]
+Homepage = "https://github.com/lmrtfy/lmrtfy"
+
+[project.scripts]
+lmrtfy = "lmrtfy.__main__:main"

@@ -1,0 +1,43 @@
+[MAIN]
+fail-under=10
+ignore=CVS
+jobs=2
+
+
+[MESSAGES CONTROL]
+disable=all
+
+enable=import-error,
+        import-self,
+        f-string-without-interpolation,
+        function-redefined.
+        bad-indentation,
+        unnecessary-semicolon,
+        simplifiable-condition,
+        simplify-boolean-expression,
+        consider-using-in,
+        consider-using-with,
+        use-list-literal,
+        use-dict-literal,
+        trailing-comma-tuple,
+        bad-open-mode,
+        bad-whitespace,
+        unused-import,
+        wrong-import-order,
+        wrong-import-position,
+        line-too-long
+
+[BASIC]
+bad-names=foo,
+          bar,
+          baz,
+          toto,
+          tutu,
+          tata
+
+good-names=i,
+           j,
+           k,
+           ex,
+           Run,
+           _
