@@ -240,7 +240,6 @@ class Runner(object):
         """
         self.client.on_message = self.on_message
         try:
-            # TODO: ISSUE #9 -> this could possibly be one of the drivers of high loads
             # queue.get() blocks until an element is inside the queue.
             # This might not work on windows which has to be tested
             while True:
