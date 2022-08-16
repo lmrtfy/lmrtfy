@@ -1,4 +1,4 @@
-name: lmrtfy-linter
+name: linter
 
 on: [push]
 
