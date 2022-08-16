@@ -34,9 +34,9 @@ b = result(x * z, name="b")
 ```
 
 * (1) import `variable` and `result` function to annotate your code
-* (2) `x` is a variable with the default value `5` which can take values between 1 and 10.
-* (3) `y` is a variable of type numpy.ndarray which holds 101 values between 0. and 1. The valid
-range is between -1 and 11 and the unit of this variable is meter.
+* (2) `x` is a variable with the default value `5` which can take values between `1` and `10`.
+* (3) `y` is a variable of type numpy.ndarray which holds 101 values between `0.` and `1.` The valid
+range is between `-1` and `11´ and the unit of this variable is meter.
 * (4) `a` is a result which is computed by `x * y`.
 
 ## Run the script locally
