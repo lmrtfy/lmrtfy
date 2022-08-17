@@ -1,22 +1,23 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+import pathlib
+
 import fire
+import lmrtfy.runner
 
-def _deploy(local: bool = False):
+
+def _deploy(local: bool = False, script_path: str = None):
     if local:
-        print("haha")
+        print(script_path)
+        lmrtfy.runner.main(pathlib.Path(script_path).resolve())
     else:
-        print("sad")
+        print("This feature is not yet implemented. Please run 'lmrtfy deploy --local' for now.")
 
 
-def _analyze(script: str):
-    print("analyze")
 
-def _run():
-    print("jiiihaaa")
 
 def main():
     fire.Fire({
-        "": _run,
-        "analyze": _analyze,
         "deploy": _deploy
     })
