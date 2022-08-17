@@ -79,7 +79,8 @@ class Runner(object):
     :type profile_path: pathlib.Path
     """
 
-    def __init__(self, broker_url, port, username, password, profile_path):
+    def __init__(self, broker_url: str, port: int, username: str, password: str,
+                 profile_path: pathlib.Path):
         """
         Constructor method
         """
@@ -169,6 +170,7 @@ class Runner(object):
         `execute` is responsible for the actual execution of the command with the correct input
         parameters.
 
+        :param job_id:
         :param job_input:
         """
         command = self.profile["language"]

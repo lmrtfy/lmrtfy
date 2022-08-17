@@ -6,6 +6,7 @@ import pathlib
 import json
 import logging
 import logging.config
+from typing import Union
 
 import filehash
 import yaml
@@ -29,7 +30,6 @@ if 'LMRTFY_DEPLOY_LOCAL' in os.environ and 'LMRTFY_TMP_DIR' in os.environ:
 
 _sha1hasher = filehash.FileHash('sha1')
 _hash = _sha1hasher.hash_file(_script_path)
-
 
 profile = {}
 profile['language'] = 'python'
@@ -55,6 +55,7 @@ class NumpyEncoder(json.JSONEncoder):
 if not _run_deployed:
     with open(str(_lmrtfy_profile_filename),'w') as f:
         yaml.dump(profile, f)
+        logging.info(f"Wrote profile to {str(_lmrtfy_profile_filename)}.")
 
 
 _types = ['json', 'string', 'string_array', 'int', 'int_array', 'float', 'float_array', 'complex',
@@ -64,7 +65,12 @@ _inverse_type_map = {type(1): int, type(True): bool, type("abc"): str, type(1.1)
                      type({}): dict, type(np.zeros(3)): np.asarray, type([]): list}
 
 
-def _add_to_api_definition(name, kind, dtype, min=None, max=None, unit=None):
+# a type definition in order to have type hint for variable and result function
+supported_object_type = Union[int, float, complex, bool, np.ndarray, list, dict]
+
+
+def _add_to_api_definition(name: str, kind: str, dtype: str, min = None, max = None,
+                           unit: str = None):
     if not _run_deployed:
         with open(_lmrtfy_profile_filename, 'r') as p:
             profile = yaml.full_load(p)
@@ -95,7 +101,7 @@ def _add_to_api_definition(name, kind, dtype, min=None, max=None, unit=None):
             yaml.dump(profile, f)
 
 
-def _get_type(a):
+def _get_type(a: supported_object_type) -> str:
     """
     Returns the type of `a` as a string.
 
@@ -142,7 +148,8 @@ def resource(a):
     return a
 
 
-def variable(a, name, min=None, max=None, unit=None):
+def variable(a: supported_object_type, name: str, min = None, max = None,
+             unit: str = None) -> supported_object_type:
     """
     :param a:
     :param name:
@@ -167,7 +174,8 @@ def variable(a, name, min=None, max=None, unit=None):
 
 
 # TODO: argument ordering is not the same as in variable Issue#7
-def result(a, name, unit=None, min=None, max=None):
+def result(a: supported_object_type, name: str, min = None, max = None,
+           unit: str = None) -> supported_object_type:
     """
     :param a:
     :param name:
