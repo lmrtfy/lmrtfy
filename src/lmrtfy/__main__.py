@@ -15,9 +15,8 @@ def _deploy(local: bool = False, script_path: str = None):
         print("This feature is not yet implemented. Please run 'lmrtfy deploy --local' for now.")
 
 
-
-
 def main():
+
     fire.Fire({
         "deploy": _deploy
     })
