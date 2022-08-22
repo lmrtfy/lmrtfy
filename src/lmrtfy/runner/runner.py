@@ -9,6 +9,7 @@ import tempfile
 import pathlib
 import enum
 import queue
+import requests
 from typing import Optional
 
 import yaml
@@ -180,6 +181,7 @@ class Runner(object):
         script = self.profile["filename"]
 
         tempdir = tempfile.TemporaryDirectory()  # pylint: disable=consider-using-with
+        # TODO: Add job_id to path
         os.environ["LMRTFY_TMP_DIR"] = tempdir.name
         logging.debug(f"Set LMRTFY_TMP_DIR to '{tempdir.name}'.")
 
@@ -219,11 +221,14 @@ class Runner(object):
             try:
                 with open(res_path, "r") as result_file:
                     results[res] = json.load(result_file)
+                    # TODO: add auth code, change results endpoint!
+                    files = {'results_file': open(res_path, 'rb')}
+                    r = requests.post(f"http://127.0.0.1:5000/result/{job_id}", files=files)
+                    if r.status_code != 200:
+                        logging.error("Results could not be uploaded")
             except FileNotFoundError:
                 partial_results_only = True
                 logging.error(f"Result file '{res_path}' not found.")
-
-        # TODO: results handler => what to do with results
 
         if partial_results_only:
             self.publish_status(

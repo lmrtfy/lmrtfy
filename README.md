@@ -18,7 +18,7 @@ From the annotations a profile is automatically generated that contains the rele
 
 ```python
 import numpy as np
-from lmrtfy import variable, result  # (1)
+from lmrtfy.annotation import variable, result  # (1)
 
 
 x = variable(5, name="x", min=1, max=10) (2)
@@ -52,7 +52,7 @@ During this step, we also create the annotation profile which will later be used
 
 Currently, you can share your script's functionality by running
 ```shell
-$ lmrtfy deploy local
+$ lmrtfy deploy local <your_script.py>
 ```
 
 This command will create an API endpoint which can be used to send jobs to your script. The script will stay
