@@ -223,7 +223,7 @@ class Runner(object):
                     results[res] = json.load(result_file)
                     # TODO: add auth code, change results endpoint!
                     files = {'results_file': open(res_path, 'rb')}
-                    r = requests.post(f"http://127.0.0.1:5000/result/{job_id}", files=files)
+                    r = requests.post(f"http://api.simulai.de/results/{job_id}", files=files)
                     if r.status_code != 200:
                         logging.error("Results could not be uploaded")
             except FileNotFoundError:
