@@ -15,8 +15,8 @@ import numpy as np
 from .. import _lmrtfy_dir
 from .. import _lmrtfy_profiles_dir
 
-
-_script_path = sys.argv[0]
+# TODO: talk about file naming convention!
+_script_path = pathlib.Path(sys.argv[0]).resolve()
 _run_deployed = False
 _tmp_dir = None
 
@@ -33,15 +33,18 @@ _hash = _sha1hasher.hash_file(_script_path)
 
 profile = {}
 profile['language'] = 'python'
-profile['filename'] = _script_path
+profile['filename'] = str(_script_path)
 profile['filehash'] = _hash
 profile['variables'] = {}
 profile['results'] = {}
 
 
 if not _run_deployed:
-    _script_identifier = _script_path.replace('/', '_').replace('\\', '_').replace('.', '_')
+    print(_script_path)
+    _script_identifier = str(_script_path).replace('/', '_').replace('\\', '_').replace('.', '_')
     _lmrtfy_profile_filename = _lmrtfy_profiles_dir.joinpath(f'{_script_identifier}.yml')
+    print(_script_identifier)
+    print(_lmrtfy_profile_filename)
     _lmrtfy_profile_filename.touch()
 
 
@@ -53,7 +56,7 @@ class NumpyEncoder(json.JSONEncoder):
 
 
 if not _run_deployed:
-    with open(str(_lmrtfy_profile_filename),'w') as f:
+    with open(_lmrtfy_profile_filename,'w') as f:
         yaml.dump(profile, f)
         logging.info(f"Wrote profile to {str(_lmrtfy_profile_filename)}.")
 
