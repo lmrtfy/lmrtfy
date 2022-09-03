@@ -275,7 +275,7 @@ class Runner(object):
                 self.publish_status(JobStatus.WAITING, "Waiting for Job in MQTT Topic.")
 
                 # blocks until something is in the queue
-                job_id, job_param = self.job_list.get().values()
+                job_id, _, job_param, _ = self.job_list.get().values()
                 self.publish_status(JobStatus.RUNNING, "Starting execution.")
                 logging.debug(f"'{job_param}' for job_id '{job_id}'")
                 self.execute(job_id, job_param)
