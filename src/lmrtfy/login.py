@@ -20,7 +20,7 @@ from lmrtfy import _lmrtfy_auth_dir
 
 
 def get_cliconfig():
-    r = requests.get('http://api.simulai.de/cliconfig')
+    r = requests.get('https://api.simulai.de/cliconfig')
     return r.json()
 
 
