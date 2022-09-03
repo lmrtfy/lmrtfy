@@ -235,12 +235,12 @@ class Runner(object):
 
                     try:
                         token = load_token_data()['access_token']
-                        headers = {'Content-type': 'application/json', 'Accept': 'text/plain',
-                                   "Authorization": f"Bearer {token}"}
+                        headers = {"Authorization": f"Bearer {token}"}
                     except Exception:
                         pass
 
                     r = requests.post(f"{config['api_results_url']}/{job_id}", files=files, headers=headers)
+                    logging.debug(r)
                     if r.status_code != 200:
                         logging.error("Results could not be uploaded")
             except FileNotFoundError:
