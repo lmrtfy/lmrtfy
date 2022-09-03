@@ -98,7 +98,9 @@ class Runner(object):
 
         # TODO: client id is ideally the same a the filehash I guess. Issue #6
         self.client_id = f"local_runner-{uuid.uuid4()}"
+        # TODO: runner status => Load, RAM Status, ...
         self.status_topic = f"status/{self.client_id}"
+        # TODO: second status topic for job status
 
         self.client = mqtt.Client(
             client_id=self.client_id, protocol=mqtt.MQTTv5, transport="websockets"
