@@ -5,6 +5,13 @@ import pathlib
 
 import fire
 import lmrtfy.runner
+from lmrtfy.login import LoginHandler
+
+
+def _login():
+    h = LoginHandler()
+    h.login()
+    h.get_token()
 
 
 def _deploy(local: bool = False, script_path: str = None):
@@ -18,5 +25,6 @@ def _deploy(local: bool = False, script_path: str = None):
 def main():
 
     fire.Fire({
-        "deploy": _deploy
+        "deploy": _deploy,
+        "login": _login
     })

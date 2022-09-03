@@ -10,3 +10,11 @@ typing_extensions>=4.2.0
 urllib3>=1.26.9
 paho-mqtt
 pylint
+fire
+pyjwt
+boto3
+botocore
+flask
+python-dotenv
+werkzeug
+cryptography
