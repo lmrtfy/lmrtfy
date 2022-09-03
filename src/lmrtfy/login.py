@@ -15,8 +15,8 @@ from time import sleep
 import jwt
 import flask
 from flask import Flask, request
-
 from werkzeug.serving import make_server
+from lmrtfy import _lmrtfy_auth_dir
 
 
 def get_cliconfig():
@@ -33,11 +33,13 @@ def generate_challenge(a_verifier):
 
 
 def save_token_data(token_data):
-    pass
+    with open(_lmrtfy_auth_dir.joinpath('token'), 'w') as f:
+        json.dump(token_data, f)
 
 
-def load_token_data():
-    pass
+def load_token_data() -> dict:
+    with open(_lmrtfy_auth_dir.joinpath('token'), 'r') as f:
+        return json.load(f)
 
 
 class ServerThread(threading.Thread):
@@ -69,12 +71,7 @@ class LoginHandler(object):
         self.redirect_uri = f"http://{self.cliconfig['auth_listener_host']}:{self.cliconfig['auth_listener_ports'][0]}/callback"
 
     def callback(self):
-        """
-        The callback is invoked after a completed login attempt (successful or otherwise).
-        It sets global variables with the auth code or error messages, then sets the
-        polling flag received_callback.
-        :return:
-        """
+        # TODO: Make this look nice.
         message = "Success"
         if 'error' in request.args:
             self.error_message = request.args['error'] + ': ' + request.args['error_description']
@@ -89,8 +86,8 @@ class LoginHandler(object):
 
     def login(self):
 
-        if self.token_is_valid():
-            return
+        if self.token_is_valid(load_token_data()['access_token']):
+            return False
 
         challenge = generate_challenge(self.verifier)
         state = auth_url_encode(secrets.token_bytes(32))
@@ -132,6 +129,8 @@ class LoginHandler(object):
             print(self.error_message)
             exit(-1)
 
+        return True
+
     def get_token(self):
         headers = {'Content-Type': 'application/json'}
         body = {'grant_type': 'authorization_code',
@@ -142,12 +141,28 @@ class LoginHandler(object):
                 'redirect_uri': self.redirect_uri}
         r = requests.post(self.cliconfig['auth_token_url'], headers=headers, data=json.dumps(body))
         data = r.json()
-        save_token_data(data)
-        print(data)
 
-    def token_is_valid(self):
-        token_data = load_token_data()
-        # Check validity and expiration
+        if self.token_is_valid(data['access_token']):
+            save_token_data(data)
+
+    def token_is_valid(self, token) -> bool:
+        try:
+            r = requests.get(self.cliconfig['auth_jwks_url'])
+            jwks = r.json()
+            public_keys = dict()
+
+            for jwk in jwks['keys']:
+                kid = jwk['kid']
+                public_keys[kid] = jwt.algorithms.RSAAlgorithm.from_jwk(json.dumps(jwk))
+
+            kid = jwt.get_unverified_header(token)['kid']
+            jwt.decode(token, key=public_keys[kid], algorithms=["RS256"], audience=self.cliconfig['auth_audience'], verify=True)
+
+            return True
+
+        except Exception:
+            pass
+
         return False
 
 

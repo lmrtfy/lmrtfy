@@ -16,6 +16,7 @@ import yaml
 import paho.mqtt.client as mqtt
 
 from lmrtfy.annotation import NumpyEncoder
+from lmrtfy.login import load_token_data, get_cliconfig
 
 
 class JobStatus(str, enum.Enum):
@@ -80,8 +81,7 @@ class Runner(object):
     :type profile_path: pathlib.Path
     """
 
-    def __init__(self, broker_url: str, port: int, username: str, password: str,
-                 profile_path: pathlib.Path):
+    def __init__(self, broker_url: str, port: int, profile_path: pathlib.Path):
         """
         Constructor method
         """
@@ -103,9 +103,16 @@ class Runner(object):
         self.client = mqtt.Client(
             client_id=self.client_id, protocol=mqtt.MQTTv5, transport="websockets"
         )
+
+        access_token = ''
+        try:
+            access_token = load_token_data()['access_token']
+        except Exception:
+            pass
+
         self.client.tls_set()
         # self.client.enable_logger()
-        self.client.username_pw_set(username, password)
+        self.client.username_pw_set(self.client_id, access_token)
         self.client.on_connect = on_mqtt_connect
         self.client.on_disconnect = on_mqtt_disconnect
         self.client.on_subscribe = on_subscribe
@@ -174,6 +181,8 @@ class Runner(object):
         :param job_id:
         :param job_input:
         """
+
+        config = get_cliconfig()
         command = self.profile["language"]
         if "python" not in command:
             logging.error(f"{command} is currently not supported.")
@@ -223,7 +232,15 @@ class Runner(object):
                     results[res] = json.load(result_file)
                     # TODO: add auth code, change results endpoint!
                     files = {'results_file': open(res_path, 'rb')}
-                    r = requests.post(f"http://api.simulai.de/results/{job_id}", files=files)
+
+                    try:
+                        token = load_token_data()['access_token']
+                        headers = {'Content-type': 'application/json', 'Accept': 'text/plain',
+                                   "Authorization": f"Bearer {token}"}
+                    except Exception:
+                        pass
+
+                    r = requests.post(f"{config['api_results_url']}/{job_id}", files=files, headers=headers)
                     if r.status_code != 200:
                         logging.error("Results could not be uploaded")
             except FileNotFoundError:
