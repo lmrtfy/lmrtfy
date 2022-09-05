@@ -66,8 +66,8 @@ class LMRTFY(object):
         self.login()
 
         if not input_file:
-            template = load_json_template(profile_id)
             logging.error('No input file given. Use this template to create one.')
+            template = load_json_template(profile_id)
             msg = json.dumps(template, indent=4).split('\n')
             for m in msg:
                 logging.warn(m)
@@ -89,12 +89,17 @@ class LMRTFY(object):
                     logging.info("Job submission successful.")
                     logging.info(f"Job-id: {r.json()['job_id']}")
                 else:
-                    logging.info("Job submission unsuccessful.")
-                    logging.info(f"Reason: \"{r.json()}\"")
+                    logging.error("Job submission unsuccessful.")
+                    logging.warning(f"Reason: \"{r.json()}\"")
         except FileNotFoundError:
             logging.error(f"Opening input file {input_file} failed.")
 
     def fetch(self, job_id: str):
+        """
+        Fetch results of a job.
+
+        :param job_id: Job id of the job that you want to fetch results for.
+        """
         pass
 
 
