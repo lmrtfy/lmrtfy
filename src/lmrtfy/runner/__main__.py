@@ -21,8 +21,13 @@ def main(script_path: Path):
     _lmrtfy_profile_filename = _lmrtfy_profiles_dir.joinpath(f'{_script_identifier}.yml')
 
     url = config['api_catalog_url']
-    with open(_lmrtfy_profile_filename, "r") as p:
-        data = {"profile": yaml.safe_load(p)}
+    try:
+        with open(_lmrtfy_profile_filename, "r") as p:
+            data = {"profile": yaml.safe_load(p)}
+
+    except FileNotFoundError:
+        logging.error(f"No profile for {script_path} found. Please run first without the lmrtfy cli.")
+        exit(-1)
 
     token = ''
     try:
