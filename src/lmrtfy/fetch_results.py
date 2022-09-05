@@ -1,32 +1,25 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import logging
 
 import requests
-import json
+from sys import exit
 
-from lmrtfy.login import load_token_data, LoginHandler, get_cliconfig
+from lmrtfy.login import load_token_data, get_cliconfig
 
 
 def fetch_results(job_id: str):
-    config = get_cliconfig()
-    url = config['api_results_url']
 
-    token = ''
-    # todo: login here? this isn't ideal
     try:
+        config = get_cliconfig()
         token = load_token_data()['access_token']
-    except Exception:
-        h = LoginHandler()
-        if h.login():
-            h.get_token()
-        try:
-            token = load_token_data()['access_token']
-        except Exception:
-            # TODO: Nice message when no token is available and login fails.
+        headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
+        r = requests.get(config['api_results_url'] + f"/{job_id}", headers=headers)
+        if r.status_code == 200:
+            return r.json()
+        else:
+            logging.error(f"Could not fetch results from server: {r.status_code}")
             exit(-1)
-
-    headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
-    r = requests.get(url.join(f"/{job_id}"), headers=headers)
-
-    if r.status_code == 200:
-        return r.json()
+    except:
+        logging.error("Could not access results server.")
+        exit(-1)

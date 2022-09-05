@@ -11,6 +11,8 @@ from lmrtfy.runner import load_json_template
 import json
 import logging
 import coloredlogs
+from lmrtfy.fetch_results import fetch_results
+from pathlib import Path
 
 _log_level = logging.INFO
 if 'LMRTFY_DEBUG' in os.environ:
@@ -70,7 +72,7 @@ class LMRTFY(object):
             template = load_json_template(profile_id)
             msg = json.dumps(template, indent=4).split('\n')
             for m in msg:
-                logging.warn(m)
+                logging.warning(m)
             exit(-1)
 
         try:
@@ -83,7 +85,7 @@ class LMRTFY(object):
                 logging.info("Submitting job with parameters: ")
                 msg = json.dumps(j, indent=4).split('\n')
                 for m in msg:
-                    logging.warn(m)
+                    logging.warning(m)
                 r = requests.post(config['api_submit_url'] + f'/{profile_id}', data=d, headers=headers)
                 if r.status_code == 200:
                     logging.info("Job submission successful.")
@@ -94,13 +96,33 @@ class LMRTFY(object):
         except FileNotFoundError:
             logging.error(f"Opening input file {input_file} failed.")
 
-    def fetch(self, job_id: str):
+    def fetch(self, job_id: str, results_dir: str = None):
         """
-        Fetch results of a job.
+        Fetch results of a job for a given job id.
 
         :param job_id: Job id of the job that you want to fetch results for.
         """
-        pass
+        self.login()
+
+        logging.info(f'Fetching results for job-id {job_id}')
+
+        results = fetch_results(job_id)
+
+        if results_dir:
+            p = Path(results_dir).joinpath(job_id)
+        else:
+            p = Path('./').joinpath(job_id)
+
+        p.mkdir(exist_ok=True)
+
+        logging.info(f'Writing results in {p.absolute()}')
+        for name, content in results.items():
+            try:
+                logging.info(f"Writing results {name}.")
+                with open(p.joinpath(name), "w") as r:
+                    r.write(content)
+            except IOError:
+                logging.error(f"Could not write results {name}")
 
 
 def main():
