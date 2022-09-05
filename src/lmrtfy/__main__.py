@@ -15,7 +15,7 @@ coloredlogs.install(fmt='%(asctime)s [%(process)d] %(levelname)s %(message)s', l
 
 class LMRTFY(object):
     """ Let me run that for you.
-        Easily deploy your scripts to accept input via web-api.
+        Easily deploy your scripts to accept input via a web API.
     """
 
     def __init__(self):
@@ -50,13 +50,19 @@ class LMRTFY(object):
             logging.error("This feature is not yet implemented. Please run 'lmrtfy deploy <script> --local' for now.")
 
     def submit(self, profile_id: str, input_file: str = None):
+        """
+        Submit a job to a deployed script via the web.
 
+        :param profile_id: Profile id of the script that you want to run.
+        :param input_file: JSON file that serves as the input of the job. Run once without specified
+        file to get template.
+        """
         self.login()
 
         if not input_file:
             template = load_json_template(profile_id)
             logging.error('No input file given. Use this template to create one.')
-            logging.warn(template)
+            logging.warning(template)
             exit(-1)
 
         #try:
