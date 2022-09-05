@@ -3,6 +3,8 @@
 
 This is the official documentation of the lmrtfy project!
 
+[GitHub Repository!](https://github.com/lmrtfy/lmrtfy)
+
 ---
 
 **Note:**
