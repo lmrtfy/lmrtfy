@@ -15,7 +15,8 @@ from typing import Optional
 import yaml
 import paho.mqtt.client as mqtt
 
-from lmrtfy.annotation import NumpyEncoder
+from lmrtfy.helper import NumpyEncoder
+from lmrtfy.login import load_token_data, get_cliconfig
 
 
 class JobStatus(str, enum.Enum):
@@ -80,8 +81,7 @@ class Runner(object):
     :type profile_path: pathlib.Path
     """
 
-    def __init__(self, broker_url: str, port: int, username: str, password: str,
-                 profile_path: pathlib.Path):
+    def __init__(self, broker_url: str, port: int, profile_path: pathlib.Path):
         """
         Constructor method
         """
@@ -98,14 +98,23 @@ class Runner(object):
 
         # TODO: client id is ideally the same a the filehash I guess. Issue #6
         self.client_id = f"local_runner-{uuid.uuid4()}"
+        # TODO: runner status => Load, RAM Status, ...
         self.status_topic = f"status/{self.client_id}"
+        # TODO: second status topic for job status
 
         self.client = mqtt.Client(
             client_id=self.client_id, protocol=mqtt.MQTTv5, transport="websockets"
         )
+
+        access_token = ''
+        try:
+            access_token = load_token_data()['access_token']
+        except Exception:
+            pass
+
         self.client.tls_set()
         # self.client.enable_logger()
-        self.client.username_pw_set(username, password)
+        self.client.username_pw_set(self.client_id, access_token)
         self.client.on_connect = on_mqtt_connect
         self.client.on_disconnect = on_mqtt_disconnect
         self.client.on_subscribe = on_subscribe
@@ -174,6 +183,8 @@ class Runner(object):
         :param job_id:
         :param job_input:
         """
+
+        config = get_cliconfig()
         command = self.profile["language"]
         if "python" not in command:
             logging.error(f"{command} is currently not supported.")
@@ -223,7 +234,15 @@ class Runner(object):
                     results[res] = json.load(result_file)
                     # TODO: add auth code, change results endpoint!
                     files = {'results_file': open(res_path, 'rb')}
-                    r = requests.post(f"http://api.simulai.de/results/{job_id}", files=files)
+
+                    try:
+                        token = load_token_data()['access_token']
+                        headers = {"Authorization": f"Bearer {token}"}
+                    except Exception:
+                        pass
+
+                    r = requests.post(f"{config['api_results_url']}/{job_id}", files=files, headers=headers)
+                    logging.debug(r)
                     if r.status_code != 200:
                         logging.error("Results could not be uploaded")
             except FileNotFoundError:
@@ -258,7 +277,7 @@ class Runner(object):
                 self.publish_status(JobStatus.WAITING, "Waiting for Job in MQTT Topic.")
 
                 # blocks until something is in the queue
-                job_id, job_param = self.job_list.get().values()
+                job_id, _, job_param, _ = self.job_list.get().values()
                 self.publish_status(JobStatus.RUNNING, "Starting execution.")
                 logging.debug(f"'{job_param}' for job_id '{job_id}'")
                 self.execute(job_id, job_param)
