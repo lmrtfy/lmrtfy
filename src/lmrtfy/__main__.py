@@ -12,25 +12,40 @@ import logging
 
 
 class LMRTFY(object):
-    """ Maybe this gets printed """
+    """ Let me run that for you.
+        Easily deploy your scripts to accept input via web-api.
+    """
+
+    def __init__(self):
+        logging.info('Start LMRTFY command line interface.')
 
     def login(self):
         """
-        This is shit
-        :return:
+        Login to the LMRTFY cloud service.
+        By using this tool you accept the terms and conditions.
         """
+        logging.info('Authenticating for LMRTFY.')
         h = LoginHandler()
         if h.login():
             h.get_token()
 
     def deploy(self, script_path: str, local: bool = False):
+        """
+        Deploy your script to accept inputs via web-api.
+
+        :param script_path: script to be deployed (full path)
+        :param local: deployment on this host only (script is executed locally)
+        """
 
         self.login()
 
+        logging.info(f'Starting deployment of {script_path}')
         if local:
+            logging.warning('Deploying locally.')
             lmrtfy.runner.main(pathlib.Path(script_path).resolve())
         else:
-            print("This feature is not yet implemented. Please run 'lmrtfy deploy --local' for now.")
+            logging.warning('Deploying to cloud.')
+            logging.error("This feature is not yet implemented. Please run 'lmrtfy deploy <script> --local' for now.")
 
 
 def main():
