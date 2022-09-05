@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-import toml
 from pathlib import Path
 import requests
 import yaml
@@ -10,7 +8,7 @@ import json
 import logging
 
 from lmrtfy.runner import Runner
-from lmrtfy import _lmrtfy_config_dir, _lmrtfy_profiles_dir
+from lmrtfy import _lmrtfy_profiles_dir
 from lmrtfy.login import load_token_data, LoginHandler, get_cliconfig
 
 

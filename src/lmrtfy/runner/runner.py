@@ -15,7 +15,7 @@ from typing import Optional
 import yaml
 import paho.mqtt.client as mqtt
 
-from lmrtfy.annotation import NumpyEncoder
+from lmrtfy.helper import NumpyEncoder
 from lmrtfy.login import load_token_data, get_cliconfig
 
 

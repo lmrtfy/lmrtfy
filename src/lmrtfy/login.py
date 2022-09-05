@@ -4,8 +4,6 @@
 import base64
 import hashlib
 import json
-import os
-import pathlib
 import requests
 import secrets
 import threading
@@ -13,10 +11,10 @@ import urllib
 import webbrowser
 from time import sleep
 import jwt
-import flask
 from flask import Flask, request
 from werkzeug.serving import make_server
 from lmrtfy import _lmrtfy_auth_dir
+from typing import Optional
 
 
 def get_cliconfig():
@@ -33,13 +31,21 @@ def generate_challenge(a_verifier):
 
 
 def save_token_data(token_data):
-    with open(_lmrtfy_auth_dir.joinpath('token'), 'w') as f:
-        json.dump(token_data, f)
+
+    try:
+        with open(_lmrtfy_auth_dir.joinpath('token'), 'w') as f:
+            json.dump(token_data, f)
+    except:
+        pass
 
 
-def load_token_data() -> dict:
-    with open(_lmrtfy_auth_dir.joinpath('token'), 'r') as f:
-        return json.load(f)
+def load_token_data() -> Optional[dict]:
+
+    try:
+        with open(_lmrtfy_auth_dir.joinpath('token'), 'r') as f:
+            return json.load(f)
+    except:
+        pass
 
 
 class ServerThread(threading.Thread):
@@ -93,6 +99,7 @@ class LoginHandler(object):
         state = auth_url_encode(secrets.token_bytes(32))
 
         app = Flask("LMRTFY Login")
+
         @app.route('/callback')
         def callback():
             return self.callback()
@@ -146,6 +153,10 @@ class LoginHandler(object):
             save_token_data(data)
 
     def token_is_valid(self, token) -> bool:
+
+        if not token:
+            return False
+
         try:
             r = requests.get(self.cliconfig['auth_jwks_url'])
             jwks = r.json()

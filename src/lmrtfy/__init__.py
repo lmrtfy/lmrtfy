@@ -33,4 +33,4 @@ if not _lmrtfy_auth_dir.is_dir():
 from lmrtfy.annotation import resource
 from lmrtfy.annotation import variable
 from lmrtfy.annotation import result
-from lmrtfy import runner
+#from lmrtfy import runner
