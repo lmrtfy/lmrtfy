@@ -94,7 +94,7 @@ class Runner(object):
         logging.debug(self.profile)
 
         self.filehash = self.profile["filehash"]
-        logging.debug(f"Running for filehash: {self.filehash}")
+        logging.debug(f"Running for profile-id: {self.filehash}")
 
         # TODO: client id is ideally the same a the filehash I guess. Issue #6
         self.client_id = f"local_runner-{uuid.uuid4()}"
@@ -165,11 +165,11 @@ class Runner(object):
         if job_id:
             logging.info(
                 f"status update for job '{job_id}': '{status}' with '{message}' for "
-                f"filehash '{self.filehash}' and client-id `{self.client_id}`."
+                f"profile-id '{self.filehash}' and client-id `{self.client_id}`."
             )
         else:
             logging.info(
-                f"status update: '{status}' with '{message}' for filehash "
+                f"status update: '{status}' with '{message}' for profile-id "
                 f"'{self.filehash}' and client-id `{self.client_id}`."
             )
 
