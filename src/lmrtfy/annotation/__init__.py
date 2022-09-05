@@ -5,17 +5,28 @@ import os
 import pathlib
 import json
 import logging
-import logging.config
+from typing import Union
+from lmrtfy.helper import NumpyEncoder
+import coloredlogs
 
 import filehash
 import yaml
 import numpy as np
 
-from .. import _lmrtfy_dir
 from .. import _lmrtfy_profiles_dir
 
 
-_script_path = sys.argv[0]
+# TODO: talk about file naming convention!
+# TODO: Hacky hack. This should be changed.
+_script_path = pathlib.Path(sys.argv[0]).resolve()
+if sys.argv:
+    if len(sys.argv[0]) >= len('lmrtfy'):
+        if sys.argv[0][-6:] == 'lmrtfy':
+            _script_path = None
+        else:
+            coloredlogs.install(fmt='%(levelname)s %(message)s')
+
+
 _run_deployed = False
 _tmp_dir = None
 
@@ -27,34 +38,28 @@ if 'LMRTFY_DEPLOY_LOCAL' in os.environ and 'LMRTFY_TMP_DIR' in os.environ:
     logging.info(f"Running: data dir is '{_tmp_dir}'")
 
 
-_sha1hasher = filehash.FileHash('sha1')
-_hash = _sha1hasher.hash_file(_script_path)
+if _script_path:
+    _sha1hasher = filehash.FileHash('sha1')
+    _hash = _sha1hasher.hash_file(_script_path)
 
-
-profile = {}
-profile['language'] = 'python'
-profile['filename'] = _script_path
-profile['filehash'] = _hash
-profile['variables'] = {}
-profile['results'] = {}
-
-
-if not _run_deployed:
-    _script_identifier = _script_path.replace('/', '_').replace('\\', '_').replace('.', '_')
-    _lmrtfy_profile_filename = _lmrtfy_profiles_dir.joinpath(f'{_script_identifier}.yml')
-    _lmrtfy_profile_filename.touch()
-
-
-class NumpyEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, np.ndarray):
-            return obj.tolist()
-        return json.JSONEncoder.default(self, obj)
+    profile = {}
+    profile['language'] = 'python'
+    profile['filename'] = str(_script_path)
+    profile['filehash'] = _hash
+    profile['variables'] = {}
+    profile['results'] = {}
 
 
 if not _run_deployed:
-    with open(str(_lmrtfy_profile_filename),'w') as f:
+    if _script_path:
+        _script_identifier = str(_script_path).replace('/', '_').replace('\\', '_').replace('.', '_')
+        _lmrtfy_profile_filename = _lmrtfy_profiles_dir.joinpath(f'{_script_identifier}.yml')
+        _lmrtfy_profile_filename.touch()
+
+if not _run_deployed and _script_path:
+    with open(_lmrtfy_profile_filename,'w') as f:
         yaml.dump(profile, f)
+        logging.info(f"Wrote profile to {str(_lmrtfy_profile_filename)}.")
 
 
 _types = ['json', 'string', 'string_array', 'int', 'int_array', 'float', 'float_array', 'complex',
@@ -64,8 +69,13 @@ _inverse_type_map = {type(1): int, type(True): bool, type("abc"): str, type(1.1)
                      type({}): dict, type(np.zeros(3)): np.asarray, type([]): list}
 
 
-def _add_to_api_definition(name, kind, dtype, min=None, max=None, unit=None):
-    if not _run_deployed:
+# a type definition in order to have type hint for variable and result function
+supported_object_type = Union[int, float, complex, bool, np.ndarray, list, dict]
+
+
+def _add_to_api_definition(name: str, kind: str, dtype: str, min = None, max = None,
+                           unit: str = None):
+    if not _run_deployed and _script_path:
         with open(_lmrtfy_profile_filename, 'r') as p:
             profile = yaml.full_load(p)
 
@@ -95,11 +105,11 @@ def _add_to_api_definition(name, kind, dtype, min=None, max=None, unit=None):
             yaml.dump(profile, f)
 
 
-def _get_type(a):
+def _get_type(a: supported_object_type) -> str:
     """
     Returns the type of `a` as a string.
 
-    Supported types: int, float, cmplex
+    Supported types: int, float, complex
     :param a: Object to get type of
     :return: type of the object
     :rytpe: string
@@ -142,7 +152,8 @@ def resource(a):
     return a
 
 
-def variable(a, name, min=None, max=None, unit=None):
+def variable(a: supported_object_type, name: str, min = None, max = None,
+             unit: str = None) -> supported_object_type:
     """
     :param a:
     :param name:
@@ -154,7 +165,7 @@ def variable(a, name, min=None, max=None, unit=None):
     """
     _add_to_api_definition(name, kind='variable', dtype=_get_type(a), min=min, max=max, unit=unit)
 
-    if _run_deployed and _tmp_dir:
+    if _run_deployed and _tmp_dir and _script_path:
         # TODO: warn and except if something fails.
         with open(str(_tmp_dir.joinpath(f'lmrtfy_variable_{name}.json')), 'r') as f:
             tmp = json.load(f)
@@ -167,7 +178,8 @@ def variable(a, name, min=None, max=None, unit=None):
 
 
 # TODO: argument ordering is not the same as in variable Issue#7
-def result(a, name, unit=None, min=None, max=None):
+def result(a: supported_object_type, name: str, min = None, max = None,
+           unit: str = None) -> supported_object_type:
     """
     :param a:
     :param name:
@@ -178,7 +190,7 @@ def result(a, name, unit=None, min=None, max=None):
     """
     _add_to_api_definition(name, kind='result', dtype=_get_type(a), unit=None, min=min, max=max)
 
-    if _run_deployed and _tmp_dir:
+    if _run_deployed and _tmp_dir and _script_path:
         # TODO: warn and except if something fails.
         with (open(str(_tmp_dir.joinpath(f'lmrtfy_result_{name}.json')), 'w')) as f:
             json.dump({name: a}, f, cls=NumpyEncoder)
