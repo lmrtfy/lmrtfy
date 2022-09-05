@@ -5,10 +5,9 @@ import fire
 import pathlib
 import lmrtfy.runner
 from lmrtfy.login import LoginHandler
+import logging
 import coloredlogs
 coloredlogs.install(fmt='%(asctime)s [%(process)d] %(levelname)s %(message)s')
-
-import logging
 
 
 class LMRTFY(object):
