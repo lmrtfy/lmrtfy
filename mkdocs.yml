@@ -28,4 +28,6 @@ markdown_extensions:
 
 nav:
   - 'index.md'
+  - 'guide.md'
+  - 'examples.md'
   - 'about.md'
