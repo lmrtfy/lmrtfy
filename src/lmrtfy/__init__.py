@@ -3,7 +3,6 @@
 import os
 import pathlib
 
-
 # Don't import or use the underscored variables. These are subject to change.
 _user_home = pathlib.Path.home()
 
@@ -14,6 +13,7 @@ _lmrtfy_dir = _user_home.joinpath('.lmrtfy')
 _lmrtfy_profiles_dir = _lmrtfy_dir.joinpath('profiles')
 _lmrtfy_config_dir = _lmrtfy_dir.joinpath('config')
 _lmrtfy_auth_dir = _lmrtfy_dir.joinpath('auth')
+_lmrtfy_template_dir = _lmrtfy_dir.joinpath('templates')
 
 if not _lmrtfy_dir.is_dir():
     os.mkdir(_lmrtfy_dir)
@@ -26,6 +26,10 @@ if not _lmrtfy_config_dir.is_dir():
 
 if not _lmrtfy_auth_dir.is_dir():
     os.mkdir(_lmrtfy_auth_dir)
+
+if not _lmrtfy_template_dir.is_dir():
+    os.mkdir(_lmrtfy_template_dir)
+
 
 from lmrtfy.annotation import resource
 from lmrtfy.annotation import variable
