@@ -63,15 +63,18 @@ class LMRTFY(object):
         with open(input_file, 'r') as f:
             config = get_cliconfig()
             token = load_token_data()['access_token']
-            print(token)
+            #print(token)
             headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
             d = json.dumps(json.load(f))
-            print(d)
+            #print(d)
             r = requests.post(config['api_submit_url'] + f'/{profile_id}', data=d, headers=headers)
-            print(r.content)
+            #print(r.content)
             if r.status_code == 200:
                 logging.info("Job submission successful.")
                 logging.info(f"Job-id: {r.json()['job_id']}")
+            else:
+                logging.info("Job submission unsuccessful.")
+                logging.info(f"Reason: \"{r.json()}\"")
         #except:
         #    logging.error("Job submission failed.")
 
