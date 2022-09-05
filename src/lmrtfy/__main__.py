@@ -89,8 +89,8 @@ class LMRTFY(object):
                     logging.info("Job submission successful.")
                     logging.info(f"Job-id: {r.json()['job_id']}")
                 else:
-                    logging.info("Job submission unsuccessful.")
-                    logging.info(f"Reason: \"{r.json()}\"")
+                    logging.error("Job submission unsuccessful.")
+                    logging.warning(f"Reason: \"{r.json()}\"")
         except FileNotFoundError:
             logging.error(f"Opening input file {input_file} failed.")
 
