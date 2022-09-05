@@ -5,9 +5,9 @@ import os
 import pathlib
 import json
 import logging
-import logging.config
 from typing import Union
 from lmrtfy.helper import NumpyEncoder
+import coloredlogs
 
 import filehash
 import yaml
@@ -23,6 +23,8 @@ if sys.argv:
     if len(sys.argv[0]) >= len('lmrtfy'):
         if sys.argv[0][-6:] == 'lmrtfy':
             _script_path = None
+        else:
+            coloredlogs.install(fmt='%(levelname)s %(message)s')
 
 
 _run_deployed = False
@@ -107,7 +109,7 @@ def _get_type(a: supported_object_type) -> str:
     """
     Returns the type of `a` as a string.
 
-    Supported types: int, float, cmplex
+    Supported types: int, float, complex
     :param a: Object to get type of
     :return: type of the object
     :rytpe: string

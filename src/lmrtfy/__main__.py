@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-os.environ['LMRTFY_DEPLOY_LOCAL'] = "1"
-
 import fire
 import pathlib
 import lmrtfy.runner
 from lmrtfy.login import LoginHandler
+import coloredlogs
+coloredlogs.install(fmt='%(asctime)s [%(process)d] %(levelname)s %(message)s')
+
+import logging
 
 
 class LMRTFY(object):
@@ -23,6 +24,8 @@ class LMRTFY(object):
             h.get_token()
 
     def deploy(self, script_path: str, local: bool = False):
+
+        self.login()
 
         if local:
             lmrtfy.runner.main(pathlib.Path(script_path).resolve())

@@ -2,10 +2,7 @@
 
 import os
 import pathlib
-import logging
 
-
-logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s', level=logging.DEBUG)
 
 # Don't import or use the underscored variables. These are subject to change.
 _user_home = pathlib.Path.home()
@@ -33,4 +30,3 @@ if not _lmrtfy_auth_dir.is_dir():
 from lmrtfy.annotation import resource
 from lmrtfy.annotation import variable
 from lmrtfy.annotation import result
-#from lmrtfy import runner
