@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import fire
 import pathlib
 import lmrtfy.runner
@@ -10,7 +11,12 @@ from lmrtfy.runner import load_json_template
 import json
 import logging
 import coloredlogs
-coloredlogs.install(fmt='%(asctime)s [%(process)d] %(levelname)s %(message)s', level=logging.DEBUG)
+
+_log_level = logging.INFO
+if 'LMRTFY_DEBUG' in os.environ:
+    _log_level = logging.DEBUG
+
+coloredlogs.install(fmt='%(asctime)s [%(process)d] %(levelname)s %(message)s', level=_log_level)
 
 
 class LMRTFY(object):
@@ -62,27 +68,31 @@ class LMRTFY(object):
         if not input_file:
             template = load_json_template(profile_id)
             logging.error('No input file given. Use this template to create one.')
-            logging.warning(template)
+            msg = json.dumps(template, indent=4).split('\n')
+            for m in msg:
+                logging.warn(m)
             exit(-1)
 
-        #try:
-        with open(input_file, 'r') as f:
-            config = get_cliconfig()
-            token = load_token_data()['access_token']
-            #print(token)
-            headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
-            d = json.dumps(json.load(f))
-            #print(d)
-            r = requests.post(config['api_submit_url'] + f'/{profile_id}', data=d, headers=headers)
-            #print(r.content)
-            if r.status_code == 200:
-                logging.info("Job submission successful.")
-                logging.info(f"Job-id: {r.json()['job_id']}")
-            else:
-                logging.info("Job submission unsuccessful.")
-                logging.info(f"Reason: \"{r.json()}\"")
-        #except:
-        #    logging.error("Job submission failed.")
+        try:
+            with open(input_file, 'r') as f:
+                config = get_cliconfig()
+                token = load_token_data()['access_token']
+                headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
+                j = json.load(f)
+                d = json.dumps(j)
+                logging.info("Submitting job with parameters: ")
+                msg = json.dumps(j, indent=4).split('\n')
+                for m in msg:
+                    logging.warn(m)
+                r = requests.post(config['api_submit_url'] + f'/{profile_id}', data=d, headers=headers)
+                if r.status_code == 200:
+                    logging.info("Job submission successful.")
+                    logging.info(f"Job-id: {r.json()['job_id']}")
+                else:
+                    logging.info("Job submission unsuccessful.")
+                    logging.info(f"Reason: \"{r.json()}\"")
+        except FileNotFoundError:
+            logging.error(f"Opening input file {input_file} failed.")
 
     def fetch(self, job_id: str):
         pass
