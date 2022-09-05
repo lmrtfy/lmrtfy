@@ -115,7 +115,7 @@ class LMRTFY(object):
 
         p.mkdir(exist_ok=True)
 
-        logging.info(f'Writing results in {p.absolute()}')
+        logging.info(f'Writing results in {p.resolve()}')
         for name, content in results.items():
             try:
                 logging.info(f"Writing results {name}.")
