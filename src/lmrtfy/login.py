@@ -45,7 +45,7 @@ def load_token_data() -> Optional[dict]:
         with open(_lmrtfy_auth_dir.joinpath('token'), 'r') as f:
             return json.load(f)
     except:
-        pass
+        return {'access_token':'', 'id_token':'', 'refresh_token':''}
 
 
 class ServerThread(threading.Thread):
