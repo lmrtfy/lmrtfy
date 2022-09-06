@@ -4,17 +4,21 @@
 import os
 import fire
 import pathlib
-import lmrtfy.runner
 import requests
-import lmrtfy
-from lmrtfy.login import LoginHandler, load_token_data, get_cliconfig
-from lmrtfy.runner import load_json_template
 import json
 import logging
-import coloredlogs
-from lmrtfy.fetch_results import fetch_results
 from pathlib import Path
 from packaging import version
+
+import coloredlogs
+
+import lmrtfy
+import lmrtfy.runner
+from lmrtfy.login import LoginHandler, load_token_data, get_cliconfig
+from lmrtfy.runner import load_json_template
+from lmrtfy.fetch_results import fetch_results
+from lmrtfy.helper import check_uuid4
+
 
 _log_level = logging.INFO
 if 'LMRTFY_DEBUG' in os.environ:
@@ -118,6 +122,11 @@ class LMRTFY(object):
         :param job_id: Job id of the job that you want to fetch results for.
         """
         self.login()
+
+        if not check_uuid4(job_id):
+            logging.error(f"'{job_id}' is not a valid job_id. Please check the output of the "
+                          f"`lmrtfy submit` step.")
+            exit(-1)
 
         logging.info(f'Fetching results for job-id {job_id}')
 
