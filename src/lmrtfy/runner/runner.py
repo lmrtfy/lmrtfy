@@ -91,6 +91,7 @@ class Runner(object):
         self.job_list = queue.Queue()
         self.busy = False
 
+        # TODO: test if profile is available
         with open(profile_path, "r") as p:
             self.profile = yaml.safe_load(p)
 
