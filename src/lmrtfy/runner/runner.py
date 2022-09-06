@@ -127,9 +127,10 @@ class Runner(object):
 
         # TODO: how to structure shared-groups and topics?
         access_token = load_token_data()['access_token']
-        user_id = jwt.decode(access_token, options={"verify_signature": False})["payload"]["sub"].replace('|', 'X')
-
-        self.client.subscribe(f"$share/{user_id}/{user_id}/{self.filehash}/job", qos=2)
+        user_id = jwt.decode(access_token, options={"verify_signature": False})["sub"].replace('|', 'X')
+        job_topic =  f"$share/{user_id}/{user_id}/{self.filehash}/job"
+        self.client.subscribe(job_topic, qos=2)
+        logging.debug(f"Listen for jobs on '{job_topic}'.")
 
         self.client.loop_start()
         time.sleep(1)
