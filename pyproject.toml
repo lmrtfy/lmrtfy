@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "lmrtfy"
-version = "0.0.4"
+version = "0.0.5"
 description = "Turn variables into program arguments. Auto-generates a CLI interface and an API using lmrtfy.de."
 readme = "README.md"
 authors = [{ name = "lmrtfy.de", email = "hello@lmrtfy.de" }]
@@ -32,7 +32,8 @@ dependencies = [
         "flask",
         "werkzeug",
         "cryptography",
-        "coloredlogs"
+        "coloredlogs",
+        "packaging"
 ]
 requires-python = ">=3.7"
 

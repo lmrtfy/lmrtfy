@@ -18,13 +18,16 @@ from .. import _lmrtfy_profiles_dir
 
 # TODO: talk about file naming convention!
 # TODO: Hacky hack. This should be changed.
-_script_path = pathlib.Path(sys.argv[0]).resolve()
+_script_path = None
 if sys.argv:
-    if len(sys.argv[0]) >= len('lmrtfy'):
-        if sys.argv[0][-6:] == 'lmrtfy':
-            _script_path = None
-        else:
-            coloredlogs.install(fmt='%(levelname)s %(message)s')
+    if len(sys.argv) > 0:
+        if len(sys.argv[0]) > 0:
+            _script_path = pathlib.Path(sys.argv[0]).resolve()
+            if len(sys.argv[0]) >= len('lmrtfy'):
+                if sys.argv[0][-6:] == 'lmrtfy':
+                    _script_path = None
+                else:
+                    coloredlogs.install(fmt='%(levelname)s %(message)s')
 
 
 _run_deployed = False

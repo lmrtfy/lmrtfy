@@ -14,3 +14,4 @@ flask
 werkzeug
 cryptography
 coloredlogs
+packaging

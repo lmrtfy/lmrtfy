@@ -9,8 +9,11 @@ import tempfile
 import pathlib
 import enum
 import queue
+
+import jwt
 import requests
 from typing import Optional
+import json
 
 import yaml
 import paho.mqtt.client as mqtt
@@ -121,8 +124,14 @@ class Runner(object):
 
         # keepalive need to be below the time out of the server (mosquitto => 60s default)
         self.client.connect(broker_url, port, keepalive=30)
+
         # TODO: how to structure shared-groups and topics?
-        self.client.subscribe(f"$share/{self.filehash}/{self.filehash}/job", qos=2)
+        access_token = load_token_data()['access_token']
+        user_id = jwt.decode(access_token, options={"verify_signature": False})["sub"].replace('|', 'X')
+        job_topic =  f"$share/{user_id}/{user_id}/{self.filehash}/job"
+        self.client.subscribe(job_topic, qos=2)
+        logging.debug(f"Listen for jobs on '{job_topic}'.")
+
         self.client.loop_start()
         time.sleep(1)
 

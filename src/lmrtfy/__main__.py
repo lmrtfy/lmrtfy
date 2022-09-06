@@ -6,6 +6,7 @@ import fire
 import pathlib
 import lmrtfy.runner
 import requests
+import lmrtfy
 from lmrtfy.login import LoginHandler, load_token_data, get_cliconfig
 from lmrtfy.runner import load_json_template
 import json
@@ -13,6 +14,7 @@ import logging
 import coloredlogs
 from lmrtfy.fetch_results import fetch_results
 from pathlib import Path
+from packaging import version
 
 _log_level = logging.INFO
 if 'LMRTFY_DEBUG' in os.environ:
@@ -21,12 +23,25 @@ if 'LMRTFY_DEBUG' in os.environ:
 coloredlogs.install(fmt='%(asctime)s [%(process)d] %(levelname)s %(message)s', level=_log_level)
 
 
+def check_version():
+    try:
+        r = requests.get("https://pypi.org/pypi/lmrtfy/json")
+        recent_version = version.parse(str(list(r.json()['releases'].keys())[-1]))
+        installed_version = version.parse(str(lmrtfy.__version__))
+
+        if installed_version < recent_version:
+            logging.warning(f"A new version ({recent_version}) is available. Please run: 'pip install --upgrade lmrtfy'")
+    except:
+        logging.warning("Version check failed")
+
+
 class LMRTFY(object):
     """ Let me run that for you.
         Easily deploy your scripts to accept input via a web API.
     """
 
     def __init__(self):
+        check_version()
         logging.info('Start LMRTFY command line interface.')
 
     def login(self):
