@@ -57,12 +57,7 @@ push = false
 [tool.bumpver.file_patterns]
 "pyproject.toml" = [
     'version = "{pep440_version}"',
-#    'current_version = "{version}"',
 ]
-#"README.md" = [
-#    "{version}",
-#    "{pep440_version}",
-#]
 "src/lmrtfy/__init__.py" = [
   '__version__ = "{pep440_version}"',
 ]
