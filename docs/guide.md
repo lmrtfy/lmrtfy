@@ -1,17 +1,16 @@
 
-# Guide
-## Installation
+# Installation
 There are two ways to install the lmrtfy tools. We recommend the usage of virtual environments
 at the moment due to the frequent updates and changes of lmrtfy.
 
-### Install from PyPI (recommended)
+## Install from PyPI (recommended)
 Use pip to install from PyPI:
 
-`pip install lmrtfy`
+`$ pip install lmrtfy`
 
 This way you will always have the most recent release of the lmrtfy tools.
 
-### Install from git
+## Install from git
 You can also install from git which is the best way to use the nightly features.
 
 Clone the git repository and install manually:
@@ -26,7 +25,7 @@ Alternatively, you can use the `develop` branch. This should be the most up-to-d
 repository, but things might break. So be careful while using the `develop` branch.
 
 
-## Annotate your script
+# Annotate your script
 
 The annotation of your script tells the lmrtfy tool which python variables are considered inputs and 
 outputs, which is done via the `variable` and `results` functions.
@@ -68,7 +67,7 @@ print(f"Velocity after {time} seconds is {velocity} m/s.")
 If you run `python free_fall_lmrtfy.py` you get the exact same result as before. During the run, lmrtfy 
 created the profile for `free_fall_lmrtfy.py` which will be needed to deploy the function.
 
-### Create the annotation profile
+## Create the annotation profile
 It is required to run your script at least once with the regular python interpreter to create the
 annotation profile which will be used to generate the API.
 ```shell
@@ -78,7 +77,7 @@ $ python <script.py>
 The profile is currently saved under `~/.lmrtfy/profiles` which will change in the future to respect
 XDG directory specifications.
 
-### Focus: `variable` and `result`
+## Focus: `variable` and `result`
 
 These functions are transparent. That means the assignment `a = variable(5, name="a")` assigns `a`
 the value `5`. This way you can run the script simply with your local python interpreter if lmrtfy is
@@ -100,6 +99,7 @@ result(value: supported_object_type,
         min = None, max = None,
         unit: str = None) -> supported_object_type
 ```
+
 * The `value` argument specifies the default argument for the variable and has to be one of the
   supported types: `int, float, complex, bool, np.ndarray, list, dict`.
 * `name` declares the name of the variable that will be used for the API generation. A sensible choice
@@ -112,7 +112,7 @@ result(value: supported_object_type,
 
 
 
-## Deploy the function (local runner)
+# Deploy the function (local runner)
 Now you can deploy the function and make it available via the lmrtfy API. This is simply done by
 ```shell
 $ lmrtfy deploy <path_to_script.py> --local
@@ -130,17 +130,19 @@ When a job is submitted the types of the job's input parameters are checked by t
 they are also checked for their bounds and their units. This way, only jobs that can be run successfully
 with the script belonging to the deployed profile. 
 
-**Note: Don't change the script after you have deployed it. The current advice would be to copy and
-rename the script before deployment. In later versions, this will be taken care of by the lmrtfy tool**
+!!! warning
+    Don't change the script after you have deployed it. The current advice would be to copy and
+    rename the script before deployment. In later versions, this will be taken care of by the lmrtfy tool
 
-## Submit a job
+# Submit a job
 The lmrtfy tool also provides a way to submit jobs with the `lmrtfy` CLI tool. All you need for this 
 is a `profile_id` which is provided by you during the deployment and a json-file that contains the input
 parameters.
 
-**Note: Later on, you will be able to see profile_ids that are available for you on our web frontend**
+!!! info
+    Later on, you will be able to see profile_ids that are available for you on our web frontend**
 
-For the listing above, the json file would look like this:
+For the listing above, the JSON file would look like this:
 ```json
 {
   "profile_id": "<profile_id>",
@@ -153,21 +155,30 @@ For the listing above, the json file would look like this:
 }
 ```
 
-`profile_id` needs to be specified inside the json as well, which is a slight inconvenience at the 
-moment, but allows us to be more flexible later on. 
+`profile_id` needs to be specified inside the json as well, which is a slight inconvenience at the
+moment, but allows us to be more flexible later on.
 
-`job_parameters` and `parameter_units` contain a key-value pair each for each of the inputs in the 
+`job_parameters` and `parameter_units` contain a key-value pair each for each of the inputs in the
 annotation profile. The types need to match exactly. No implicit type casting in performed during
-the submission. The unit also has to match exactly. 
+the submission. The unit also has to match exactly.
 
-_Later on, we might perform automatic conversion
-in case of a unit mismatch, e.g. if the profile requires `s` (as in seconds) but the input is given
-as `h` (as in hours)._
+Save the JSON file es `input.json` and run:
 
+```shell
+$ lmrtfy deploy <profile_id> input.json --local
+```
+
+!!! info
+    Later on, we might perform automatic conversion in case of a unit mismatch, e.g. if the profile 
+    requires `s` (as in seconds) but the input is given as `h` (as in hours). 
+    
+    There will be an option to enable/disable the function. If you have any opinions about that, 
+    please let us know
+   
 When you submit your job you will receive a `job_id` which is needed to fetch the results as you
 will see in the next part of this guide.
 
-## Get results
+# Get results
 lmrtfy also provides a way to download the results of the computation. You simply run
 ```shell
 $ lmrtfy fetch <job_id> <save_path>
