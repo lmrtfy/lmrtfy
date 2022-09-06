@@ -50,9 +50,9 @@ lmrtfy = "lmrtfy.__main__:main"
 current_version = "0.0.5"
 version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
 commit_message = "bump version {old_version} -> {new_version}"
-commit = false
-tag = false
-push = false
+commit = true 
+tag = true
+push = true
 
 [tool.bumpver.file_patterns]
 "pyproject.toml" = [
