@@ -1,14 +1,20 @@
-site_name: lmrtfy - Let Me Run That For You
+site_name: LMRTFY
 site_url: https://www.lmrt.fyi
 repo_url: https://github.com/lmrtfy/lmrtfy
 site_author: lmrtfy
+repo_name: lmrtfy/lmrtfy
+repo_url: https://github.com/lmrtfy/lmrtfy
 
 docs_dir: 'docs'
 
 theme:
-  name: readthedocs
+  name: material
   highlight_js: true
 
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 plugins:
   - search
@@ -21,13 +27,39 @@ plugins:
 markdown_extensions:
   - markdown_include.include:
       base_path: .
+  - abbr
   - admonition
+  - attr_list
+  - def_list
   - toc:
       baselevel: 2
-      permalink: "#"
+      permalink: true
+
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
 
 nav:
-  - 'index.md'
-  - 'guide.md'
-  - 'examples.md'
-  - 'about.md'
+  - LMRTFY on GitHub: "https://github.com/lmrtfy/lmrtfy"
+  - LMRTFY: 'index.md'
+  - Advanced Guide: 'guide.md'
+  - Examples: 'examples.md'
+  - About: 'about.md'
+

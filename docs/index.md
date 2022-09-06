@@ -1,19 +1,6 @@
-# lmrtfy - Let me run that for you
-** Run Your Code - Share the Functionality **
+This is the official documentation of the lmrtfy project! - [GitHub Repository](https://github.com/lmrtfy/lmrtfy)
 
-This is the official documentation of the lmrtfy project!
-
-[GitHub Repository!](https://github.com/lmrtfy/lmrtfy)
-
----
-
-**Note:**
-
-** lmrtfy is currently in an early alpha phase. We try to minimize the things that will change in
-the future, but we cannot make any guarantees at the moment. Please keep that in mind while using
-the lmrtfy tools.**
-
----
+LMRTFY stands for _Let Me Run That For You_. 
 
 ## Introduction
 
@@ -22,14 +9,20 @@ lmrtfy is a tool to share your applications with others without dealing with the
 * Only minimal changes to your code by annotating your input and output variables
 * Automatically generated API that can be shared with others
 
+!!! warning
+    lmrtfy is currently in an early alpha phase. We try to minimize the things that will change in
+    the future, but we cannot make any guarantees at the moment. Please keep that in mind while using
+    the lmrtfy tools.
+
 Currently, the application itself runs on your computer and we provide a tightly controlled interface
 via our web API to start jobs that make use of the script running on your computer. Follow the quick 
 start guide to get started!
 
 We also have a more comprehensive [guide](guide.md) and [examples](examples.md) that you might be interested in!
 
-**If you encounter any obstacles while using our tool or while reading the documentation, please don't
-hesitate to contact us. Just create an issue on GitHub.**
+!!! Note 
+    If you encounter any obstacles while using our tool or while reading the documentation, please don't
+    hesitate to contact us. Just create an issue on GitHub.
 
 ## Quickstart
 ### Installation: 
@@ -39,12 +32,15 @@ hesitate to contact us. Just create an issue on GitHub.**
 Login/sign up to receive access token: `$ lmrtfy login`. The token is saved in `~/.lmrtfy/auth/token` but you 
 should not need to manually open the token.
 
-Tokens are currently valid for 24 hours. After that you will be requested to login again. That also means
-that you cannot have scripts deployed more than 24 hours right now. This will change soon so that you 
-can deploy scripts longer than that.
 
-_(Hint: Just run `lmrtfy deploy <script> --local`again after 24h and you are fine if you need longer running
-deployments right now.)_
+
+!!! info
+    Tokens are currently valid for 24 hours. After that you will be requested to login again. That also means
+    that you cannot have scripts deployed more than 24 hours right now. This will change soon so that you
+    can deploy scripts longer than that.
+    
+    Just run `lmrtfy deploy <script> --local`again after 24h and you are fine if you need longer running
+    deployments right now.)
 
 ### Create code annotations
 Annotate the inputs and outputs of your script with `variable` and `results` and save it as `script.py`:

@@ -41,7 +41,12 @@ The second example calculates the velocity of an object falling from the sky (wi
 The standard gravity on earth is 9.81 m*s^(-2). Multiplicated by the fall time, we will get the velocity
 of the object after that time. 
 
-In regular python code that you run locally it would look something like this:
+If you like equations more, you might recognize these from your physics class:
+$$
+v = g \cdot t
+$$
+
+In regular python code that you run locally it would look like this:
 ```python
 standard_gravity = 9.81
 time = 200.
@@ -85,7 +90,70 @@ The results are downloaded and stored inside the specified path within a directo
 `job_id` as its name.
 
 ## Example 3: Compound interest
-TODO
+
+The third example calculates the compound interest $C$ starting from a principal value $P$ with 
+annualt interest $I$ after $N$ years:
+
+$$
+C = P \cdot (1 + I)^N - P
+$$
+
+Very common formula in anything related to finance.  
+
+Again, we start with the plain code, as you would implement it right away:
+```python
+# file: ci.py
+def compound_interest(principal: float, annual_interest: float, years: int):
+    return principal * (1. + annual_interest/100.)**years - principal
+
+if __name__ == "__main__":
+    principal = 10_000
+    interest = 6
+    years = 10
+    ci = compound_interest(principal, interest, years)
+    print(f"Compound interest after {years} years: {ci}")
+```
+
+You can run this example with `$ python ci.py` and it should print `7908.47`. Which is the compound 
+interest after 10 years if you started with 10000 units that grow by 6% each year.
+
+There are several problems with this solution:
+1. You need to change the code to run it for other inputs
+2. Units are unclear! `principal` is a currency, but that actually does not matter. The real problem
+is the `interest`. Is it decimal or in %?
+
+Using lmrtfy, you would annotate the script as follows:
+```python
+# file: ci_lmrtfy_1.py
+from lmrtfy import variable, result
+
+def compound_interest(principal: float, annual_interest: float, years: int):
+    return principal * (1. + annual_interest/100.)**years - principal
+
+
+if __name__ == "__main__":
+    principal = variable(10_000, name="principal", min=0)
+    interest = variable(6, name="interest", min=0, max=100, unit="%")
+    years = variable(10, name="years", min=0)
+    
+    ci = compound_interest(principal, interest, years)
+    ci = result(ci, name="compound interest")
+    
+    print(f"Compound interest after {years} years: {ci}")
+```
+
+Now, we run `python ci_lmrtfy_1.py` to generate the profile and then deploy with 
+```shell
+$ lmrtfy deploy ci_lmrtfy_1.py --local
+```
+
+!!! warning
+    The type annotation are not enforced when run locally. LMRTFY checks the types and units only
+    if jobs are submitted through its API. This guarantees that you can run your code without our
+    service.
+
+### Alternative
+A more compact but working alternative is to create the result as follows:
 ```python
 from lmrtfy import variable, result
 
@@ -96,10 +164,13 @@ if __name__ == "__main__":
     ci = result(
         compound_interest(
             principal=variable(10000., name="principal", min=0),
-            annual_interest=variable(0.06, name="annual_interest", min=0, max=100, unit="%"),
+            annual_interest=variable(6, name="annual_interest", min=0, max=100, unit="%"),
             years=variable(10, name="years", min=0)
         ),
         name="compound_interest"
     )
+    print(ci)
 ```
+
+It's not necessarily prettier to look at, but also works!
 
