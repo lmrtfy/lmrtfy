@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "lmrtfy"
-version = "0.0.4"
+version = "0.0.5"
 description = "Turn variables into program arguments. Auto-generates a CLI interface and an API using lmrtfy.de."
 readme = "README.md"
 authors = [{ name = "lmrtfy.de", email = "hello@lmrtfy.de" }]
@@ -32,7 +32,8 @@ dependencies = [
         "flask",
         "werkzeug",
         "cryptography",
-        "coloredlogs"
+        "coloredlogs",
+        "packaging"
 ]
 requires-python = ">=3.7"
 
@@ -44,3 +45,19 @@ Homepage = "https://github.com/lmrtfy/lmrtfy"
 
 [project.scripts]
 lmrtfy = "lmrtfy.__main__:main"
+
+[tool.bumpver]
+current_version = "0.0.5"
+version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
+commit_message = "bump version {old_version} -> {new_version}"
+commit = true 
+tag = true
+push = true
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'version = "{pep440_version}"',
+]
+"src/lmrtfy/__init__.py" = [
+  '__version__ = "{pep440_version}"',
+]

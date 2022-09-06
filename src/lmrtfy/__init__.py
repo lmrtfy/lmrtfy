@@ -3,6 +3,7 @@
 import os
 import pathlib
 
+__version__ = "0.0.5"
 # Don't import or use the underscored variables. These are subject to change.
 _user_home = pathlib.Path.home()
 
