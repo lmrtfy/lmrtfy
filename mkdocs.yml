@@ -6,7 +6,7 @@ site_author: lmrtfy
 docs_dir: 'docs'
 
 theme:
-  name: readthedocs
+  name: material
   highlight_js: true
 
 
@@ -27,7 +27,9 @@ markdown_extensions:
       permalink: "#"
 
 nav:
-  - 'index.md'
+  - lmrtfy on GitHub: "https://github.com/lmrtfy/lmrtfy"
+  - LMRTFY: 'index.md'
   - 'guide.md'
   - 'examples.md'
   - 'about.md'
+

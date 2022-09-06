@@ -16,25 +16,78 @@ You can also install from git which is the best way to use the nightly features.
 
 Clone the git repository and install manually:
 ```shell 
-$ git clone https://github.com/lmrtfy/lmrtfy.git
+$ git clone --branch main https://github.com/lmrtfy/lmrtfy.git
 $ cd lmrtfy
 $ pip install .
 ```
+The `main` branch is the release branch and should always work with the lmrtfy API. 
+
+Alternatively, you can use the `develop` branch. This should be the most up-to-date branch in the
+repository, but things might break. So be careful while using the `develop` branch.
+
 
 ## Annotate your script
 
-The annotation of your script tells the lmrtfy tool which variables are considered inputs and outputs.
+The annotation of your script tells the lmrtfy tool which python variables are considered inputs and 
+outputs, which is done via the `variable` and `results` functions.
 
-This is done via the `variable` and `results` functions:
+This step is important, because lmrtfy traces the calls to `variable` and `result` to create a profile
+for the code. This profile includes the inputs and outputs as well as the additional meta information
+(`min`, `max`, `unit`, and possibly more in the future).
+
+Let's assume that you have create a script to calculate the velocity of an object after a certain time:
 ```python
-# import the required things from lmrtfy
-from lmrtfy import variable, result
-# annotate an input
-input1 = variable(200., name="input1", min=0, max=1000, unit="s")
-output1 = result(9.81*input1, name="output1", min=0, max=9810, unit="m")
+# file: free_fall.py
+standard_gravity = 9.81
+time = 200.
+
+velocity = standard_gravity * time
+print(f"Velocity after {time} seconds is {velocity} m/s.")
 ```
 
-The function signatures are as follows. Only the first two arguments are required.
+Now, if you want to recalculate for a different time, you would edit the script and run it again. While
+this might work for a small script like this, this becomes tedious if you have different input variables
+and want others to use your script easily, too.
+
+Let's change the script in such a way that lmrtfy can create a profile which can be used to deploy
+the function and make it available to other users:
+
+```python
+# file: free_fall_lmrtfy.py
+# import the required things from lmrtfy
+from lmrtfy import variable, result
+standard_gravity = 9.81
+# annotate an input
+time = variable(200., name="time", min=0, max=1000, unit="s")
+
+# annotate an output
+velocity = result(9.81*time , name="velocity", min=0, max=9810, unit="m")
+print(f"Velocity after {time} seconds is {velocity} m/s.")
+```
+
+If you run `python free_fall_lmrtfy.py` you get the exact same result as before. During the run, lmrtfy 
+created the profile for `free_fall_lmrtfy.py` which will be needed to deploy the function.
+
+### Create the annotation profile
+It is required to run your script at least once with the regular python interpreter to create the
+annotation profile which will be used to generate the API.
+```shell
+$ python <script.py>
+```
+
+The profile is currently saved under `~/.lmrtfy/profiles` which will change in the future to respect
+XDG directory specifications.
+
+### Focus: `variable` and `result`
+
+These functions are transparent. That means the assignment `a = variable(5, name="a")` assigns `a`
+the value `5`. This way you can run the script simply with your local python interpreter if lmrtfy is
+installed in the environment. `variable` and `result` do not have any external dependency (e.g. API calls)
+
+The functions signatures are as follows. Only the first two arguments are required. Ideally, the
+`name` argument should match the name of the variable you assign to, although that is not necessary. 
+It's considered to be a best practice, because it reduces possible errors and fosters a more intuitive 
+understanding of the code.
 ```python
 # variable signature:
 variable(value: supported_object_type, 
@@ -57,15 +110,7 @@ result(value: supported_object_type,
 * `unit` is a `str` that declares the unit of the variable/result. This is especially useful in scientific
   calculations where units are often not standardized and unclear.
 
-## Create the annotation profile
-It is required to run your script at least once with the regular python interpreter to create the
-annotation profile which will be used to generate the API.
-```shell
-$ python <script.py>
-```
 
-The profile is currently saved under `~/.lmrtfy/profiles` which will change in the future to respect
-XDG directory specifications.
 
 ## Deploy the function (local runner)
 Now you can deploy the function and make it available via the lmrtfy API. This is simply done by
@@ -75,8 +120,18 @@ $ lmrtfy deploy <path_to_script.py> --local
 The `--local` flag means that the script will run locally on your computer and waits for jobs from
 the outside. The lmrtfy API only allows job submissions that fit your deployed annotation profile.
 
-The inputs are type checked and also checked for their valid ranges and units. Only jobs that can run 
-successfully with your code reach your code at all. 
+In the future you will be able to deploy directly to the cloud. Then, you do not have to host the runner
+yourself. 
+
+The current workaround would be to use `lmrtfy` on a server or inside a docker container which can
+be hosted in the cloud. 
+
+When a job is submitted the types of the job's input parameters are checked by the lmrtfy API. Futhermore
+they are also checked for their bounds and their units. This way, only jobs that can be run successfully
+with the script belonging to the deployed profile. 
+
+**Note: Don't change the script after you have deployed it. The current advice would be to copy and
+rename the script before deployment. In later versions, this will be taken care of by the lmrtfy tool**
 
 ## Submit a job
 The lmrtfy tool also provides a way to submit jobs with the `lmrtfy` CLI tool. All you need for this 

@@ -1,4 +1,4 @@
-# lmrtfy - Let me run that for you
+# LMRTFY - Let me run that for you
 ** Run Your Code - Share the Functionality **
 
 This is the official documentation of the lmrtfy project!
