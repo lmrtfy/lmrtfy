@@ -32,7 +32,8 @@ dependencies = [
         "flask",
         "werkzeug",
         "cryptography",
-        "coloredlogs"
+        "coloredlogs",
+        "packaging"
 ]
 requires-python = ">=3.7"
 
