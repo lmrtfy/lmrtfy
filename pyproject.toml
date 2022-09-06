@@ -44,3 +44,24 @@ Homepage = "https://github.com/lmrtfy/lmrtfy"
 
 [project.scripts]
 lmrtfy = "lmrtfy.__main__:main"
+
+[tool.bumpver]
+current_version = "0.0.5"
+version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
+commit_message = "bump version {old_version} -> {new_version}"
+commit = false
+tag = false
+push = false
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'version = "{pep440_version}"',
+#    'current_version = "{version}"',
+]
+#"README.md" = [
+#    "{version}",
+#    "{pep440_version}",
+#]
+"src/lmrtfy/__init__.py" = [
+  '__version__ = "{pep440_version}"',
+]
