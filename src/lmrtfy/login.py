@@ -4,6 +4,8 @@
 import base64
 import hashlib
 import json
+import os
+
 import requests
 import secrets
 import threading
@@ -19,7 +21,13 @@ import logging
 
 
 def get_cliconfig():
-    r = requests.get('https://api.simulai.de/cliconfig')
+    if "LMRTFY_LOCAL" in os.environ:
+        r = requests.get("http://127.0.0.1:5000/cliconfig")
+    elif "LMRTFY_DEV" in os.environ:
+        r = requests.get("https://dev-api.simulai.de/cliconfig")
+    else:
+        r = requests.get('https://api.simulai.de/cliconfig')
+
     return r.json()
 
 
