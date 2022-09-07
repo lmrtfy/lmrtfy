@@ -91,15 +91,13 @@ def _add_to_api_definition(name: str, kind: str, dtype: str, min = None, max = N
         logging.info(f"Analyzer: Adding {kind} with name '{name}'")
         profile[f'{kind}s'][name] = {}
 
-        logging.info(f"{name}:{kind}:{dtype} => {min} < {name} < {max}")
-
         if dtype:
             logging.info(f"Analyzer: Adding datatype '{dtype}' for {kind} with name '{name}'")
             profile[f'{kind}s'][name]['dtype'] = dtype
-        if min is None:
+        if min is not None:
             logging.info(f"Analyzer: Adding minimum value '{min}' for {kind} with name '{name}'")
             profile[f'{kind}s'][name]['min'] = min
-        if max is None:
+        if max is not None:
             logging.info(f"Analyzer: Adding maximum value '{max}' for {kind} with name '{name}'")
             profile[f'{kind}s'][name]['max'] = max
         if unit:
