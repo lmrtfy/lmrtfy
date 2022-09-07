@@ -128,6 +128,7 @@ class LMRTFY(object):
         """
         Fetch results of a job for a given job id.
 
+        :param results_dir:  Directory where to put the results. Default is './'
         :param job_id: Job id of the job that you want to fetch results for.
         """
         self.login()
