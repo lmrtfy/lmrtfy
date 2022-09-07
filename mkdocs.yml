@@ -3,7 +3,6 @@ site_url: https://www.lmrt.fyi
 repo_url: https://github.com/lmrtfy/lmrtfy
 site_author: lmrtfy
 repo_name: lmrtfy/lmrtfy
-repo_url: https://github.com/lmrtfy/lmrtfy
 
 docs_dir: 'docs'
 
@@ -16,8 +15,13 @@ extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
+extra:
+  version:
+    provider: mike
+
 plugins:
   - search
+  - mike
   - mkdocstrings:
       handlers:
         python:
