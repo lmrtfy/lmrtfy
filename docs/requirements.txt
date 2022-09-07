@@ -20,3 +20,4 @@ pyyaml_env_tag==0.1
 six==1.16.0
 watchdog==2.1.9
 zipp==3.8.1
+mkdocs-material==8.4.2
