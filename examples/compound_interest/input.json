@@ -1,0 +1,10 @@
+{
+  "job_arguments": {
+    "annual_interest": {
+      "value": 6.0,
+      "unit": "%"
+    },
+    "principal": 5000.0,
+    "years": 10
+  }
+}
