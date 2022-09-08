@@ -42,7 +42,9 @@ requires-python = ">=3.7"
 dev = ["black", "bumpver", "isort", "pip-tools", "pytest", "numpy"]
 
 [project.urls]
-Homepage = "https://github.com/lmrtfy/lmrtfy"
+homepage = "https://lmrt.fyi"
+repository = "https://github.com/lmrtfy/lmrtfy"
+documentation = "https://lmrtfy.github.io/lmrtfy"
 
 [project.scripts]
 lmrtfy = "lmrtfy.__main__:main"
