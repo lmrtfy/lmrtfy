@@ -17,4 +17,4 @@ jobs:
           git config user.name gh_pages_bot
           git config user.email gh_pages_bot@lmrtf.fyi
           git fetch origin gh-pages --depth=1
-      - run: mike deploy --push --config-file="mkdocs_gh_pages.yml" --update-alias "develop" develop
+      - run: mike deploy --push --config-file="mkdocs_gh_pages.yml" develop
