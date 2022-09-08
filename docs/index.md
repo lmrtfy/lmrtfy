@@ -18,11 +18,17 @@ Currently, the application itself runs on your computer and we provide a tightly
 via our web API to start jobs that make use of the script running on your computer. Follow the quick 
 start guide to get started!
 
-We also have a more comprehensive [guide](guide.md) and [examples](examples.md) that you might be interested in!
+We also have a more comprehensive [tutorial](tutorial/installation.md) and [examples](examples/starting_example.md) that you might be interested in!
 
 !!! Note 
     If you encounter any obstacles while using our tool or while reading the documentation, please don't
     hesitate to contact us. Just create an issue on GitHub.
+
+### Examples
+The [examples](examples/starting_example.md) are provided in the `examples/` directory. They are **work in progress**. As lmrtfy
+matures, more and more examples will be added.
+
+If you miss an example for a specific use case, please let us know, and we will add one!
 
 ## Quickstart
 
