@@ -14,5 +14,8 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
-      - run: pip install -r docs/requirements.txt
-      - run: mike deploy --push --config-file="mkdocs_gh_pages.yml" --update-alias ${VERSION} latest
+      - run: |
+          pip install -r docs/requirements.txt
+          git config user.name gh_pages_bot
+          git config user.email gh_pages_bot@lmrtf.fyi
+          mike deploy --push --config-file="mkdocs_gh_pages.yml" --update-alias ${VERSION} latest
