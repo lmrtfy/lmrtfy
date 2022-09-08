@@ -64,3 +64,5 @@ push = true
 "src/lmrtfy/__init__.py" = [
   '__version__ = "{pep440_version}"',
 ]
+".github/workflows/publish_github_pages" = [
+  'VERSION = "MAJOR.MINOR"']
