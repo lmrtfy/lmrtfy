@@ -18,4 +18,5 @@ jobs:
           pip install -r docs/requirements.txt
           git config user.name gh_pages_bot
           git config user.email gh_pages_bot@lmrtf.fyi
+          git fetch origin gh-pages --depth=1
           mike deploy --push --config-file="mkdocs_gh_pages.yml" --update-alias ${VERSION} latest
