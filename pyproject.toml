@@ -65,4 +65,5 @@ push = true
   '__version__ = "{pep440_version}"',
 ]
 ".github/workflows/publish_github_pages.yml" = [
-  'VERSION = "MAJOR.MINOR.PATCH"']
+  'VERSION = "MAJOR.MINOR.PATCH"',
+]
