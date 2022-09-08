@@ -1,0 +1,13 @@
+{
+  "argument_values": {
+    "x": 6,
+    "y": [1.0, 2.0, 4.0],
+    "z": "abc",
+    "z1": ["abc", "def"],
+    "z2": ["abc", 1, 1.1],
+    "z3": {"a": "abc", "b": 1}
+  },
+  "argument_units" : {
+    "y": "m"
+  }
+}

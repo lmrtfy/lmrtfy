@@ -106,7 +106,7 @@ result(value: supported_object_type,
   is the same name as the variable's name in the code itself.
 * `min` and `max` can be used to specify boundaries for the input and output values in case they are
   numeric. This might come in handy if the code only works for certain input parameter ranges. If the
-  inputs are outside of the specified range the job will be rejected by the generated API.
+  inputs are outside the specified range the job will be rejected by the generated API.
 * `unit` is a `str` that declares the unit of the variable/result. This is especially useful in scientific
   calculations where units are often not standardized and unclear.
 
@@ -136,7 +136,7 @@ with the script belonging to the deployed profile.
 
 # Submit a job
 The lmrtfy tool also provides a way to submit jobs with the `lmrtfy` CLI tool. All you need for this 
-is a `profile_id` which is provided by you during the deployment and a json-file that contains the input
+is a `profile_id` which is provided by you during the deployment and a JSON file that contains the input
 parameters.
 
 !!! info
@@ -145,20 +145,16 @@ parameters.
 For the listing above, the JSON file would look like this:
 ```json
 {
-  "profile_id": "<profile_id>",
-  "job_parameters": {
+  "argument_values": {
     "time": 200.0
   },
-  "parameter_units" : {
+  "argument_units" : {
     "time": "s"
   }
 }
 ```
 
-`profile_id` needs to be specified inside the json as well, which is a slight inconvenience at the
-moment, but allows us to be more flexible later on.
-
-`job_parameters` and `parameter_units` contain a key-value pair each for each of the inputs in the
+`argument_values` and `argument_units` contain a key-value pair each for each of the inputs in the
 annotation profile. The types need to match exactly. No implicit type casting in performed during
 the submission. The unit also has to match exactly.
 
