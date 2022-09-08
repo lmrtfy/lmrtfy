@@ -25,13 +25,21 @@ We also have a more comprehensive [guide](guide.md) and [examples](examples.md) 
     hesitate to contact us. Just create an issue on GitHub.
 
 ## Quickstart
+
+### TL;DR
+1. intall with `pip install lmrtfy`
+2. login/sign up with `lmrtfy login`
+3. annotate your code's inputs with `variable` and its outputs with `result`
+4. in terminal 1 run `lmrtfy deploy <script.py> --local` (returns profile_id)
+5. in terminal 2 run `lmrtfy submit <profile_id> <input.json>` (returns job_id)
+6. in terminal 2 run `lmrtfy fetch <job_id> <path>` to get results
+
 ### Installation: 
 `$ pip install lmrtfy`
 
 ### First login 
 Login/sign up to receive access token: `$ lmrtfy login`. The token is saved in `~/.lmrtfy/auth/token` but you 
 should not need to manually open the token.
-
 
 
 !!! info
@@ -60,9 +68,9 @@ Run `python script.py` to create the profile. This **always** works, even withou
 Run `lmrtfy deploy script.py --local` to generate the API and start the runner to listen to jobs for your script. 
 You can find the profile id to submit a job in the logs: 
 ```shell
-2022-09-05 11:07:15 [31031] INFO Starting deployment of examples/velocity_from_gravity/calc_velocity.py
-2022-09-05 11:07:15 [31031] WARNING Deploying locally.
-2022-09-05 11:07:16 [31031] INFO Profile_id to be used for requests: 7ff68a0cfd8c61122cfdaf0a835c7cd1f94e7db9
+INFO Starting deployment of examples/velocity_from_gravity/calc_velocity.py
+WARNING Deploying locally.
+INFO Profile_id to be used for requests: 7ff68a0cfd8c61122cfdaf0a835c7cd1f94e7db9
 ```
 
 ### Submit jobs with CLI
@@ -70,21 +78,20 @@ Open a new terminal and submit a new job (`<profile_id>` is the profile id you r
 ```shell
 $ lmrtfy submit <profile_id> <input.json>
 ```
-For the example above save the following in your `input.json` (substitute `<profile_id>` with the profile id that you received during the deployment step):
+For the example above save the following in your `input.json`:
 ```json
 {
-  "profile_id": "<profile_id>",
-  "job_parameters": {
+  "argument_values": {
     "time": 200.0
   },
-  "parameter_units" : {
+  "argument_units" : {
     "time": "s"
   }
 }
 ```
 You will receive a `job_id` which you will need to fetch the results later on:
 ```shell
-2022-09-05 16:05:32 [60492] INFO Job-id: 14584640-778c-4f91-a288-03cffc2b9c7a
+INFO Job-id: 14584640-778c-4f91-a288-03cffc2b9c7a
 ```
 ### Fetch results
 Get the results by calling `$ lmrtfy fetch <job_id> <path>`. Currently, the results will be saved 

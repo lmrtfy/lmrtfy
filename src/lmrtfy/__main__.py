@@ -4,17 +4,22 @@
 import os
 import fire
 import pathlib
-import lmrtfy.runner
 import requests
-import lmrtfy
-from lmrtfy.login import LoginHandler, load_token_data, get_cliconfig
 from lmrtfy.runner import load_json_template
 import json
 import logging
-import coloredlogs
-from lmrtfy.fetch_results import fetch_results
 from pathlib import Path
 from packaging import version
+
+import coloredlogs
+
+import lmrtfy
+import lmrtfy.runner
+from lmrtfy.login import LoginHandler, load_token_data, get_cliconfig
+from lmrtfy.runner import load_json_template
+from lmrtfy.fetch_results import fetch_results
+from lmrtfy.helper import check_uuid4
+
 
 _log_level = logging.INFO
 if 'LMRTFY_DEBUG' in os.environ:
@@ -54,20 +59,28 @@ class LMRTFY(object):
         if h.login():
             h.get_token()
 
-    def deploy(self, script_path: str, local: bool = False):
+    def deploy(self, script_path: str, local: bool = False, run_as_daemon: bool = False):
         """
         Deploy your script to accept inputs via web-api.
 
         :param script_path: script to be deployed (full path)
         :param local: deployment on this host only (script is executed locally)
+        :param run_as_daemon: run local deployment as daemon (in background)
         """
 
         self.login()
 
         logging.info(f'Starting deployment of {script_path}')
         if local:
+
+            if run_as_daemon:
+                from daemon import DaemonContext as Context
+            else:
+                from lmrtfy.helper import Context
+
             logging.warning('Deploying locally.')
-            lmrtfy.runner.main(pathlib.Path(script_path).resolve())
+            with Context(working_directory='./') as c:
+                lmrtfy.runner.main(pathlib.Path(script_path).resolve())
         else:
             logging.warning('Deploying to cloud.')
             logging.error("This feature is not yet implemented. Please run 'lmrtfy deploy <script> --local' for now.")
@@ -107,7 +120,7 @@ class LMRTFY(object):
                     logging.info(f"Job-id: {r.json()['job_id']}")
                 else:
                     logging.error("Job submission unsuccessful.")
-                    logging.warning(f"Reason: \"{r.json()}\"")
+                    logging.warning(f"Reason: \"{r.text}\"")
         except FileNotFoundError:
             logging.error(f"Opening input file {input_file} failed.")
 
@@ -115,9 +128,15 @@ class LMRTFY(object):
         """
         Fetch results of a job for a given job id.
 
+        :param results_dir:  Directory where to put the results. Default is './'
         :param job_id: Job id of the job that you want to fetch results for.
         """
         self.login()
+
+        if not check_uuid4(job_id):
+            logging.error(f"'{job_id}' is not a valid job_id. Please check the output of the "
+                          f"`lmrtfy submit` step.")
+            exit(-1)
 
         logging.info(f'Fetching results for job-id {job_id}')
 

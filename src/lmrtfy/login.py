@@ -4,6 +4,8 @@
 import base64
 import hashlib
 import json
+import os
+
 import requests
 import secrets
 import threading
@@ -19,7 +21,28 @@ import logging
 
 
 def get_cliconfig():
-    r = requests.get('https://api.simulai.de/cliconfig')
+    if "LMRTFY_LOCAL" in os.environ:
+        try:
+            r = requests.get("http://127.0.0.1:5000/cliconfig")
+            logging.warning("Using the local API.")
+        except ConnectionError:
+            logging.error("Could not reach a local API. Make sure it is running.")
+            exit(-1)
+    elif "LMRTFY_DEV" in os.environ:
+        try:
+            r = requests.get("https://dev-api.simulai.de/cliconfig")
+            logging.warning("Using the development API.")
+        except ConnectionError:
+            logging.error("Could not reach the development API.")
+            exit(-1)
+    else:
+        try:
+            r = requests.get('https://api.simulai.de/cliconfig')
+        except:
+            logging.error("Could not reach the LMRTFY API. Please try again in a few minutes. If"
+                          "the error persists please contact the lmrtfy team.")
+            exit(-1)
+
     return r.json()
 
 

@@ -118,4 +118,3 @@ venv.bak/
 *.swp
 
 examples/example1/dummy_data
-*.json
