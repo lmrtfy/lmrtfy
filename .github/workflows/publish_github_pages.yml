@@ -1,4 +1,4 @@
-name: publish_to_github_pages
+name: Docs
 on:
   push:
     branches:
