@@ -4,62 +4,100 @@
 
 Turn variables into program arguments. Auto-generates a CLI interface and an API using lmrt.fyi.
 
-# Installation
-Installation is really easy via pip:
-```shell
-$ pip install lmrtfy
-```
+## Introduction
 
-# Usage
-Using lmrtfy is straight-forward. In contrast to many other tools the goal is to have only minimal
-changes in your code. Currently, you only need to annotate the input variables and the results variables.
+lmrtfy is a tool to share your applications with others without dealing with the tedious things:
 
-From the annotations a profile is automatically generated that contains the relevant information.
+* Only minimal changes to your code by annotating your input and output variables
+* Automatically generated API that can be shared with others
 
+!!! warning
+lmrtfy is currently in an early alpha phase. We try to minimize the things that will change in
+the future, but we cannot make any guarantees at the moment. Please keep that in mind while using
+the lmrtfy tools.
+
+Currently, the application itself runs on your computer and we provide a tightly controlled interface
+via our web API to start jobs that make use of the script running on your computer. Follow the quick
+start guide to get started!
+
+We also have a more comprehensive [guide](guide.md) and [examples](examples.md) that you might be interested in!
+
+!!! Note
+If you encounter any obstacles while using our tool or while reading the documentation, please don't
+hesitate to contact us. Just create an issue on GitHub.
+
+## Quickstart
+
+### TL;DR
+1. intall with `pip install lmrtfy`
+2. login/sign up with `lmrtfy login`
+3. annotate your code's inputs with `variable` and its outputs with `result`
+4. in terminal 1 run `lmrtfy deploy <script.py> --local` (returns profile_id)
+5. in terminal 2 run `lmrtfy submit <profile_id> <input.json>` (returns job_id)
+6. in terminal 2 run `lmrtfy fetch <job_id> <path>` to get results
+
+### Installation:
+`$ pip install lmrtfy`
+
+### First login
+Login/sign up to receive access token: `$ lmrtfy login`. The token is saved in `~/.lmrtfy/auth/token` but you
+should not need to manually open the token.
+
+
+!!! info
+Tokens are currently valid for 24 hours. After that you will be requested to login again. That also means
+that you cannot have scripts deployed more than 24 hours right now. This will change soon so that you
+can deploy scripts longer than that.
+
+    Just run `lmrtfy deploy <script> --local`again after 24h and you are fine if you need longer running
+    deployments right now.)
+
+### Create code annotations
+Annotate the inputs and outputs of your script with `variable` and `results` and save it as `script.py`:
 ```python
-import numpy as np
-from lmrtfy.annotation import variable, result  # (1)
-
-
-x = variable(5, name="x", min=1, max=10) (2)
-y = variable(np.linspace(0., 1., 101, dtype=np.float64), name="y", min=-1., max=11., unit="m") (3)
-z = variable("abc", name="z")
-
-z1 = variable(["abc", "def"], name="z1")
-z2 = variable(["abc", 1, 1.1], name="z2")
-z3 = variable({'a': "abc", 'b': 1}, name="z3")
-
-a = result(x * y, name="a") (4)
-b = result(x * z, name="b")
+# import the required things from lmrtfy
+from lmrtfy import variable, result
+# annotate an input
+time = variable(200., name="time", min=0, max=1000, unit="s")
+speed = result(9.81*time, name="speed", min=0, max=9810, unit="m/s")
 ```
 
-* (1) import `variable` and `result` function to annotate your code
-* (2) `x` is a variable with the default value `5` which can take values between `1` and `10`.
-* (3) `y` is a variable of type numpy.ndarray which holds 101 values between `0.` and `1.` The valid
-range is between `-1` and `11´ and the unit of this variable is meter.
-* (4) `a` is a result which is computed by `x * y`.
+This calculates the velocity of an object in free fall after `time` seconds.
 
-## Run the script locally
+Run `python script.py` to create the profile. This **always** works, even without access to lmrtfy.
 
-This is really easy. We do not change your development process and you run your script exactly as usual:
+### Deploy the script to accept jobs from the generated web API
+Run `lmrtfy deploy script.py --local` to generate the API and start the runner to listen to jobs for your script.
+You can find the profile id to submit a job in the logs:
 ```shell
-$ python your_script.py
+INFO Starting deployment of examples/velocity_from_gravity/calc_velocity.py
+WARNING Deploying locally.
+INFO Profile_id to be used for requests: 7ff68a0cfd8c61122cfdaf0a835c7cd1f94e7db9
 ```
 
-During this step, we also create the annotation profile which will later be used to deploy the functionality.
-
-## Share your app with others
-
-Currently, you can share your script's functionality by running
+### Submit jobs with CLI
+Open a new terminal and submit a new job (`<profile_id>` is the profile id you received during the deployment (`7ff...` in the example above)):
 ```shell
-$ lmrtfy deploy local <your_script.py>
+$ lmrtfy submit <profile_id> <input.json>
 ```
-
-This command will create an API endpoint which can be used to send jobs to your script. The script will stay
-on your computer and will only accept jobs that have inputs matching the description in your `variable` statements
-in the code. The inputs will be checked for their type, their valid range, their unit and their name. This
-way only valid jobs will even reach your code.
-
+For the example above save the following in your `input.json`:
+```json
+{
+  "argument_values": {
+    "time": 200.0
+  },
+  "argument_units" : {
+    "time": "s"
+  }
+}
+```
+You will receive a `job_id` which you will need to fetch the results later on:
+```shell
+INFO Job-id: 14584640-778c-4f91-a288-03cffc2b9c7a
+```
+### Fetch results
+Get the results by calling `$ lmrtfy fetch <job_id> <path>`. Currently, the results will be saved
+in `<path>/<job_id>` as JSON files. 
 
 # License
 ![BSD 3-Clause License](https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE)
