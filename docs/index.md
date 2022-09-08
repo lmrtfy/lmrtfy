@@ -70,14 +70,13 @@ Open a new terminal and submit a new job (`<profile_id>` is the profile id you r
 ```shell
 $ lmrtfy submit <profile_id> <input.json>
 ```
-For the example above save the following in your `input.json` (substitute `<profile_id>` with the profile id that you received during the deployment step):
+For the example above save the following in your `input.json`:
 ```json
 {
-  "profile_id": "<profile_id>",
-  "job_parameters": {
+  "argument_values": {
     "time": 200.0
   },
-  "parameter_units" : {
+  "argument_units" : {
     "time": "s"
   }
 }
