@@ -1,5 +1,5 @@
 site_name: LMRTFY
-site_url: https://www.lmrt.fyi
+site_url: https://lmrt.fyi
 repo_url: https://github.com/lmrtfy/lmrtfy
 site_author: lmrtfy
 repo_name: lmrtfy/lmrtfy
@@ -61,6 +61,7 @@ markdown_extensions:
   - pymdownx.tilde
 
 nav:
+  - lmrt.fyi: "https://lmrt.fyi"
   - GitHub repository: "https://github.com/lmrtfy/lmrtfy"
   - LMRTFY: 'index.md'
   - Tutorial:
