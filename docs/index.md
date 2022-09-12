@@ -1,4 +1,8 @@
-This is the official documentation of the lmrtfy project! - [GitHub Repository](https://github.com/lmrtfy/lmrtfy)
+This is the official documentation of the lmrtfy project! 
+
+[Offical site](https://lmrt.fyi)
+
+[GitHub Repository](https://github.com/lmrtfy/lmrtfy)
 
 LMRTFY stands for _Let Me Run That For You_. 
 
