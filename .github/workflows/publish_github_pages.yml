@@ -1,10 +1,11 @@
-name: publish_to_github_pages
+name: Docs
 on:
   push:
     branches:
       - main
+      - develop
 env:
-  VERSION: "0.0.6"
+  VERSION: "0.0.7b0"
 
 jobs:
   deploy:

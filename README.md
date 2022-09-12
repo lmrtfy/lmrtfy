@@ -1,6 +1,6 @@
 # lmrtfy
 
-![Linter](https://github.com/lmrtfy/lmrtfy/workflows/linter/badge.svg) [![Documentation Status](https://readthedocs.org/projects/lmrtfy/badge/?version=latest)](https://lmrtfy.readthedocs.io/en/latest/?badge=latest)
+![Linter](https://github.com/lmrtfy/lmrtfy/workflows/linter/badge.svg) [![Documentation](https://github.com/lmrtfy/lmrtfy/actions/workflows/publish_github_pages.yml/badge.svg)](https://lmrtfy.github.io/lmrtfy)
 
 Turn variables into program arguments. Auto-generates a CLI interface and an API using lmrt.fyi.
 
