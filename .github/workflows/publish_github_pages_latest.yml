@@ -1,0 +1,24 @@
+name: Docs
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+env:
+  VERSION: "0.0.7b0"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - run: |
+          pip install -r docs/requirements.txt
+          git config user.name gh_pages_bot
+          git config user.email gh_pages_bot@lmrtf.fyi
+          git fetch origin gh-pages --depth=1
+      - run: mike deploy --push --update-alias ${VERSION} latest
