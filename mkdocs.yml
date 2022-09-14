@@ -9,6 +9,8 @@ docs_dir: 'docs'
 theme:
   name: material
   highlight_js: true
+  logo: images/lmrtfy_small.png
+  favicon: images/favicon.png
 
 extra_javascript:
   - javascripts/mathjax.js
@@ -18,6 +20,7 @@ extra_javascript:
 extra:
   version:
     provider: mike
+  homepage: https://lmrt.fyi
 
 plugins:
   - search
