@@ -1,0 +1,158 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import logging
+from makefun import create_function
+from inspect import Signature, Parameter
+import requests
+from lmrtfy.login import LoginHandler, load_token_data, get_cliconfig
+from lmrtfy.runner import fetch_template
+import numpy.typing as npt
+from typing import List, Optional, Type
+import json
+from lmrtfy.helper import NumpyEncoder
+import enum
+
+
+typemap = dict()
+typemap['int'] = int
+typemap['float'] = float
+typemap['complex'] = complex
+typemap['string'] = str
+typemap['float_array'] = npt.NDArray[float]
+typemap['int_array'] = npt.NDArray[int]
+typemap['string_array'] = List[str]
+typemap['json'] = dict
+typemap['bool'] = bool
+
+
+class JobStatus(str, enum.Enum):
+    IDLE = "IDLE"
+    WAITING = "WAITING"
+    SUCCESS = "SUCCESS"
+    FAILED = "FAILED"
+    JOB_RECEIVED = "JOB_RECEIVED"
+    RUNNING = "RUNNING"
+    RESULTS_READY = "RESULTS_READY"
+    INCOMPLETE_RESULTS = "INCOMPLETE_RESULTS"
+    ABORTED = "ABORTED"
+    UNKNOWN = "UNKNOWN"
+
+
+class Job(object):
+
+    def __init__(self, job_id):
+        self.job_id = job_id
+        # TODO: store in jobs-dir
+
+    def check_status(self) -> JobStatus:
+        try:
+            token = load_token_data()['access_token']
+            headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
+            r = requests.get(get_cliconfig()['api_submit_url'][:-1] + f'jobs/{self.job_id}', headers=headers)
+            return JobStatus(r.json())
+        except:  # TODO: Except clause too broad
+            return JobStatus.UNKNOWN
+
+    @property
+    def results(self) -> Optional[dict]:
+        try:
+            config = get_cliconfig()
+            token = load_token_data()['access_token']
+            headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
+            r = requests.get(config['api_results_url'] + f"/{self.job_id}", headers=headers)
+            if r.status_code == 200:
+                return json.loads(r.json()[self.job_id])
+            else:
+                logging.error(f"Could not fetch results from server: {r.status_code}")
+        except:
+            logging.error("Could not access results server.")
+
+    @property
+    def ready(self) -> bool:
+        if self.check_status() == JobStatus.RESULTS_READY:
+            return True
+        return False
+
+
+def signature_from_profile(profile):
+    parameters = list()
+    for v in profile['variables']:
+        parameters.append(
+            Parameter(v, kind=Parameter.POSITIONAL_OR_KEYWORD, annotation=typemap[profile['variables'][v]['dtype']]))
+
+    results = list()
+    for v in profile['results']:
+        results.append(typemap[profile['results'][v]['dtype']])
+    results = tuple(results)
+
+    sig = Signature(parameters, return_annotation=Optional[Type[Job]])
+
+    return sig, results
+
+
+def fetch_profile(profile_id):
+
+    try:
+        config = get_cliconfig()
+        token = load_token_data()['access_token']
+        headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
+        url = config['api_profiles_url'] + f'/{profile_id}'
+        rr = requests.get(url, headers=headers)
+        if rr.status_code == 200:
+            return rr.json()
+        else:
+            logging.error('Could not fetch template from server.')
+    except:
+        logging.error('Fetch template request failed.')
+
+
+class Catalog(object):
+
+    def __init__(self):
+        h = LoginHandler()
+        if h.login():
+            h.get_token()
+
+        self.config = get_cliconfig()
+
+        self.token = load_token_data()['access_token']
+        self.headers = {'Content-type': 'application/json', 'Accept': 'text/plain',
+                        "Authorization": f"Bearer {self.token}"}
+
+        self.profiles = None
+        self.update()
+
+    def update(self):
+        try:
+            r = requests.get(self.config['api_catalog_url'], headers=self.headers)
+            if r.status_code == 200:
+                self.profiles = r.json()
+                logging.info("Updated function catalog.")
+                for profile in self.profiles['profiles']:
+                    pid = profile.split('/')[-1]
+                    t = fetch_profile(pid)
+                    func_name = t['filename'].split('/')[-1].split('.')[0].strip()
+                    logging.info(f"Added function {func_name}.")
+                    self.__add_function(func_name, *signature_from_profile(t), pid=pid)
+        except:  # TODO: Except clause too broad!
+            logging.error("Could not update function catalog.")
+
+    def __add_function(self, name, sig, res_ann, pid):
+
+        template = fetch_template(pid)
+
+        def f(**kwargs) -> Job:
+            for p in kwargs:
+                template['argument_values'][p] = kwargs[p]
+            r = requests.post(self.config['api_submit_url'] + f'/{pid}', data=json.dumps(template, cls=NumpyEncoder),
+                              headers=self.headers)
+            if r.status_code == 200:
+                return Job(r.json()['job_id'])
+            if r.status_code == 400:
+                logging.error('Input Error', r.json())
+
+        setattr(self, name, create_function(sig, f, func_name=name))
+
+
+catalog = Catalog()
