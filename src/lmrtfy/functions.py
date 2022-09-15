@@ -158,7 +158,7 @@ class Catalog(object):
                 for profile in self.profiles['profiles']:
                     pid = profile.split('/')[-1]
                     t = fetch_profile(pid)
-                    func_name = unique_name(self, t['filename'].split('/')[-1].split('.')[0].strip())
+                    func_name = unique_name(self, t['filename'].replace('\\', '/').split('/')[-1].split('.')[0].strip())
                     logging.info(f"Added function {func_name}.")
                     self.__add_function(func_name, *signature_from_profile(t), pid=pid)
         except:  # TODO: Except clause too broad!

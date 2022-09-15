@@ -9,6 +9,7 @@ import tempfile
 import pathlib
 import enum
 import queue
+import certifi
 
 import jwt
 import requests
@@ -124,7 +125,7 @@ class Runner(object):
         except Exception:
             pass
 
-        self.client.tls_set()
+        self.client.tls_set(certifi.where())
         # self.client.enable_logger()
         self.client.username_pw_set(self.client_id, access_token)
         self.client.on_connect = self.on_mqtt_connect
@@ -217,7 +218,8 @@ class Runner(object):
 
         script = self.profile["filename"]
 
-        tempdir = tempfile.TemporaryDirectory()  # pylint: disable=consider-using-with
+        # TODO: Techdebt. Ignoring the cleanup errors is due to a python uptream bug in tempfile. bugs.python.org #43153
+        tempdir = tempfile.TemporaryDirectory(ignore_cleanup_errors=True)  # pylint: disable=consider-using-with
         # TODO: Add job_id to path
         os.environ["LMRTFY_TMP_DIR"] = tempdir.name
         logging.debug(f"Set LMRTFY_TMP_DIR to '{tempdir.name}'.")
