@@ -22,6 +22,11 @@ from lmrtfy.helper import NumpyEncoder
 from lmrtfy.login import load_token_data, get_cliconfig
 
 
+class RunnerStatus(str, enum.Enum):
+    IDLE = "IDLE"
+    WAITING = "WAITING"
+
+
 class JobStatus(str, enum.Enum):
     IDLE = "IDLE"
     WAITING = "WAITING"
@@ -34,14 +39,6 @@ class JobStatus(str, enum.Enum):
     ABORTED = "ABORTED"
 
 
-def on_mqtt_connect(client, userdata, flags, rc, properties=None):
-    logging.debug("on_connect")
-    logging.debug(f"  userdata  : {userdata}")
-    logging.debug(f"  flags     : {flags}")
-    logging.debug(f"  rc        : {rc}")
-    logging.debug(f"  properties: {properties}")
-    if rc == 0:
-        logging.info("Successfully connected to MQTT broker.")
 
 
 def on_mqtt_disconnect(client, userdata, flags, rc, properties=None):
@@ -106,8 +103,19 @@ class Runner(object):
         self.status_topic = f"status/{self.client_id}"
         # TODO: second status topic for job status
 
+
+        access_token = load_token_data()['access_token']
+        self.user_id = jwt.decode(access_token, options={"verify_signature": False})["sub"].replace(
+            '|', 'X')
+        # job_topic =  f"$share/{user_id}/{user_id}/{self.filehash}/job"
+        # self.client.subscribe(job_topic, qos=2)
+
+
+
         self.client = mqtt.Client(
-            client_id=self.client_id, protocol=mqtt.MQTTv5, transport="websockets"
+            client_id=self.client_id,
+            protocol=mqtt.MQTTv5,
+            transport="websockets"
         )
 
         access_token = ''
@@ -119,7 +127,7 @@ class Runner(object):
         self.client.tls_set()
         # self.client.enable_logger()
         self.client.username_pw_set(self.client_id, access_token)
-        self.client.on_connect = on_mqtt_connect
+        self.client.on_connect = self.on_mqtt_connect
         self.client.on_disconnect = on_mqtt_disconnect
         self.client.on_subscribe = on_subscribe
 
@@ -127,11 +135,6 @@ class Runner(object):
         self.client.connect(broker_url, port, keepalive=30)
 
         # TODO: how to structure shared-groups and topics?
-        access_token = load_token_data()['access_token']
-        user_id = jwt.decode(access_token, options={"verify_signature": False})["sub"].replace('|', 'X')
-        job_topic =  f"$share/{user_id}/{user_id}/{self.filehash}/job"
-        self.client.subscribe(job_topic, qos=2)
-        logging.debug(f"Listen for jobs on '{job_topic}'.")
 
         self.client.loop_start()
         time.sleep(1)
@@ -143,6 +146,19 @@ class Runner(object):
             "message": "",
         }
         self.publish_status(JobStatus.IDLE, "Started idling.")
+
+    def on_mqtt_connect(self, client, userdata, flags, rc, properties=None):
+        logging.debug("on_connect")
+        logging.debug(f"  userdata  : {userdata}")
+        logging.debug(f"  flags     : {flags}")
+        logging.debug(f"  rc        : {rc}")
+        logging.debug(f"  properties: {properties}")
+        if rc == 0:
+            logging.info("Successfully connected to MQTT broker.")
+
+        job_topic = f"$share/{self.user_id}/{self.user_id}/{self.filehash}/job"
+        self.client.subscribe(job_topic)
+        logging.debug(f"Listen for jobs on '{job_topic}'.")
 
     def on_message(self, client, userdate, msg):
         """
