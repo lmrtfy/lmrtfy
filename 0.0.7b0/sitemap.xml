@@ -2,57 +2,57 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://lmrt.fyi/0.0.7b0/</loc>
-         <lastmod>2022-09-14</lastmod>
+         <lastmod>2022-09-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.7b0/CHANGELOG/</loc>
-         <lastmod>2022-09-14</lastmod>
+         <lastmod>2022-09-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.7b0/about/</loc>
-         <lastmod>2022-09-14</lastmod>
+         <lastmod>2022-09-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.7b0/examples/compound_interest/</loc>
-         <lastmod>2022-09-14</lastmod>
+         <lastmod>2022-09-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.7b0/examples/free_fall/</loc>
-         <lastmod>2022-09-14</lastmod>
+         <lastmod>2022-09-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.7b0/examples/starting_example/</loc>
-         <lastmod>2022-09-14</lastmod>
+         <lastmod>2022-09-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.7b0/tutorial/annotation/</loc>
-         <lastmod>2022-09-14</lastmod>
+         <lastmod>2022-09-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.7b0/tutorial/deployment/</loc>
-         <lastmod>2022-09-14</lastmod>
+         <lastmod>2022-09-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.7b0/tutorial/fetch_results/</loc>
-         <lastmod>2022-09-14</lastmod>
+         <lastmod>2022-09-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.7b0/tutorial/installation/</loc>
-         <lastmod>2022-09-14</lastmod>
+         <lastmod>2022-09-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.7b0/tutorial/submission/</loc>
-         <lastmod>2022-09-14</lastmod>
+         <lastmod>2022-09-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
