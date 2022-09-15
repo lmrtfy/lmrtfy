@@ -7,6 +7,7 @@ from inspect import Signature, Parameter
 import requests
 from lmrtfy.login import LoginHandler, load_token_data, get_cliconfig
 from lmrtfy.runner import fetch_template
+from lmrtfy import _lmrtfy_job_dir
 import numpy.typing as npt
 from typing import List, Optional, Type
 import json
@@ -42,35 +43,45 @@ class JobStatus(str, enum.Enum):
 class Job(object):
 
     def __init__(self, job_id):
-        self.job_id = job_id
-        # TODO: store in jobs-dir
+        self.id = job_id
+        logging.info(f"Job {self.id} created. Status is {self.status}.")
 
-    def check_status(self) -> JobStatus:
+    @property
+    def status(self):
         try:
             token = load_token_data()['access_token']
             headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
-            r = requests.get(get_cliconfig()['api_submit_url'][:-1] + f'jobs/{self.job_id}', headers=headers)
-            return JobStatus(r.json())
-        except:  # TODO: Except clause too broad
-            return JobStatus.UNKNOWN
+            r = requests.get(get_cliconfig()['api_submit_url'][:-1] + f'jobs/{self.id}', headers=headers)
+            status = JobStatus(r.json())
+        except:
+            status = JobStatus.UNKNOWN
+
+        try:
+            with open(_lmrtfy_job_dir.joinpath(f"{self.id}.job"), "w") as f:
+                json.dump({"id": self.id, "status": status}, f)
+        except:
+            logging.error(f"Could not write local job-file for job {self.id}.")
+
+        return status
 
     @property
-    def results(self) -> Optional[dict]:
+    def results(self):
         try:
             config = get_cliconfig()
             token = load_token_data()['access_token']
             headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
-            r = requests.get(config['api_results_url'] + f"/{self.job_id}", headers=headers)
+            r = requests.get(config['api_results_url'] + f"/{self.id}", headers=headers)
+            # TODO: Store results locally and delete job_file.
             if r.status_code == 200:
-                return json.loads(r.json()[self.job_id])
+                return json.loads(r.json()[self.id])
             else:
                 logging.error(f"Could not fetch results from server: {r.status_code}")
         except:
             logging.error("Could not access results server.")
 
     @property
-    def ready(self) -> bool:
-        if self.check_status() == JobStatus.RESULTS_READY:
+    def ready(self):
+        if self.status == JobStatus.RESULTS_READY:
             return True
         return False
 
