@@ -247,7 +247,7 @@ class Runner(object):
             logging.error("Execution failed for some reason.")
             logging.error(f"stderr: \n {result_code.stderr.decode()}")
         else:
-            self.publish_status(JobStatus.SUCCESS, "SUCCESS", job_id=job_id)
+        #    self.publish_status(JobStatus.SUCCESS, "SUCCESS", job_id=job_id)
             logging.debug("Execution succeeded.")
             logging.debug(f"stdout of execution: {result_code.stdout.decode()}")
 
