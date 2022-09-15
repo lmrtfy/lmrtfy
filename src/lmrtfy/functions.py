@@ -86,6 +86,21 @@ class Job(object):
         return False
 
 
+def unique_name(o, name):
+    new_name = name
+
+    if hasattr(o, new_name):
+        logging.warning(f"Function {new_name} already exists in catalog!")
+        suffix = 1
+
+        while True:
+            new_name = name + str(suffix)
+            if not hasattr(o, new_name):
+                break
+
+    return new_name
+
+
 def signature_from_profile(profile):
     parameters = list()
     for v in profile['variables']:
@@ -143,7 +158,7 @@ class Catalog(object):
                 for profile in self.profiles['profiles']:
                     pid = profile.split('/')[-1]
                     t = fetch_profile(pid)
-                    func_name = t['filename'].split('/')[-1].split('.')[0].strip()
+                    func_name = unique_name(self, t['filename'].split('/')[-1].split('.')[0].strip())
                     logging.info(f"Added function {func_name}.")
                     self.__add_function(func_name, *signature_from_profile(t), pid=pid)
         except:  # TODO: Except clause too broad!
