@@ -54,6 +54,12 @@ class LMRTFY(object):
         Login to the LMRTFY cloud service.
         By using this tool you accept the terms and conditions.
         """
+
+        if "LMRTFY_LOCAL" in os.environ:
+            logging.warning("Using the local API.")
+        elif "LMRTFY_DEV" in os.environ:
+            logging.warning("Using the development API.")
+
         logging.info('Authenticating for LMRTFY.')
         h = LoginHandler()
         if h.login():
@@ -154,7 +160,7 @@ class LMRTFY(object):
             try:
                 logging.info(f"Writing results {name}.")
                 with open(p.joinpath(name), "w") as r:
-                    r.write(content)
+                    json.dump({name: content}, r)
             except IOError:
                 logging.error(f"Could not write results {name}")
 

@@ -11,9 +11,21 @@ readme = "README.md"
 authors = [{ name = "lmrtfy.de", email = "hello@lmrtfy.de" }]
 license = { file = "LICENSE" }
 classifiers = [
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: BSD License",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.10",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development",
+    "Topic :: System :: Software Distribution",
 ]
 keywords = ["api", "generator", "cli"]
 dependencies = [

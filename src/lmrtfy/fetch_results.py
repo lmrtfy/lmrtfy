@@ -9,7 +9,6 @@ from lmrtfy.login import load_token_data, get_cliconfig
 
 
 def fetch_results(job_id: str):
-
     try:
         config = get_cliconfig()
         token = load_token_data()['access_token']
@@ -19,7 +18,10 @@ def fetch_results(job_id: str):
             return r.json()
         else:
             logging.error(f"Could not fetch results from server: {r.status_code}")
+            logging.error(f"Reason: {r.json()}")
             exit(-1)
-    except:
+
+    except ConnectionError as e:
         logging.error("Could not access results server.")
+        logging.error(e.errno)
         exit(-1)

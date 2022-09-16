@@ -1,6 +1,6 @@
-# lmrtfy
+# LMRTFY - ![Badge_BSD3](https://img.shields.io/badge/license-BSD--3-green)
 
-![Linter](https://github.com/lmrtfy/lmrtfy/workflows/linter/badge.svg) [![Documentation](https://github.com/lmrtfy/lmrtfy/actions/workflows/publish_github_pages.yml/badge.svg)](https://lmrtfy.github.io/lmrtfy)
+![Linter](https://github.com/lmrtfy/lmrtfy/workflows/linter/badge.svg) [![Documentation](https://github.com/lmrtfy/lmrtfy/actions/workflows/publish_github_pages.yml/badge.svg)](https://docs.lmrt.fyi)
 
 Turn variables into program arguments. Auto-generates a CLI interface and an API using lmrt.fyi.
 

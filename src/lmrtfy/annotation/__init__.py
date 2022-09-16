@@ -147,56 +147,79 @@ def _get_type(a: supported_object_type) -> str:
         return "json"
 
 
-def resource(a):
-    """ This is a filepath, address or URL.
-    :param a:
-    :return:
-    """
-    return a
 
 
-def variable(a: supported_object_type, name: str, min = None, max = None,
+
+def variable(value: supported_object_type, name: str, min = None, max = None,
              unit: str = None) -> supported_object_type:
     """
-    :param a:
-    :param name:
-    :param min:
-    :param max:
-    :param unit:
-    :return:
+    `variable` defines an input parameter of the script. It is used to create the profile for the
+    code.
 
+    `v1 = variable(5, name='var1')` create a variable named 'var1' in the profile. If run with the
+    python interpreter `v1` takes the value 5 and can be used in the rest of the code just like
+    any other variable.
+
+    :param value: Value that is used if script is run with the python interpreter. Can be any expression.
+    :param name: Name of the variable used by the API for job submission.
+    :param min: [optional] Minimum value that a numeric variable takes. Checked by API.
+    :param max: [optional] Maximum value that a numeric variable takes. Checked by API.
+    :param unit: [optional] A string declaring the unit. This will likely change to support ´pynt` units.
+    :return: `value`
     """
-    _add_to_api_definition(name, kind='variable', dtype=_get_type(a), min=min, max=max, unit=unit)
+    _add_to_api_definition(name, kind='variable', dtype=_get_type(value), min=min, max=max, unit=unit)
 
     if _run_deployed and _tmp_dir and _script_path:
         # TODO: warn and except if something fails.
         with open(str(_tmp_dir.joinpath(f'lmrtfy_variable_{name}.json')), 'r') as f:
             tmp = json.load(f)
             # TODO: Make it work for numpy dtypes.
-            dtype = _inverse_type_map[type(a)]
-            a = dtype(tmp[name])
-            logging.info(f"Running: Loaded variable '{name}' of type '{dtype}' and value '{a}'.")
+            dtype = _inverse_type_map[type(value)]
+            value = dtype(tmp[name])
+            logging.info(f"Running: Loaded variable '{name}' of type '{dtype}' and value '{value}'.")
 
-    return a
+    return value
 
 
 # TODO: argument ordering is not the same as in variable Issue#7
-def result(a: supported_object_type, name: str, min = None, max = None,
+def result(value: supported_object_type, name: str, min = None, max = None,
            unit: str = None) -> supported_object_type:
     """
-    :param a:
-    :param name:
-    :param min:
-    :param max:
-    :param unit:
-    :return:
+
+    `result` defines an input parameter of the script. It is used to create the profile for the
+    code.
+
+    `r1 = result(5*v1, name='res1')` creates a result named 'res1' in the profile. If run with the
+    python interpreter `r1` is equal to `5*v1`
+
+    :param value: Value that is used if script is run with the python interpreter. Can be any expression.
+    :param name: Name of the variable used by the API for job submission.
+    :param min: [optional] Minimum value that a numeric result takes. Currently not checked.
+    :param max: [optional] Maximum value that a numeric result takes. Currently not checked.
+    :param unit: [optional] A string declaring the unit. This will likely change to support ´pynt` units.
+        This is currently not checked and saved but will be used in the future.
+    :return: `value`
     """
-    _add_to_api_definition(name, kind='result', dtype=_get_type(a), unit=None, min=min, max=max)
+
+    _add_to_api_definition(name, kind='result', dtype=_get_type(value), unit=None, min=min, max=max)
 
     if _run_deployed and _tmp_dir and _script_path:
         # TODO: warn and except if something fails.
         with (open(str(_tmp_dir.joinpath(f'lmrtfy_result_{name}.json')), 'w')) as f:
-            json.dump({name: a}, f, cls=NumpyEncoder)
-            logging.info(f"Running: Saved result '{name}' with value '{a}'.")
+            json.dump({name: value}, f, cls=NumpyEncoder)
+            logging.info(f"Running: Saved result '{name}' with value '{value}'.")
 
-    return a
+    return value
+
+
+# TODO: remove the underscore when implemented. The underscore keeps the function from popping up in
+#the API reference
+def _resource(resource):
+    """ This is a filepath, address or URL.
+
+    This is currently not implemented-
+
+    :param resource:
+    :return:
+    """
+    return resource

@@ -31,40 +31,67 @@ There are several problems with this solution:
 2. Units are unclear! `principal` is a currency, but that actually does not matter. The real problem
    is the `interest`. Is it decimal or in %?
 
-## Annotate with lmrtfy
+# Annotate with lmrtfy
 
 Using lmrtfy, you would annotate the script as follows:
 ```python
-# file: ci_lmrtfy_1.py
+# file: calc_compound_interest.py
 from lmrtfy import variable, result
 
+
 def compound_interest(principal: float, annual_interest: float, years: int):
-    return principal * (1. + annual_interest/100.)**years - principal
+   """
+   Compute the compound interest for `years` when starting from `principal` with `annual interest`.
+
+   compound interest = principal * (1 + annual_interest)^years - principal
+
+   """
+
+   return principal * (1. + annual_interest/100.)**years - principal
 
 
 if __name__ == "__main__":
-    principal = variable(10_000, name="principal", min=0)
-    interest = variable(6, name="interest", min=0, max=100, unit="%")
-    years = variable(10, name="years", min=0)
-    
-    ci = compound_interest(principal, interest, years)
-    ci = result(ci, name="compound interest")
-    
-    print(f"Compound interest after {years} years: {ci}")
+   principal = variable(10000., name="principal", min=0)
+   annual_interest = variable(6.0, name="annual_interest", min=0, max=100, unit="%")
+   years = variable(10, name="years", min=0)
+
+   ci = result(compound_interest(principal, annual_interest, years), name="compound_interest"
+
 ```
 
 Now, we run `python ci_lmrtfy_1.py` to generate the profile.
 
 !!! warning
-The type annotation are not enforced when run locally. LMRTFY checks the types and units only
-if jobs are submitted through its API. This guarantees that you can run your code without our
-service.
+    The type annotation are not enforced when run locally. LMRTFY checks the types and units only
+    if jobs are submitted through its API. This guarantees that you can run your code without our
+    service.
+
+# Deployment
 
 After creating the profile we can easily deploy with
 ```shell
-$ lmrtfy deploy ci_lmrtfy_1.py --local
+$ lmrtfy deploy examples/compound_interest/calc_compound_interest.py --local
 ```
 
+## Call `compound_interest` from code
+Similar to the other examples we just need to import the `catalog` and call the correct function:
+```python
+# file: examples/compound_interest/call_compound_interest.py
+from time import sleep
+
+from lmrtfy import catalog
+
+job = catalog.calc_compound_interest(5., 10., 5)
+
+if job:
+   print(job.id, job.status)
+   while not job.ready:
+      sleep(1.)
+
+   print(job.results)
+```
+
+## Call `compound_interest` from the CLI
 The output should be similar to this:
 ```text
 INFO Profile_id to be used for requests: <profile_id>
@@ -73,7 +100,6 @@ INFO Profile_id to be used for requests: <profile_id>
 The `<profile_id>` is important to submit jobs. 
 
 
-## Submit a job
 To submit a job you are currently required to save the input parameters as JSON (e.g. `input.json`):
 ```json
 {
@@ -100,7 +126,7 @@ INFO Job-id: <job_id>
 
 We need the `<job_id>` later to fetch the results from the computation. 
 
-## Alternative
+# Alternative Annotation
 A more compact but working alternative is to create the result as follows:
 ```python
 from lmrtfy import variable, result
