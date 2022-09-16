@@ -101,6 +101,6 @@ nav:
     - Catalog: "api_reference/catalog.md"
   - How to report an issue: "report_bugs.md"
   - Contributing: 'contributing.md'
-  - Roadmap: 'roadmap.md'
+  #- Roadmap: 'roadmap.md'
   - Changelog: 'CHANGELOG.md'
 
