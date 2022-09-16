@@ -19,7 +19,8 @@ def fetch_results(job_id: str):
             return r.json()
         else:
             logging.error(f"Could not fetch results from server: {r.status_code}")
+            logging.error(f"Reason: {r.json()}")
             exit(-1)
-    except:
+    except ConnectionError:
         logging.error("Could not access results server.")
         exit(-1)
