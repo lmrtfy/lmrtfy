@@ -54,6 +54,12 @@ class LMRTFY(object):
         Login to the LMRTFY cloud service.
         By using this tool you accept the terms and conditions.
         """
+
+        if "LMRTFY_LOCAL" in os.environ:
+            logging.warning("Using the local API.")
+        elif "LMRTFY_DEV" in os.environ:
+            logging.warning("Using the development API.")
+
         logging.info('Authenticating for LMRTFY.')
         h = LoginHandler()
         if h.login():
