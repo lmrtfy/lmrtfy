@@ -24,3 +24,18 @@ repository, but things might break. So be careful while using the `develop` bran
 
 
 
+## Install from Source
+You can also install LMRTFY from [source](https://github.com/lmrtfy/lmrtfy). This way you can always
+try the newest commits from the `main` and `develop` branches.
+
+!!! note
+Code from the `main` branch will likely work with current backend. Using code from `develop` is
+probably not a good idea, because this will likely break.
+
+If you want to install LMRTFY from source you need to run the following commands:
+
+```shell
+$ git clone --branch main https://github.com/lmrtfy/lmrtfy.git
+$ cd lmrtfy
+$ pip install .
+```

@@ -66,6 +66,7 @@ class Job(object):
 
     @property
     def results(self):
+        # TODO: use fetch_results from the corresponding file
         try:
             config = get_cliconfig()
             token = load_token_data()['access_token']
@@ -73,11 +74,12 @@ class Job(object):
             r = requests.get(config['api_results_url'] + f"/{self.id}", headers=headers)
             # TODO: Store results locally and delete job_file.
             if r.status_code == 200:
-                return json.loads(r.json()[self.id])
+                return r.json() #json.loads(r.json())
             else:
                 logging.error(f"Could not fetch results from server: {r.status_code}")
-        except:
+        except ConnectionError as e:
             logging.error("Could not access results server.")
+            logging.error(e.strerror)
 
     @property
     def ready(self):
@@ -135,7 +137,18 @@ def fetch_profile(profile_id):
 
 
 class Catalog(object):
+    """
+    The Catalog object provides an interface to deployed functions that you can run from your code.
 
+    Cloud functions are pulled into the catalog by the constructor, which happens during `from lmrtfy
+    import catalog`.
+
+    If you want to retrieve newly deployed function, call `catalog.update()`.
+
+    To run a deployed function from the catalog call `catalog.<deployed_function>(*args, **kwargs)`.
+
+    Each function that has been pulled into the catalog is available via the `help()` command.
+    """
     def __init__(self):
         h = LoginHandler()
         if h.login():
@@ -151,6 +164,9 @@ class Catalog(object):
         self.update()
 
     def update(self):
+        """
+        Call `update` to update the catalog with newly deployed functions.
+        """
         try:
             r = requests.get(self.config['api_catalog_url'], headers=self.headers)
             if r.status_code == 200:
@@ -177,7 +193,7 @@ class Catalog(object):
             if r.status_code == 200:
                 return Job(r.json()['job_id'])
             if r.status_code == 400:
-                logging.error('Input Error', r.json())
+                logging.error(f'Input Error: {r.json()}')
 
         setattr(self, name, create_function(sig, f, func_name=name))
 

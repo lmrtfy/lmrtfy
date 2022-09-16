@@ -30,7 +30,7 @@ extra_css:
   - stylesheets/extra.css
 
 extra_javascript:
-  - javascripts/mathjax.js
+  - javascript/mathjax.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
@@ -82,10 +82,12 @@ markdown_extensions:
 
 nav:
   - lmrt.fyi: "https://lmrt.fyi"
-  - GitHub repository: "https://github.com/lmrtfy/lmrtfy"
-  - LMRTFY: 'index.md'
+  - LMRTFY @ GitHub: "https://github.com/lmrtfy/lmrtfy"
+  - Introduction: 'index.md'
+  - Quickstart: 'quickstart.md'
   - Tutorial:
     - Installation: 'tutorial/installation.md'
+    - Login: 'tutorial/login.md'
     - Annotate your script: 'tutorial/annotation.md'
     - Deploy your script/function: 'tutorial/deployment.md'
     - Submit a job: 'tutorial/submission.md'
@@ -94,6 +96,11 @@ nav:
     - Starting Example: 'examples/starting_example.md'
     - Free Fall: 'examples/free_fall.md'
     - Compound Interest: 'examples/compound_interest.md'
-  - About: 'about.md'
+  - API Reference:
+    - Annotation: "api_reference/annotation.md"
+    - Catalog: "api_reference/catalog.md"
+  - How to report an issue: "report_bugs.md"
+  - Contributing: 'contributing.md'
+  #- Roadmap: 'roadmap.md'
   - Changelog: 'CHANGELOG.md'
 

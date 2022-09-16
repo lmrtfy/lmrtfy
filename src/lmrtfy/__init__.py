@@ -35,8 +35,7 @@ if not _lmrtfy_template_dir.is_dir():
 if not _lmrtfy_job_dir.is_dir():
     os.mkdir(_lmrtfy_job_dir)
 
-
-from lmrtfy.annotation import resource
+#from lmrtfy.annotation import resource
 from lmrtfy.annotation import variable
 from lmrtfy.annotation import result
 from lmrtfy.functions import catalog

@@ -1,3 +1,8 @@
+# v0.0.7 - 16/sep/2022
+* **introduced `catalog` feature to call 'cloud' functions directly from code.**
+* enhanced documentation (API reference, links, quickstart, structure, ...)
+* general bug fixes for better stability
+
 # v0.0.6 - 08/sep/2022
 * changed input formats for json as follows:
 ```json
