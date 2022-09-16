@@ -1,7 +1,7 @@
 LMRTFY stands for _Let Me Run That For You_. 
 
 **Create functions that run in the cloud, on your servers or even on your laptop.<br>
-Call them from code, just like a regular function.**
+Call them from code, anywhere, just like a regular function.**
 
 [![Offical site](https://img.shields.io/badge/website-lmrt.fyi-blue?style=for-the-badge)](https://lmrt.fyi)
 
@@ -13,7 +13,7 @@ Call them from code, just like a regular function.**
 * [Tutorial](tutorial/installation.md)
 * [Examples](examples/starting_example.md)
 * [API Reference](api_reference/annotation.md)
-* [How to report bugs](report_bugs.md) and [how to contribute](contributing.md)
+* [How to report issues](report_bugs.md) and [how to contribute](contributing.md)
 
 ## Introduction 
 
@@ -34,11 +34,13 @@ We strive to provide a frictionless developer experience:
 1. install with `pip install lmrtfy`
 2. login/sign up with `lmrtfy login`
 3. annotate your code's inputs with `variable` and its outputs with `result`
-4. in the terminal, run `lmrtfy deploy examples/deployment/calc_compound_interest.py --local`
-5. open `examples/calling_cloud_functions/call_function`
-6. run `python examples/call_deployed_function.py` to call the deployed function and get the results.
+4. deploy the script:
+    5.  `lmrtfy deploy examples/deployment/calc_compound_interest.py --local`
+5. Use the deployed function (from another terminal, or another computer!):
+    6. open `examples/calling_cloud_functions/call_function.py`
+    7. run `python examples/call_deployed_function.py` to call the deployed function and get the results.
 
-As you can see in step 5 and 6, it's as simple as calling a regular function from any other library
+As you can see in step 5, it's as simple as calling a regular function from any other library
 you have installed locally. 
 
 ## Examples
