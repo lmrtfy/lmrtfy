@@ -46,7 +46,8 @@ dependencies = [
         "cryptography",
         "coloredlogs",
         "packaging",
-        "python-daemon"
+        "python-daemon",
+        "makefun"
 ]
 requires-python = ">=3.7"
 
