@@ -25,21 +25,16 @@ from lmrtfy.login import load_token_data, get_cliconfig
 
 class RunnerStatus(str, enum.Enum):
     IDLE = "IDLE"
-    WAITING = "WAITING"
+    ACCEPTING_JOBS = "ACCEPTING_JOBS"
+    RUNNING = "RUNNING"
 
 
 class JobStatus(str, enum.Enum):
-    IDLE = "IDLE"
-    WAITING = "WAITING"
-    SUCCESS = "SUCCESS"
-    FAILED = "FAILED"
-    JOB_RECEIVED = "JOB_RECEIVED"
+    UNKNOWN = "UNKNOWN"
+    ACCEPTED = "ACCEPTED"
     RUNNING = "RUNNING"
+    FAILED = "FAILED"
     RESULTS_READY = "RESULTS_READY"
-    INCOMPLETE_RESULTS = "INCOMPLETE_RESULTS"
-    ABORTED = "ABORTED"
-
-
 
 
 def on_mqtt_disconnect(client, userdata, flags, rc, properties=None):
@@ -74,10 +69,6 @@ class Runner(object):
     :type broker_url: str
     :param port: Port to use for MQTT
     :type port: int
-    :param username: username for MQTT broker
-    :type username: str
-    :param password: password for MQTT broker
-    :type password: str
     :param profile_path: Path to the user-profile that the runner is connected to
     :type profile_path: pathlib.Path
     """
@@ -101,17 +92,16 @@ class Runner(object):
         # TODO: client id is ideally the same a the filehash I guess. Issue #6
         self.client_id = f"local_runner-{uuid.uuid4()}"
         # TODO: runner status => Load, RAM Status, ...
-        self.status_topic = f"status/{self.client_id}"
+        self.runner_status_topic = f"status/runner/{self.client_id}"
+        self.heartbeat_topic = f"heartbeat/runner/{self.client_id}"
+        self.job_status_topic = f"status/job/"
         # TODO: second status topic for job status
-
 
         access_token = load_token_data()['access_token']
         self.user_id = jwt.decode(access_token, options={"verify_signature": False})["sub"].replace(
             '|', 'X')
         # job_topic =  f"$share/{user_id}/{user_id}/{self.filehash}/job"
         # self.client.subscribe(job_topic, qos=2)
-
-
 
         self.client = mqtt.Client(
             client_id=self.client_id,
@@ -123,6 +113,7 @@ class Runner(object):
         try:
             access_token = load_token_data()['access_token']
         except Exception:
+            # Todo: give error
             pass
 
         self.client.tls_set(certifi.where())
@@ -140,13 +131,20 @@ class Runner(object):
         self.client.loop_start()
         time.sleep(1)
 
-        self.status = {
+        self.job_status = {
             "filehash": self.filehash,
             "job_id": None,
-            "status": JobStatus.IDLE,
+            "status": JobStatus.UNKNOWN,
             "message": "",
         }
-        self.publish_status(JobStatus.IDLE, "Started idling.")
+        self.runner_status = {
+            "filehash": self.filehash,
+            "runner_id": self.client_id,
+            "status": RunnerStatus.IDLE,
+            "message": "",
+        }
+
+        self.publish_runner_status(RunnerStatus.IDLE, "Started idling.")
 
     def on_mqtt_connect(self, client, userdata, flags, rc, properties=None):
         logging.debug("on_connect")
@@ -172,10 +170,10 @@ class Runner(object):
         logging.debug("on_message")
         logging.debug(f"  userdate: {userdate}")
         logging.debug(f"  msg: {msg}")
-        self.publish_status(JobStatus.JOB_RECEIVED, "Received job")
         self.job_list.put(json.loads(msg.payload), block=False)
+        self.publish_job_status(JobStatus.ACCEPTED, "Accepted job", json.loads(msg.payload)["job_id"])
 
-    def publish_status(self, status: JobStatus, message: str, job_id: Optional[int] = None):
+    def publish_job_status(self, status: JobStatus, message: str, job_id: Optional[int] = None):
         """
         Publishes a status message with JobStatus and a message to MQTT.
 
@@ -186,21 +184,22 @@ class Runner(object):
         :param job_id: job_id for the status message. Does not always apply. default: None
         :type job_id: Optional[int]
         """
-        self.status["status"] = status
-        self.status["message"] = message
-        self.status["job_id"] = job_id
-        if job_id:
-            logging.info(
-                f"status update for job '{job_id}': '{status}' with '{message}' for "
-                f"profile-id '{self.filehash}' and client-id `{self.client_id}`."
-            )
-        else:
-            logging.info(
-                f"status update: '{status}' with '{message}' for profile-id "
-                f"'{self.filehash}' and client-id `{self.client_id}`."
-            )
+        self.job_status["status"] = status
+        self.job_status["message"] = message
+        self.job_status["job_id"] = job_id
+        job_status_topic = f"status/job/{job_id}"
+        logging.info(
+            f"status update for job '{job_id}': '{status}' with '{message}' for "
+            f"profile-id '{self.filehash}' and client-id `{self.client_id}`."
+        )
+        self.client.publish(job_status_topic, json.dumps(self.job_status))
 
-        self.client.publish(self.status_topic, json.dumps(self.status))
+    def publish_runner_status(self, status: RunnerStatus, message: str):
+        logging.info(f"status update fo runner `{self.client_id}: '{status}' with '{message}'.")
+
+        self.runner_status["status"] = status
+        self.runner_status["message"] = message
+        self.client.publish(self.runner_status_topic, json.dumps(self.runner_status))
 
     def execute(self, job_id: int, job_input: dict):
         """
@@ -224,7 +223,6 @@ class Runner(object):
         os.environ["LMRTFY_TMP_DIR"] = tempdir.name
         logging.debug(f"Set LMRTFY_TMP_DIR to '{tempdir.name}'.")
 
-        self.publish_status(JobStatus.RUNNING, "Reading input variables.", job_id=job_id)
         # Set write input files
         for var, meta_data in self.profile["variables"].items():
             var_path = pathlib.Path(tempdir.name).joinpath(f"lmrtfy_variable_{var}.json")
@@ -239,22 +237,21 @@ class Runner(object):
 
         # Set environment variables for execution and run code
         # TODO: How safe is that?
-        self.publish_status(JobStatus.RUNNING, "Running script.", job_id=job_id)
+        self.publish_job_status(JobStatus.RUNNING, "Running script.", job_id=job_id)
         os.environ["LMRTFY_DEPLOY_LOCAL"] = "1"
         result_code = subprocess.run(command_args_list, capture_output=True)
 
         # check results
         if result_code.returncode != 0:
-            self.publish_status(JobStatus.FAILED, "FAILED!", job_id=job_id)
+            self.publish_job_status(JobStatus.FAILED, "FAILED!", job_id=job_id)
             logging.error("Execution failed for some reason.")
             logging.error(f"stderr: \n {result_code.stderr.decode()}")
         else:
-        #    self.publish_status(JobStatus.SUCCESS, "SUCCESS", job_id=job_id)
             logging.debug("Execution succeeded.")
             logging.debug(f"stdout of execution: {result_code.stdout.decode()}")
 
         results = {}
-        partial_results_only = False
+        failed = False
         for res, meta_data in self.profile["results"].items():
             res_path = pathlib.Path(tempdir.name).joinpath(f"lmrtfy_result_{res}.json")
             try:
@@ -267,6 +264,7 @@ class Runner(object):
                         token = load_token_data()['access_token']
                         headers = {"Authorization": f"Bearer {token}"}
                     except Exception:
+                        # TODO: Fix exception and log meaningful error message
                         pass
 
                     r = requests.post(f"{config['api_results_url']}/{job_id}", files=files, headers=headers)
@@ -274,17 +272,15 @@ class Runner(object):
                     if r.status_code != 200:
                         logging.error("Results could not be uploaded")
             except FileNotFoundError:
-                partial_results_only = True
+                failed = True
                 logging.error(f"Result file '{res_path}' not found.")
+                break
 
-        if partial_results_only:
-            self.publish_status(
-                JobStatus.INCOMPLETE_RESULTS, "Partial results available", job_id=job_id
-            )
+        if failed:
+            self.publish_job_status(JobStatus.FAILED, "Job failed.", job_id=job_id)
         else:
-            self.publish_status(
-                JobStatus.RESULTS_READY, "Results are ready for download", job_id=job_id
-            )
+            self.publish_job_status(JobStatus.RESULTS_READY, "Results ready.", job_id=job_id)
+
         logging.debug(results)
         self.busy = False
 
@@ -295,22 +291,21 @@ class Runner(object):
         self.client.on_message = self.on_message
         try:
             # queue.get() blocks until an element is inside the queue.
-            # This might not work on windows which has to be tested
+            # This might not work on Windows which has to be tested
             while True:
                 # time.sleep(0.1)
                 # TODO: this check might be necessary on windows... if not self.job_list.empty()
                 #  and not self.busy:
                 # if not self.job_list.empty() and not self.busy:
                 # self.busy = True
-                self.publish_status(JobStatus.WAITING, "Waiting for Job in MQTT Topic.")
+                self.publish_runner_status(RunnerStatus.ACCEPTING_JOBS, "Waiting for Job in MQTT Topic.")
 
                 # blocks until something is in the queue
                 job_id, _, job_param, _ = self.job_list.get().values()
-                self.publish_status(JobStatus.RUNNING, "Starting execution.")
+                self.publish_runner_status(RunnerStatus.RUNNING, "Starting execution.")
                 logging.debug(f"'{job_param}' for job_id '{job_id}'")
                 self.execute(job_id, job_param)
                 self.job_list.task_done()
-                self.publish_status(JobStatus.IDLE, "Back to Idle.")
         except KeyboardInterrupt:
             logging.info("Detected KeyboardInterrupt. Stop program.")
             self.client.loop_stop()
