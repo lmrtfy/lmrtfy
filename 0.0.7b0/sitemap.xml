@@ -16,6 +16,36 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://lmrt.fyi/0.0.7b0/contributing/</loc>
+         <lastmod>2022-09-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://lmrt.fyi/0.0.7b0/quickstart/</loc>
+         <lastmod>2022-09-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://lmrt.fyi/0.0.7b0/report_bugs/</loc>
+         <lastmod>2022-09-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://lmrt.fyi/0.0.7b0/roadmap/</loc>
+         <lastmod>2022-09-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://lmrt.fyi/0.0.7b0/api_reference/annotation/</loc>
+         <lastmod>2022-09-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://lmrt.fyi/0.0.7b0/api_reference/catalog/</loc>
+         <lastmod>2022-09-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://lmrt.fyi/0.0.7b0/examples/compound_interest/</loc>
          <lastmod>2022-09-16</lastmod>
          <changefreq>daily</changefreq>
@@ -47,6 +77,11 @@
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.7b0/tutorial/installation/</loc>
+         <lastmod>2022-09-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://lmrt.fyi/0.0.7b0/tutorial/login/</loc>
          <lastmod>2022-09-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
