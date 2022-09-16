@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#install-with-pip-recommended" class="md-skip">
+        <a href="#linux-and-macos" class="md-skip">
           Skip to content
         </a>
       
@@ -353,29 +353,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#install-with-pip-recommended" class="md-nav__link">
-    Install with pip (recommended)
+  <a href="#linux-and-macos" class="md-nav__link">
+    Linux and MacOS
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-from-source" class="md-nav__link">
-    Install from source
-  </a>
-  
-    <nav class="md-nav" aria-label="Install from source">
+    <nav class="md-nav" aria-label="Linux and MacOS">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-from-source_1" class="md-nav__link">
-    Install from Source
+  <a href="#windows" class="md-nav__link">
+    Windows
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-from-source" class="md-nav__link">
+    Install from Source
+  </a>
   
 </li>
       
@@ -672,29 +672,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#install-with-pip-recommended" class="md-nav__link">
-    Install with pip (recommended)
+  <a href="#linux-and-macos" class="md-nav__link">
+    Linux and MacOS
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-from-source" class="md-nav__link">
-    Install from source
-  </a>
-  
-    <nav class="md-nav" aria-label="Install from source">
+    <nav class="md-nav" aria-label="Linux and MacOS">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-from-source_1" class="md-nav__link">
-    Install from Source
+  <a href="#windows" class="md-nav__link">
+    Windows
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-from-source" class="md-nav__link">
+    Install from Source
+  </a>
   
 </li>
       
@@ -720,13 +720,23 @@
 
   <h1>Installation</h1>
 
-<p>There are two ways to install the lmrtfy tools. We recommend the usage of virtual environments
+<p>There are two ways to install the <code>lmrtfy</code>. We recommend the usage of virtual environments
 at the moment due to the frequent updates and changes of lmrtfy.</p>
-<h2 id="install-with-pip-recommended">Install with pip (recommended)<a class="headerlink" href="#install-with-pip-recommended" title="Permanent link">&para;</a></h2>
-<p>Use pip to install from PyPI:</p>
-<p><code>$ pip install lmrtfy</code></p>
-<p>This way you will always have the most recent release of the lmrtfy tools.</p>
-<h2 id="install-from-source">Install from source<a class="headerlink" href="#install-from-source" title="Permanent link">&para;</a></h2>
+<h2 id="linux-and-macos">Linux and MacOS<a class="headerlink" href="#linux-and-macos" title="Permanent link">&para;</a></h2>
+<p>We provide a PyPI package for Linux and MacOS which can be installed easily with <code>pip</code>:</p>
+<div class="highlight"><pre><span></span><code>$ pip install lmrtfy
+</code></pre></div>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<p>On Windows the <code>conda</code> package manager provided by
+<a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html">miniconda and Anaconda</a>
+is the best way to use Python and install Python packages.</p>
+<p>Right now, we only support a PyPI package which can be installed with <code>conda</code>. If you have <code>pip</code> installed
+in your conda environment you can directly install from PyPI, otherwise you need to install <code>pip</code> first:
+<div class="highlight"><pre><span></span><code>$ conda install pip
+$ pip install lmrtfy
+</code></pre></div></p>
+<p>This way you will always have the most recent release of <code>lmrtfy</code>.</p>
+<h2 id="install-from-source">Install from Source<a class="headerlink" href="#install-from-source" title="Permanent link">&para;</a></h2>
 <p>You can also install from git which is the best way to use the nightly features.</p>
 <p>Clone the git repository and install manually:
 <div class="highlight"><pre><span></span><code>$ git clone --branch main https://github.com/lmrtfy/lmrtfy.git
@@ -736,19 +746,6 @@ $ pip install .
 The <code>main</code> branch is the release branch and should always work with the lmrtfy API. </p>
 <p>Alternatively, you can use the <code>develop</code> branch. This should be the most up-to-date branch in the
 repository, but things might break. So be careful while using the <code>develop</code> branch.</p>
-<h3 id="install-from-source_1">Install from Source<a class="headerlink" href="#install-from-source_1" title="Permanent link">&para;</a></h3>
-<p>You can also install LMRTFY from <a href="https://github.com/lmrtfy/lmrtfy">source</a>. This way you can always
-try the newest commits from the <code>main</code> and <code>develop</code> branches.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-</div>
-<p>Code from the <code>main</code> branch will likely work with current backend. Using code from <code>develop</code> is
-probably not a good idea, because this will likely break.</p>
-<p>If you want to install LMRTFY from source you need to run the following commands:</p>
-<div class="highlight"><pre><span></span><code>$ git clone --branch main https://github.com/lmrtfy/lmrtfy.git
-$ <span class="nb">cd</span> lmrtfy
-$ pip install .
-</code></pre></div>
 
 
 

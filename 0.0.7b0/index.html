@@ -708,7 +708,7 @@
 
 <p>LMRTFY stands for <em>Let Me Run That For You</em>. </p>
 <p><strong>Create functions that run in the cloud, on your servers or even on your laptop.<br>
-Call them from code, just like a regular function.</strong></p>
+Call them from code, anywhere, just like a regular function.</strong></p>
 <p><a href="https://lmrt.fyi"><img alt="Offical site" src="https://img.shields.io/badge/website-lmrt.fyi-blue?style=for-the-badge" /></a></p>
 <p><a href="https://github.com/lmrtfy/lmrtfy"><img alt="GitHub Repository" src="https://img.shields.io/badge/repository-GitHub-blue?style=for-the-badge" /></a>
 <a href="https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE"><img alt="Badge_BSD3" src="https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge" /></a>
@@ -718,7 +718,7 @@ Call them from code, just like a regular function.</strong></p>
 <li><a href="tutorial/installation/">Tutorial</a></li>
 <li><a href="examples/starting_example/">Examples</a></li>
 <li><a href="api_reference/annotation/">API Reference</a></li>
-<li><a href="report_bugs/">How to report bugs</a> and <a href="contributing/">how to contribute</a></li>
+<li><a href="report_bugs/">How to report issues</a> and <a href="contributing/">how to contribute</a></li>
 </ul>
 <h3 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h3>
 <p>LMRTFY is a tool to share scripts via the cloud. Your scripts can run on your laptop, on your server
@@ -738,11 +738,17 @@ from their own code using the <a href="https://pypi.org/project/lmrtfy/">lmrtfy 
 <li>install with <code>pip install lmrtfy</code></li>
 <li>login/sign up with <code>lmrtfy login</code></li>
 <li>annotate your code's inputs with <code>variable</code> and its outputs with <code>result</code></li>
-<li>in the terminal, run <code>lmrtfy deploy examples/deployment/calc_compound_interest.py --local</code></li>
-<li>open <code>examples/calling_cloud_functions/call_function</code></li>
+<li>deploy the script:<ol>
+<li><code>lmrtfy deploy examples/deployment/calc_compound_interest.py --local</code></li>
+</ol>
+</li>
+<li>Use the deployed function (from another terminal, or another computer!):<ol>
+<li>open <code>examples/calling_cloud_functions/call_function.py</code></li>
 <li>run <code>python examples/call_deployed_function.py</code> to call the deployed function and get the results.</li>
 </ol>
-<p>As you can see in step 5 and 6, it's as simple as calling a regular function from any other library
+</li>
+</ol>
+<p>As you can see in step 5, it's as simple as calling a regular function from any other library
 you have installed locally. </p>
 <h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h3>
 <p>The <a href="examples/starting_example/">examples</a> are provided in the <code>examples/</code> directory. They are <strong>work in progress</strong>. As lmrtfy
