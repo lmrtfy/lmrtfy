@@ -1,4 +1,32 @@
-# Submit a job
+# Calling a Deployed Function
+
+Let's assume that you have just deployed the script `calc_compound_interest.py` from the examples 
+provided in `examples/compound_interest/calc_compound_interest.py` by running
+
+```shell
+$ lmrtfy deploy examples/compound_interest/calc_compound_interest.py --loca
+```
+
+
+
+## Calling a Function from Code
+```python
+from time import sleep
+
+from lmrtfy import catalog  #1
+
+job = catalog.calc_compound_interest(5., 10., 5) #2
+
+print(job.id, job.status)
+
+while not job.ready: #3
+    sleep(1.)
+
+print(job.results) #4
+```
+
+## Using the CLI Tools
+
 The lmrtfy tool also provides a way to submit jobs with the `lmrtfy` CLI tool. All you need for this
 is a `profile_id` which is provided by you during the deployment and a JSON file that contains the input
 parameters.

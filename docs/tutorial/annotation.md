@@ -53,6 +53,10 @@ XDG directory specifications.
 
 ## Focus: `variable` and `result`
 
+The API reference for `variable` and `result` can be found [here](../api_reference.md).
+
+
+
 These functions are transparent. That means the assignment `a = variable(5, name="a")` assigns `a`
 the value `5`. This way you can run the script simply with your local python interpreter if lmrtfy is
 installed in the environment. `variable` and `result` do not have any external dependency (e.g. API calls)
