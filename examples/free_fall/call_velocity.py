@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from time import sleep
+import time
 
 from lmrtfy import catalog
 
-job = catalog.calc_compound_interest(5., 10., 5)
+job = catalog.calc_velocity(time=100.0)
 
 if job:
-    print(job.id, job.status)
     while not job.ready:
-        sleep(1.)
+        time.sleep(1)
 
     print(job.results)
