@@ -99,6 +99,7 @@ def unique_name(o, name):
             new_name = name + str(suffix)
             if not hasattr(o, new_name):
                 break
+            suffix += 1
 
     return new_name
 

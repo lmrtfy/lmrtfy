@@ -218,7 +218,10 @@ class Runner(object):
         script = self.profile["filename"]
 
         # TODO: Techdebt. Ignoring the cleanup errors is due to a python uptream bug in tempfile. bugs.python.org #43153
-        tempdir = tempfile.TemporaryDirectory(ignore_cleanup_errors=True)  # pylint: disable=consider-using-with
+        try:
+            tempdir = tempfile.TemporaryDirectory(ignore_cleanup_errors=True)  # pylint: disable=consider-using-with
+        except:
+            tempdir = tempfile.TemporaryDirectory()  # pylint: disable=consider-using-with
         # TODO: Add job_id to path
         os.environ["LMRTFY_TMP_DIR"] = tempdir.name
         logging.debug(f"Set LMRTFY_TMP_DIR to '{tempdir.name}'.")
@@ -282,6 +285,12 @@ class Runner(object):
             self.publish_job_status(JobStatus.RESULTS_READY, "Results ready.", job_id=job_id)
 
         logging.debug(results)
+
+        try:
+            tempdir.cleanup()
+        except:
+            pass
+
         self.busy = False
 
     def start_listening(self):
