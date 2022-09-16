@@ -24,14 +24,12 @@ def get_cliconfig():
     if "LMRTFY_LOCAL" in os.environ:
         try:
             r = requests.get("http://127.0.0.1:5000/cliconfig")
-            logging.warning("Using the local API.")
         except ConnectionError:
             logging.error("Could not reach a local API. Make sure it is running.")
             exit(-1)
     elif "LMRTFY_DEV" in os.environ:
         try:
             r = requests.get("https://dev-api.simulai.de/cliconfig")
-            logging.warning("Using the development API.")
         except ConnectionError:
             logging.error("Could not reach the development API.")
             exit(-1)
