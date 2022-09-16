@@ -53,7 +53,7 @@ XDG directory specifications.
 
 ## Focus: `variable` and `result`
 
-The API reference for `variable` and `result` can be found [here](../api_reference.md).
+The API reference for `variable` and `result` can be found [here](../api_reference/api_reference.md).
 
 
 

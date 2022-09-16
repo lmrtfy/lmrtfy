@@ -96,8 +96,10 @@ nav:
     - Starting Example: 'examples/starting_example.md'
     - Free Fall: 'examples/free_fall.md'
     - Compound Interest: 'examples/compound_interest.md'
-  - API Reference: "api_reference.md"
-  - How to report a bug: "report_bugs.md"
+  - API Reference:
+    - Annotation: "api_reference/annotation.md"
+    - Catalog: "api_reference/catalog.md"
+  - How to report an issue: "report_bugs.md"
   - Contributing: 'contributing.md'
   - Roadmap: 'roadmap.md'
   - Changelog: 'CHANGELOG.md'
