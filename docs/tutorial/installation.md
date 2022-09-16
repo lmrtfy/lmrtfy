@@ -1,14 +1,28 @@
-There are two ways to install the lmrtfy tools. We recommend the usage of virtual environments
+There are two ways to install the `lmrtfy`. We recommend the usage of virtual environments
 at the moment due to the frequent updates and changes of lmrtfy.
 
-# Install with pip (recommended)
-Use pip to install from PyPI:
+# Linux and MacOS
+We provide a PyPI package for Linux and MacOS which can be installed easily with `pip`:
 
-`$ pip install lmrtfy`
+```shell
+$ pip install lmrtfy
+```
 
-This way you will always have the most recent release of the lmrtfy tools.
+## Windows
+On Windows the `conda` package manager provided by
+[miniconda and Anaconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html)
+is the best way to use Python and install Python packages.
 
-# Install from source
+Right now, we only support a PyPI package which can be installed with `conda`. If you have `pip` installed
+in your conda environment you can directly install from PyPI, otherwise you need to install `pip` first:
+```shell
+$ conda install pip
+$ pip install lmrtfy
+```
+
+This way you will always have the most recent release of `lmrtfy`.
+
+# Install from Source
 You can also install from git which is the best way to use the nightly features.
 
 Clone the git repository and install manually:
@@ -23,19 +37,3 @@ Alternatively, you can use the `develop` branch. This should be the most up-to-d
 repository, but things might break. So be careful while using the `develop` branch.
 
 
-
-## Install from Source
-You can also install LMRTFY from [source](https://github.com/lmrtfy/lmrtfy). This way you can always
-try the newest commits from the `main` and `develop` branches.
-
-!!! note
-Code from the `main` branch will likely work with current backend. Using code from `develop` is
-probably not a good idea, because this will likely break.
-
-If you want to install LMRTFY from source you need to run the following commands:
-
-```shell
-$ git clone --branch main https://github.com/lmrtfy/lmrtfy.git
-$ cd lmrtfy
-$ pip install .
-```
