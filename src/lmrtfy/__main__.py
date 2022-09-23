@@ -160,7 +160,7 @@ class LMRTFY(object):
             try:
                 logging.info(f"Writing results {name}.")
                 with open(p.joinpath(name), "w") as r:
-                    r.write(content)
+                    json.dump({name: content}, r)
             except IOError:
                 logging.error(f"Could not write results {name}")
 

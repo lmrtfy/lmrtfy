@@ -1,5 +1,24 @@
-# Get results
-lmrtfy also provides a way to download the results of the computation. All you need is the `<job_id>`
+# Fetching results in your code
+When you call a function from your code, the results are part of the job object created when [calling
+the function](submission.md).
+
+You can only get the results when they are ready by using `job.results`:
+
+```python
+while not job.ready:
+    sleep(1.)
+
+print(job.results)
+```
+
+Currently, the while loop is necessary to wait for the results. This isn't the most ergonomic way
+to do this. 
+
+This could easily become a future (in the sense of concurrent programming) later on. **We are also 
+looking for feedback, what would work best for you.**
+
+# Get results with the CLI
+LMRTFY also provides a way to download the results of the computation. All you need is the `<job_id>`
 that you received when you submitted the job. Then, you simply run
 
 ```shell

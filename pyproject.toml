@@ -5,15 +5,27 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "lmrtfy"
-version = "0.0.7b0"
+version = "0.0.7"
 description = "Turn variables into program arguments. Auto-generates a CLI interface and an API using lmrtfy.de."
 readme = "README.md"
 authors = [{ name = "lmrtfy.de", email = "hello@lmrtfy.de" }]
 license = { file = "LICENSE" }
 classifiers = [
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: BSD License",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.10",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development",
+    "Topic :: System :: Software Distribution",
 ]
 keywords = ["api", "generator", "cli"]
 dependencies = [
@@ -50,7 +62,7 @@ documentation = "https://lmrtfy.github.io/lmrtfy"
 lmrtfy = "lmrtfy.__main__:main"
 
 [tool.bumpver]
-current_version = "0.0.7b0"
+current_version = "0.0.7"
 version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true 
@@ -64,6 +76,9 @@ push = true
 "src/lmrtfy/__init__.py" = [
   '__version__ = "{pep440_version}"',
 ]
-".github/workflows/publish_github_pages.yml" = [
+".github/workflows/publish_github_pages_stable.yml" = [
   'VERSION: "MAJOR.MINOR.PATCH[PYTAGNUM]"',
+]
+".github/workflows/publish_github_pages_latest.yml" = [
+    'VERSION: "MAJOR.MINOR.PATCH[PYTAGNUM]"',
 ]
