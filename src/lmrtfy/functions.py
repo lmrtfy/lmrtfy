@@ -65,7 +65,7 @@ class Job(object):
         return status
 
     @property
-    def results(self):
+    def results(self) -> Optional[dict]:
         try:
             config = get_cliconfig()
             token = load_token_data()['access_token']
@@ -73,7 +73,7 @@ class Job(object):
             r = requests.get(config['api_results_url'] + f"/{self.id}", headers=headers)
             # TODO: Store results locally and delete job_file.
             if r.status_code == 200:
-                return json.loads(r.json()[self.id])
+                return r.json()
             else:
                 logging.error(f"Could not fetch results from server: {r.status_code}")
         except:
