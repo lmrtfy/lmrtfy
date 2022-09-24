@@ -27,7 +27,7 @@ if sys.argv:
                 if sys.argv[0][-6:] == 'lmrtfy':
                     _script_path = None
                 else:
-                    coloredlogs.install(fmt='%(levelname)s %(message)s')
+                    coloredlogs.install(fmt='LMRTFY Analyzer %(levelname)s %(message)s')
 
 
 _run_deployed = False
@@ -45,9 +45,11 @@ if _script_path:
     _sha1hasher = filehash.FileHash('sha1')
     _hash = _sha1hasher.hash_file(_script_path)
 
-    profile = {}
+    profile = dict()
     profile['language'] = 'python'
     profile['filename'] = str(_script_path)
+    # TODO: Remove all whitespace and things that cannot be a function name from the name
+    profile['name'] = profile['filename'].replace('\\', '/').split('/')[-1].split('.py')[0]
     profile['filehash'] = _hash
     profile['variables'] = {}
     profile['results'] = {}
@@ -63,6 +65,7 @@ if not _run_deployed and _script_path:
     with open(_lmrtfy_profile_filename,'w') as f:
         yaml.dump(profile, f)
         logging.info(f"Wrote profile to {str(_lmrtfy_profile_filename)}.")
+        logging.info(f"Using function name: {profile['name']}")
 
 
 _types = ['json', 'string', 'string_array', 'int', 'int_array', 'float', 'float_array', 'complex',
@@ -85,23 +88,23 @@ def _add_to_api_definition(name: str, kind: str, dtype: str, min = None, max = N
         if name in profile[f'{kind}s']:
             logging.error(f"{kind.capitalize()} with name '{name}' already exists! "
                           f"Change the 'name' property in the '{kind}' call.")
-            logging.error("Analyzer: Profiling failed. Exiting. Fix the errors above ^^^^^.")
+            logging.error("Profiling failed. Exiting. Fix the errors above ^^^^^.")
             sys.exit(1)
 
-        logging.info(f"Analyzer: Adding {kind} with name '{name}'")
+        logging.info(f"Adding {kind} with name '{name}'")
         profile[f'{kind}s'][name] = {}
 
         if dtype:
-            logging.info(f"Analyzer: Adding datatype '{dtype}' for {kind} with name '{name}'")
+            logging.info(f"Adding datatype '{dtype}' for {kind} with name '{name}'")
             profile[f'{kind}s'][name]['dtype'] = dtype
         if min is not None:
-            logging.info(f"Analyzer: Adding minimum value '{min}' for {kind} with name '{name}'")
+            logging.info(f"Adding minimum value '{min}' for {kind} with name '{name}'")
             profile[f'{kind}s'][name]['min'] = min
         if max is not None:
-            logging.info(f"Analyzer: Adding maximum value '{max}' for {kind} with name '{name}'")
+            logging.info(f"Adding maximum value '{max}' for {kind} with name '{name}'")
             profile[f'{kind}s'][name]['max'] = max
         if unit:
-            logging.info(f"Analyzer: Adding unit '{unit}' for {kind} with name '{name}'")
+            logging.info(f"Adding unit '{unit}' for {kind} with name '{name}'")
             profile[f'{kind}s'][name]['unit'] = unit
 
         with open(_lmrtfy_profile_filename, 'w') as f:
@@ -129,7 +132,7 @@ def _get_type(a: supported_object_type) -> str:
                 if t in str(a.dtype):
                     return f"{t}_array"
     except ImportError:
-        logging.warning("Analyzer: numpy is not available, so I'm assuming you don't need it "
+        logging.warning("Numpy is not available, so I'm assuming you don't need it "
                         "either.")
 
     if type(a) in [list, tuple, set]:
@@ -145,9 +148,6 @@ def _get_type(a: supported_object_type) -> str:
 
     if type(a) == dict:
         return "json"
-
-
-
 
 
 def variable(value: supported_object_type, name: str, min = None, max = None,
