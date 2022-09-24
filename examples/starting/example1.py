@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-from lmrtfy import variable, result
+from lmrtfy.annotation import variable, result
 
 
 x = variable(5, name="x", min=1, max=10)

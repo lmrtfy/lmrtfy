@@ -3,7 +3,7 @@
 
 import time
 
-from lmrtfy import catalog
+from lmrtfy.functions import catalog
 
 job = catalog.example1(x=1,
                        y=[1, 2.0, 3.0],

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from lmrtfy import variable, result
+from lmrtfy.annotation import variable, result
 
 
 def compound_interest(principal: float, annual_interest: float, years: int):
