@@ -47,6 +47,7 @@ if _script_path:
 
     profile = dict()
     profile['language'] = 'python'
+    profile['version'] = sys.version
     profile['filename'] = str(_script_path)
     # TODO: Remove all whitespace and things that cannot be a function name from the name
     profile['name'] = profile['filename'].replace('\\', '/').split('/')[-1].split('.py')[0]
