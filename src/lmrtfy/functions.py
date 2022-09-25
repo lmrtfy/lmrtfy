@@ -135,6 +135,44 @@ def fetch_profile(profile_id):
         logging.error('Fetch template request failed.')
 
 
+class Namespace(object):
+
+    def __init__(self, name: str, local: bool=False):
+
+        h = LoginHandler()
+        if h.login():
+            h.get_token()
+
+        self.config = get_cliconfig()
+
+        self.token = load_token_data()['access_token']
+        self.headers = {'Content-type': 'application/json', 'Accept': 'text/plain',
+                        "Authorization": f"Bearer {self.token}"}
+
+        if '/' in name:
+            n = name.split('/')
+            name = n[0]
+            setattr(self, n[1], Namespace('/'.join(n[1:])))
+        # TODO: Check name is unique, if not error
+        self.name = name
+
+        # TODO: iterate and add/populate all the sub-namespaces
+
+    def add_function(self, func):
+        pass
+
+    def share(self, function, email: str) -> bool:
+        """
+        Share a function from your catalog to a user via email.
+        :param function: Member of catalog or a namespace to be shared.
+        :param email: Email address of the user the function is shared with.
+        :param namespace: The namespace the function is shared in.
+        :return: Return True on success and False is an error occurred.
+        """
+        # TODO: Implement
+        return False
+
+
 class Catalog(object):
     """
     The Catalog object provides an interface to deployed functions that you can run from your code.
@@ -195,6 +233,21 @@ class Catalog(object):
                 logging.error(f'Input Error: {r.json()}')
 
         setattr(self, name, create_function(sig, f, func_name=name))
+
+    def create_namespace(self, name: str) -> Optional[Namespace]:
+        """
+        Create a unique namespace that collects functions and can be shared.
+        :param name: Name of the namespace
+        :return: Returns the Namespace object on success and None in case of an error.
+        """
+        try:
+            n = Namespace(name)
+            self.update()
+            return n
+        except:
+            logging.error(f"Could not create namespace {name}.")
+
+        return None
 
 
 catalog = Catalog()
