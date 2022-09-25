@@ -8,6 +8,7 @@ import logging
 from typing import Union
 from lmrtfy.helper import NumpyEncoder
 import coloredlogs
+from datetime import datetime
 
 import filehash
 import yaml
@@ -51,6 +52,7 @@ if _script_path:
     profile['filename'] = str(_script_path)
     # TODO: Remove all whitespace and things that cannot be a function name from the name
     profile['name'] = profile['filename'].replace('\\', '/').split('/')[-1].split('.py')[0]
+    profile['updated'] = datetime.utcnow().timestamp()
     profile['filehash'] = _hash
     profile['variables'] = {}
     profile['results'] = {}
