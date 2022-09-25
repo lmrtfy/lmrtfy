@@ -9,13 +9,13 @@ from typing import Union
 from lmrtfy.helper import NumpyEncoder
 import coloredlogs
 from datetime import datetime
+from hashlib import sha1
 
 import filehash
 import yaml
 import numpy as np
 
 from .. import _lmrtfy_profiles_dir
-
 
 # TODO: talk about file naming convention!
 # TODO: Hacky hack. This should be changed.
@@ -109,6 +109,8 @@ def _add_to_api_definition(name: str, kind: str, dtype: str, min = None, max = N
         if unit:
             logging.info(f"Adding unit '{unit}' for {kind} with name '{name}'")
             profile[f'{kind}s'][name]['unit'] = unit
+
+        profile[f'{kind}s_hash'] = sha1(json.dumps(profile[f'{kind}s'], sort_keys=True).encode()).hexdigest()
 
         with open(_lmrtfy_profile_filename, 'w') as f:
             yaml.dump(profile, f)
