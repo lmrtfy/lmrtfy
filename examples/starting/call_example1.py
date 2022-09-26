@@ -6,7 +6,7 @@ import time
 from lmrtfy.functions import catalog
 
 job = catalog.example1(x=1,
-                       y=[1, 2.0, 3.0],
+                       y=[1.0, 2.0, 3.0],
                        z="foobar",
                        z1=["bar", "foo"],
                        z2=["foo", 1, 42],
