@@ -34,11 +34,11 @@ from their own code using the [lmrtfy package](https://pypi.org/project/lmrtfy/)
 
 We strive to provide a frictionless developer experience:
 
-* Change as little code as possile to use LMRTFY
+* Change as little code as possible to use LMRTFY
 * Call deployed function like any other function provided by a local library
 
 !!! warning
-LMRTFY is currently in an early phase. Things will likely change in future releases.
+   LMRTFY is currently in an early phase. Things will likely change in future releases.
 
 
 ## Quickstart - TL;DR
