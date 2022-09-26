@@ -110,7 +110,7 @@ class LoginHandler(object):
     def login(self) -> bool:
 
         if self.token_is_valid(load_token_data()['access_token']):
-            logging.info('Valid access token found. Login not necessary.')
+            logging.debug('Valid access token found. Login not necessary.')
             return False
 
         challenge = generate_challenge(self.verifier)
@@ -161,7 +161,7 @@ class LoginHandler(object):
         return True
 
     def get_token(self):
-        logging.info('Fetching access token.')
+        logging.debug('Fetching access token.')
 
         headers = {'Content-Type': 'application/json'}
         body = {'grant_type': 'authorization_code',
@@ -178,7 +178,7 @@ class LoginHandler(object):
 
     def token_is_valid(self, token) -> bool:
 
-        logging.info('Validating auth token.')
+        logging.debug('Validating auth token.')
         if not token:
             return False
 
@@ -195,7 +195,7 @@ class LoginHandler(object):
             jwt.decode(token, key=public_keys[kid], algorithms=["RS256"], audience=self.cliconfig['auth_audience'],
                        verify=True)
 
-            logging.info('Auth token accepted.')
+            logging.debug('Auth token accepted.')
             return True
 
         except jwt.exceptions.InvalidSignatureError:
@@ -224,6 +224,7 @@ class LoginHandler(object):
         return False
 
     def logout(self):
+        logging.debug("Logging out of LMRTFY.")
         delete_token()
 
         base_url = f"{self.cliconfig['api_logout_url']}?"
@@ -233,10 +234,12 @@ class LoginHandler(object):
 
         url = base_url + urllib.parse.urlencode(url_parameters)
         webbrowser.open_new(url)
+        logging.info("Logout successful.")
 
 
 def delete_token():
     try:
         _lmrtfy_auth_dir.joinpath('token').unlink(missing_ok=True)
+        logging.debug("Auth token deleted.")
     except:
         pass

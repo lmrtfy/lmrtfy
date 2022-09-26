@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import logging
 from makefun import create_function
 from inspect import Signature, Parameter
@@ -13,6 +14,13 @@ from typing import List, Optional, Type
 import json
 from lmrtfy.helper import NumpyEncoder
 import enum
+import coloredlogs
+
+_log_level = logging.INFO
+if 'LMRTFY_DEBUG' in os.environ:
+    _log_level = logging.DEBUG
+
+coloredlogs.install(fmt='%(asctime)s [%(process)d] %(levelname)s %(message)s', level=_log_level)
 
 
 typemap = dict()
@@ -208,12 +216,12 @@ class Catalog(object):
             r = requests.get(self.config['api_catalog_url'], headers=self.headers)
             if r.status_code == 200:
                 self.profiles = r.json()
-                logging.info("Updated function catalog.")
+                logging.debug("Updated function catalog.")
                 for profile in self.profiles['profiles']:
                     pid = profile.split('/')[-1]
                     t = fetch_profile(pid)
                     func_name = unique_name(self, t['filename'].replace('\\', '/').split('/')[-1].split('.')[0].strip())
-                    logging.info(f"Added function {func_name}.")
+                    logging.debug(f"Added function {func_name}.")
                     self.__add_function(func_name, *signature_from_profile(t), pid=pid)
         except:  # TODO: Except clause too broad!
             logging.error("Could not update function catalog.")
