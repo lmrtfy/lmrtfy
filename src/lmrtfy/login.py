@@ -222,3 +222,21 @@ class LoginHandler(object):
             logging.error('Unspecified token validation error accored.')
 
         return False
+
+    def logout(self):
+        delete_token()
+
+        base_url = f"{self.cliconfig['api_logout_url']}?"
+        url_parameters = {
+            "client_id": self.cliconfig['auth_client_id']
+        }
+
+        url = base_url + urllib.parse.urlencode(url_parameters)
+        webbrowser.open_new(url)
+
+
+def delete_token():
+    try:
+        _lmrtfy_auth_dir.joinpath('token').unlink(missing_ok=True)
+    except:
+        pass

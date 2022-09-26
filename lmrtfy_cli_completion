@@ -16,22 +16,12 @@ _complete-lmrtfy()
 
   case "${lastcommand}" in
   
-    deploy)
+    submit)
       
       if is_prev_global; then
         opts="${GLOBAL_OPTIONS}"
       else
-        opts="--local --run-as-daemon --script-path --self ${GLOBAL_OPTIONS}"
-      fi
-      opts=$(filter_options $opts)
-    ;;
-
-    login)
-      
-      if is_prev_global; then
-        opts="${GLOBAL_OPTIONS}"
-      else
-        opts="--self ${GLOBAL_OPTIONS}"
+        opts="--input-file --profile-id --self ${GLOBAL_OPTIONS}"
       fi
       opts=$(filter_options $opts)
     ;;
@@ -46,19 +36,39 @@ _complete-lmrtfy()
       opts=$(filter_options $opts)
     ;;
 
-    submit)
+    deploy)
       
       if is_prev_global; then
         opts="${GLOBAL_OPTIONS}"
       else
-        opts="--input-file --profile-id --self ${GLOBAL_OPTIONS}"
+        opts="--local --run-as-daemon --script-path --self ${GLOBAL_OPTIONS}"
       fi
       opts=$(filter_options $opts)
     ;;
 
     lmrtfy)
       
-      opts="deploy fetch login submit ${GLOBAL_OPTIONS}" 
+      opts="deploy fetch login logout submit ${GLOBAL_OPTIONS}" 
+      opts=$(filter_options $opts)
+    ;;
+
+    logout)
+      
+      if is_prev_global; then
+        opts="${GLOBAL_OPTIONS}"
+      else
+        opts="--self ${GLOBAL_OPTIONS}"
+      fi
+      opts=$(filter_options $opts)
+    ;;
+
+    login)
+      
+      if is_prev_global; then
+        opts="${GLOBAL_OPTIONS}"
+      else
+        opts="--self ${GLOBAL_OPTIONS}"
+      fi
       opts=$(filter_options $opts)
     ;;
   esac

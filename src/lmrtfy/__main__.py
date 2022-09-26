@@ -51,6 +51,11 @@ class LMRTFY(object):
         check_version()
         self._login_handler = LoginHandler()
 
+    def logout(self):
+        """
+        Logout from the LMRTFY cloud service
+        """
+        self._login_handler.logout()
 
     def login(self):
         """
