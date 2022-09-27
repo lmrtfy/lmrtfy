@@ -57,6 +57,7 @@ def main(script_path: Path):
         except:
             logging.error('Could not get input template.')
     else:
+        logging.debug(r.content)
         logging.error('Deployment failed.')
         exit(-1)
 
