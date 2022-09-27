@@ -895,7 +895,9 @@ import catalog</code>.</p>
 <span class="normal">251</span>
 <span class="normal">252</span>
 <span class="normal">253</span>
-<span class="normal">254</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Catalog</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Catalog</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Catalog object provides an interface to deployed functions that you can run from your code.</span>
 
@@ -957,6 +959,8 @@ import catalog</code>.</p>
                 <span class="k">return</span> <span class="n">Job</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;job_id&#39;</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Input Error: </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">create_function</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">func_name</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
 
@@ -1047,9 +1051,7 @@ import catalog</code>.</p>
 
       <details class="quote">
         <summary>Source code in <code>src/lmrtfy/functions.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">241</span>
-<span class="normal">242</span>
-<span class="normal">243</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">243</span>
 <span class="normal">244</span>
 <span class="normal">245</span>
 <span class="normal">246</span>
@@ -1060,7 +1062,9 @@ import catalog</code>.</p>
 <span class="normal">251</span>
 <span class="normal">252</span>
 <span class="normal">253</span>
-<span class="normal">254</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_namespace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Namespace</span><span class="p">]:</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_namespace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Namespace</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a unique namespace that collects functions and can be shared.</span>
 <span class="sd">    :param name: Name of the namespace</span>
