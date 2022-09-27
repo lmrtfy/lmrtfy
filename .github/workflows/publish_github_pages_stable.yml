@@ -1,9 +1,9 @@
-name: Docs
+name: "Docs - release"
 on:
   release
 
 env:
-  VERSION: "0.0.7b0"
+  VERSION: "0.0.9b0"
 
 jobs:
   deploy:

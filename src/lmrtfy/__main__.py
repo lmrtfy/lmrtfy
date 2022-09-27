@@ -18,7 +18,6 @@ import lmrtfy.runner
 from lmrtfy.login import LoginHandler, load_token_data, get_cliconfig
 from lmrtfy.runner import load_json_template
 from lmrtfy.fetch_results import fetch_results
-from lmrtfy.helper import check_uuid4
 
 
 _log_level = logging.INFO
@@ -29,10 +28,12 @@ coloredlogs.install(fmt='%(asctime)s [%(process)d] %(levelname)s %(message)s', l
 
 
 def check_version():
+    installed_version = version.parse(str(lmrtfy.__version__))
+    logging.info(f"Running lmrtfy version {installed_version}.")
+
     try:
         r = requests.get("https://pypi.org/pypi/lmrtfy/json")
         recent_version = version.parse(str(list(r.json()['releases'].keys())[-1]))
-        installed_version = version.parse(str(lmrtfy.__version__))
 
         if installed_version < recent_version:
             logging.warning(f"A new version ({recent_version}) is available. Please run: 'pip install --upgrade lmrtfy'")
@@ -46,8 +47,15 @@ class LMRTFY(object):
     """
 
     def __init__(self):
+        logging.info('LMRTFY command line interface')
         check_version()
-        logging.info('Start LMRTFY command line interface.')
+        self._login_handler = LoginHandler()
+
+    def logout(self):
+        """
+        Logout from the LMRTFY cloud service
+        """
+        self._login_handler.logout()
 
     def login(self):
         """
@@ -61,9 +69,8 @@ class LMRTFY(object):
             logging.warning("Using the development API.")
 
         logging.info('Authenticating for LMRTFY.')
-        h = LoginHandler()
-        if h.login():
-            h.get_token()
+        if self._login_handler.login():
+            self._login_handler.get_token()
 
     def deploy(self, script_path: str, local: bool = False, run_as_daemon: bool = False):
         """
@@ -139,10 +146,11 @@ class LMRTFY(object):
         """
         self.login()
 
-        if not check_uuid4(job_id):
-            logging.error(f"'{job_id}' is not a valid job_id. Please check the output of the "
-                          f"`lmrtfy submit` step.")
-            exit(-1)
+        # TODO: These error messages should be created server-side
+        #if not check_uuid4(job_id):
+        #    logging.error(f"'{job_id}' is not a valid job_id. Please check the output of the "
+        #                  f"`lmrtfy submit` step.")
+        #    exit(-1)
 
         logging.info(f'Fetching results for job-id {job_id}')
 

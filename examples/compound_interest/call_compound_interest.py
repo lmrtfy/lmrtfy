@@ -3,7 +3,7 @@
 
 from time import sleep
 
-from lmrtfy import catalog
+from lmrtfy.functions import catalog
 
 job = catalog.calc_compound_interest(5., 10., 5)
 

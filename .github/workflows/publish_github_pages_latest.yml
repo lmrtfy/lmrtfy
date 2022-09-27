@@ -1,4 +1,4 @@
-name: Docs
+name: "Docs - latest"
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
       - develop
 
 env:
-  VERSION: "0.0.7b0"
+  VERSION: "0.0.9b0"
 
 jobs:
   deploy:

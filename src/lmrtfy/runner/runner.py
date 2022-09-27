@@ -1,23 +1,21 @@
 # -*- coding: utf-8 -*-
+import enum
+import json
 import logging
 import os
-import time
-import json
-import uuid
+import pathlib
+import queue
 import subprocess
 import tempfile
-import pathlib
-import enum
-import queue
-import certifi
-
-import jwt
-import requests
+import time
+import uuid
 from typing import Optional
-import json
 
-import yaml
+import certifi
+import jwt
 import paho.mqtt.client as mqtt
+import requests
+import yaml
 
 from lmrtfy.helper import NumpyEncoder
 from lmrtfy.login import load_token_data, get_cliconfig
@@ -98,8 +96,8 @@ class Runner(object):
         # TODO: second status topic for job status
 
         access_token = load_token_data()['access_token']
-        self.user_id = jwt.decode(access_token, options={"verify_signature": False})["sub"].replace(
-            '|', 'X')
+        user_id = jwt.decode(access_token, options={"verify_signature": False})["sub"]
+        self.user_id = user_id.replace('|','-----')
         # job_topic =  f"$share/{user_id}/{user_id}/{self.filehash}/job"
         # self.client.subscribe(job_topic, qos=2)
 
@@ -184,9 +182,12 @@ class Runner(object):
         :param job_id: job_id for the status message. Does not always apply. default: None
         :type job_id: Optional[int]
         """
+        # TODO: Why is job_status a class member?
         self.job_status["status"] = status
         self.job_status["message"] = message
         self.job_status["job_id"] = job_id
+        self.job_status["user_id"] = self.user_id
+
         job_status_topic = f"status/job/{job_id}"
         logging.info(
             f"status update for job '{job_id}': '{status}' with '{message}' for "
@@ -197,6 +198,7 @@ class Runner(object):
     def publish_runner_status(self, status: RunnerStatus, message: str):
         logging.info(f"status update fo runner `{self.client_id}: '{status}' with '{message}'.")
 
+        self.runner_status["user_id"] = self.user_id
         self.runner_status["status"] = status
         self.runner_status["message"] = message
         self.client.publish(self.runner_status_topic, json.dumps(self.runner_status))
@@ -310,7 +312,7 @@ class Runner(object):
                 self.publish_runner_status(RunnerStatus.ACCEPTING_JOBS, "Waiting for Job in MQTT Topic.")
 
                 # blocks until something is in the queue
-                job_id, _, job_param, _ = self.job_list.get().values()
+                job_id, _, job_param, _, _ = self.job_list.get().values()
                 self.publish_runner_status(RunnerStatus.RUNNING, "Starting execution.")
                 logging.debug(f"'{job_param}' for job_id '{job_id}'")
                 self.execute(job_id, job_param)
@@ -318,3 +320,4 @@ class Runner(object):
         except KeyboardInterrupt:
             logging.info("Detected KeyboardInterrupt. Stop program.")
             self.client.loop_stop()
+            exit(-1)
