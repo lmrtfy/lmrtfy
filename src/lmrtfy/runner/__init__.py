@@ -1,9 +1,10 @@
 import logging
 import json
 from typing import Optional
+import requests
+
 from lmrtfy import _lmrtfy_template_dir
 from lmrtfy.login import load_token_data, get_cliconfig
-import requests
 
 
 def fetch_template(profile_id):
@@ -50,3 +51,4 @@ def load_json_template(profile_id) -> Optional[dict]:
 
 from lmrtfy.runner.runner import Runner
 from lmrtfy.runner.__main__ import main
+from lmrtfy.runner.runner import JobStatus
