@@ -1,15 +1,33 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import threading
 from pathlib import Path
 import requests
 import yaml
 import json
 import logging
+import time
+import atexit
 
-from lmrtfy.runner import Runner, save_json_template
 from lmrtfy import _lmrtfy_profiles_dir
+from lmrtfy.runner import Runner, save_json_template, RunnerStatus
+from lmrtfy.runner.timer import every
 from lmrtfy.login import load_token_data, LoginHandler, get_cliconfig
+
+
+def send_termination(runner: Runner):
+    runner.publish_runner_status(RunnerStatus.TERMINATED, "Terminated Runner")
+    time.sleep(0.5)
+    runner.client.loop_stop()
+
+
+def send_heartbeat(runner: Runner):
+    runner.publish_runner_status(runner.runner_status["status"], "Heartbeat")
+
+
+def stop_heartbeat(stop_event: threading.Event, t):
+    stop_event.set()
+    t.join()
 
 
 def main(script_path: Path):
@@ -63,4 +81,15 @@ def main(script_path: Path):
 
     r = Runner(broker_url=config['broker_url'], port=int(config['broker_port']), profile_path=_lmrtfy_profile_filename)
 
-    r.start_listening()
+    stop_event = threading.Event()
+    t = every(30, stop_event, send_heartbeat, r)
+
+    atexit.register(send_termination, r)
+
+    try:
+        r.start_listening()
+
+    except KeyboardInterrupt:
+        stop_heartbeat(stop_event, t)
+        exit(-1)
+

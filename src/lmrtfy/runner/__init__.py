@@ -50,5 +50,5 @@ def load_json_template(profile_id) -> Optional[dict]:
 
 
 from lmrtfy.runner.runner import Runner
+from lmrtfy.runner.runner import JobStatus, RunnerStatus
 from lmrtfy.runner.__main__ import main
-from lmrtfy.runner.runner import JobStatus
