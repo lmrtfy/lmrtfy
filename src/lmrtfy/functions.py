@@ -235,6 +235,8 @@ class Catalog(object):
                 return Job(r.json()['job_id'])
             if r.status_code == 400:
                 logging.error(f'Input Error: {r.json()}')
+            elif r.status_code == 404:
+                logging.error(f"{r.json()}")
 
         setattr(self, name, create_function(sig, f, func_name=name))
 
