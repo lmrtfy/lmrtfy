@@ -24,7 +24,7 @@ def _every(delay, stop_event: threading.Event, task, *args, **kwargs):
             logging.error(f"Problem while executing repetitive task: {e}")
 
         # skip tasks if we are behind schedule:
-        next_time += (time.time() - next_time) // delay * delay + delay
+        next_time += (time.time() - next_time) // delay + delay
 
 
 def every(delay, stop_event: threading.Event, task, *args, **kwargs):
