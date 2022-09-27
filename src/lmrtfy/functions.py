@@ -6,15 +6,19 @@ import logging
 from makefun import create_function
 from inspect import Signature, Parameter
 import requests
-from lmrtfy.login import LoginHandler, load_token_data, get_cliconfig
-from lmrtfy.runner import fetch_template
-from lmrtfy import _lmrtfy_job_dir
+
 import numpy.typing as npt
 from typing import List, Optional, Type
 import json
-from lmrtfy.helper import NumpyEncoder
+
 import enum
 import coloredlogs
+
+from lmrtfy.login import LoginHandler, load_token_data, get_cliconfig
+from lmrtfy.runner import fetch_template
+from lmrtfy.runner import JobStatus
+from lmrtfy import _lmrtfy_job_dir
+from lmrtfy.helper import NumpyEncoder
 
 _log_level = logging.INFO
 if 'LMRTFY_DEBUG' in os.environ:
@@ -35,19 +39,6 @@ typemap['json'] = dict
 typemap['bool'] = bool
 
 
-class JobStatus(str, enum.Enum):
-    IDLE = "IDLE"
-    WAITING = "WAITING"
-    SUCCESS = "SUCCESS"
-    FAILED = "FAILED"
-    JOB_RECEIVED = "JOB_RECEIVED"
-    RUNNING = "RUNNING"
-    RESULTS_READY = "RESULTS_READY"
-    INCOMPLETE_RESULTS = "INCOMPLETE_RESULTS"
-    ABORTED = "ABORTED"
-    UNKNOWN = "UNKNOWN"
-
-
 class Job(object):
 
     def __init__(self, job_id):
@@ -59,9 +50,10 @@ class Job(object):
         try:
             token = load_token_data()['access_token']
             headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
-            r = requests.get(get_cliconfig()['api_submit_url'][:-1] + f'jobs/{self.id}', headers=headers)
+            r = requests.get(get_cliconfig()['api_job_url'] + f'/{self.id}', headers=headers)
             status = JobStatus(r.json())
-        except:
+        except Exception as e:
+            logging.error(e)
             status = JobStatus.UNKNOWN
 
         try:
@@ -216,11 +208,12 @@ class Catalog(object):
             r = requests.get(self.config['api_catalog_url'], headers=self.headers)
             if r.status_code == 200:
                 self.profiles = r.json()
+                logging.debug(self.profiles)
                 logging.debug("Updated function catalog.")
                 for profile in self.profiles['profiles']:
                     pid = profile.split('/')[-1]
                     t = fetch_profile(pid)
-                    func_name = unique_name(self, t['filename'].replace('\\', '/').split('/')[-1].split('.')[0].strip())
+                    func_name = unique_name(self, t["name"]) #t['filename'].replace('\\', '/').split('/')[-1].split('.')[0].strip())
                     logging.debug(f"Added function {func_name}.")
                     self.__add_function(func_name, *signature_from_profile(t), pid=pid)
         except:  # TODO: Except clause too broad!
@@ -233,8 +226,11 @@ class Catalog(object):
         def f(**kwargs) -> Job:
             for p in kwargs:
                 template['argument_values'][p] = kwargs[p]
-            r = requests.post(self.config['api_submit_url'] + f'/{pid}', data=json.dumps(template, cls=NumpyEncoder),
+
+            r = requests.post(self.config['api_submit_url'] + f'/{pid}',
+                              data=json.dumps(template, cls=NumpyEncoder),
                               headers=self.headers)
+
             if r.status_code == 200:
                 return Job(r.json()['job_id'])
             if r.status_code == 400:
