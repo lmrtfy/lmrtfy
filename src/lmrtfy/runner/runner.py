@@ -33,6 +33,7 @@ class JobStatus(str, enum.Enum):
     RUNNING = "RUNNING"
     FAILED = "FAILED"
     RESULTS_READY = "RESULTS_READY"
+    SUBMITTED = "SUBMITTED"
 
 
 def on_mqtt_disconnect(client, userdata, flags, rc, properties=None):
@@ -312,7 +313,7 @@ class Runner(object):
                 self.publish_runner_status(RunnerStatus.ACCEPTING_JOBS, "Waiting for Job in MQTT Topic.")
 
                 # blocks until something is in the queue
-                job_id, _, job_param, _, _ = self.job_list.get().values()
+                job_id, _, _, job_param, _, _ = self.job_list.get().values()
                 self.publish_runner_status(RunnerStatus.RUNNING, "Starting execution.")
                 logging.debug(f"'{job_param}' for job_id '{job_id}'")
                 self.execute(job_id, job_param)
