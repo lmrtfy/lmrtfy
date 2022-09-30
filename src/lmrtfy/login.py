@@ -56,6 +56,11 @@ def save_token_data(token_data):
 
 
 def load_token_data() -> dict:
+
+    env_token = os.getenv("LMRTFY_ACCESS_TOKEN", None)
+    if env_token:
+        return {'access_token': env_token, 'id_token': '', 'refresh_token': ''}
+
     try:
         with open(_lmrtfy_auth_dir.joinpath('token'), 'r') as f:
             return json.load(f)
