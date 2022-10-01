@@ -1,7 +1,18 @@
+---
+hide:
+    - tags
+tags:
+    - HTML5
+---
+
 LMRTFY stands for _Let Me Run That For You_. 
 
 **Create functions that run in the cloud, on your servers or even on your laptop.<br>
-Call them from code, anywhere, just like a regular function.**
+Call them from code that runs somewhere else, just like a regular function.**
+
+TODO:
+* Currently works in Python
+* share them with friends and track the usage
 
 [![Offical site](https://img.shields.io/badge/website-lmrt.fyi-blue?style=for-the-badge)](https://lmrt.fyi)
 
