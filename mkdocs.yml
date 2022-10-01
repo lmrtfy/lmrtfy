@@ -11,7 +11,8 @@ theme:
   highlight_js: true
   logo: images/lmrtfy_small.png
   favicon: images/favicon.png
-
+  icon:
+    repo: fontawesome/brands/github
   font: false
   palette:
     # Palette toggle for light mode
@@ -37,11 +38,41 @@ extra_javascript:
 extra:
   version:
     provider: mike
+  generator: false
   homepage: https://lmrt.fyi
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/lmrtfy/lmrtfy
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/lmrt-fyi
+    - icon: fontawesome/brands/medium
+      link: https://medium.com/lmrt-fyi
+#  consent:
+#    title: Cookie consent
+#    description: |
+#        We use cookies to recognize your repeated visits and preferences, as well
+#        as to measure the effectiveness of our documentation and whether users
+#        find what they're searching for. With your consent, you're helping us to
+#        make our documentation better.
+#    cookies:
+#      analytics:
+#        name: Google Analytics
+#        checked: true
+#      github:
+#        name: github
+#        checked: true
+#    actions:
+#      - accept
+#      - reject
+#      - manage
+
+copyright:
+  Copyright &copy; 2022 LMRTFY #– <a href="#__consent">Change cookie settings</a>
 
 plugins:
   - search
   - mike
+  - tags
   - mkdocstrings:
       handlers:
         python:
