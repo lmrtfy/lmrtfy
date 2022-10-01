@@ -19,20 +19,22 @@ import yaml
 
 from lmrtfy.helper import NumpyEncoder
 from lmrtfy.login import load_token_data, get_cliconfig
-
+from lmrtfy.runner.timer import every
 
 class RunnerStatus(str, enum.Enum):
     IDLE = "IDLE"
-    ACCEPTING_JOBS = "ACCEPTING_JOBS"
     RUNNING = "RUNNING"
+    TERMINATED = "TERMINATED"
 
 
 class JobStatus(str, enum.Enum):
     UNKNOWN = "UNKNOWN"
     ACCEPTED = "ACCEPTED"
     RUNNING = "RUNNING"
+    REJECTED = "REJECTED"
     FAILED = "FAILED"
     RESULTS_READY = "RESULTS_READY"
+    SUBMITTED = "SUBMITTED"
 
 
 def on_mqtt_disconnect(client, userdata, flags, rc, properties=None):
@@ -51,6 +53,8 @@ def on_subscribe(client, userdata, flags, rc, properties=None):
     logging.debug(f"  flags     : {flags}")
     logging.debug(f"  rc        : {[x.getName() for x in rc]}")
     logging.debug(f"  properties: {properties}")
+
+
 
 
 class Runner(object):
@@ -196,12 +200,16 @@ class Runner(object):
         self.client.publish(job_status_topic, json.dumps(self.job_status))
 
     def publish_runner_status(self, status: RunnerStatus, message: str):
-        logging.info(f"status update fo runner `{self.client_id}: '{status}' with '{message}'.")
+        if message != "Heartbeat":
+            logging.info(f"status update for runner `{self.client_id}: '{status}' with '{message}'.")
+        else:
+            logging.debug(f"status update for runner `{self.client_id}: '{status}' with '{message}'.")
 
         self.runner_status["user_id"] = self.user_id
         self.runner_status["status"] = status
         self.runner_status["message"] = message
         self.client.publish(self.runner_status_topic, json.dumps(self.runner_status))
+
 
     def execute(self, job_id: int, job_input: dict):
         """
@@ -300,24 +308,24 @@ class Runner(object):
         This method waits for arriving jobs and starts the execution.
         """
         self.client.on_message = self.on_message
-        try:
-            # queue.get() blocks until an element is inside the queue.
-            # This might not work on Windows which has to be tested
-            while True:
-                # time.sleep(0.1)
-                # TODO: this check might be necessary on windows... if not self.job_list.empty()
-                #  and not self.busy:
-                # if not self.job_list.empty() and not self.busy:
-                # self.busy = True
-                self.publish_runner_status(RunnerStatus.ACCEPTING_JOBS, "Waiting for Job in MQTT Topic.")
+        #try:
+        # queue.get() blocks until an element is inside the queue.
+        # This might not work on Windows which has to be tested
+        while True:
+            # time.sleep(0.1)
+            # TODO: this check might be necessary on windows... if not self.job_list.empty()
+            #  and not self.busy:
+            # if not self.job_list.empty() and not self.busy:
+            # self.busy = True
+            self.publish_runner_status(RunnerStatus.IDLE, "Waiting for job in MQTT Topic.")
 
-                # blocks until something is in the queue
-                job_id, _, job_param, _, _ = self.job_list.get().values()
-                self.publish_runner_status(RunnerStatus.RUNNING, "Starting execution.")
-                logging.debug(f"'{job_param}' for job_id '{job_id}'")
-                self.execute(job_id, job_param)
-                self.job_list.task_done()
-        except KeyboardInterrupt:
-            logging.info("Detected KeyboardInterrupt. Stop program.")
-            self.client.loop_stop()
-            exit(-1)
+            # blocks until something is in the queue
+            job_id, _, _, job_param, _, _ = self.job_list.get().values()
+            self.publish_runner_status(RunnerStatus.RUNNING, "Starting execution.")
+            logging.debug(f"'{job_param}' for job_id '{job_id}'")
+            self.execute(job_id, job_param)
+            self.job_list.task_done()
+        #except KeyboardInterrupt:
+        #    logging.info("Detected KeyboardInterrupt. Stop program.")
+        #    self.client.loop_stop()
+        #    exit(-1)

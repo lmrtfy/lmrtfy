@@ -18,9 +18,14 @@ from werkzeug.serving import make_server
 from lmrtfy import _lmrtfy_auth_dir
 from typing import Optional
 import logging
+from datetime import datetime
+from lmrtfy import _lmrtfy_config_dir
 
 
 def get_cliconfig() -> Optional[dict]:
+
+    # TODO: Cache cliconfig
+
     # TODO: What happens if LOCAL and DEV are defined?
     if "LMRTFY_LOCAL" in os.environ:
         url = "http://127.0.0.1:5000/cliconfig"
@@ -30,8 +35,23 @@ def get_cliconfig() -> Optional[dict]:
         url = "https://api.simulai.de/cliconfig"
 
     try:
-        r = requests.get(url)
-        return r.json()
+        config_file = _lmrtfy_config_dir.joinpath('cliconfig.json')
+        if config_file.exists():
+            with open(config_file, 'r') as f:
+                d = json.load(f)
+                if float(d['updated']) > (float(datetime.utcnow().timestamp()) - 3600):
+                    logging.debug("Loading cached cliconfig.")
+                    return d
+
+        logging.debug("Refreshing cliconfig.")
+        r = requests.get(url).json()
+
+        r['updated'] = str(datetime.utcnow().timestamp())
+
+        with open(config_file, 'w') as f:
+            json.dump(r, f)
+
+        return r
     # TODO: Exception clause too broad
     except:
         logging.error(f"Could not reach the LMRTFY API at {url}. Please try again in a few minutes."
@@ -56,6 +76,11 @@ def save_token_data(token_data):
 
 
 def load_token_data() -> dict:
+
+    env_token = os.getenv("LMRTFY_ACCESS_TOKEN", None)
+    if env_token:
+        return {'access_token': env_token, 'id_token': '', 'refresh_token': ''}
+
     try:
         with open(_lmrtfy_auth_dir.joinpath('token'), 'r') as f:
             return json.load(f)
