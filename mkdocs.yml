@@ -28,7 +28,7 @@ theme:
       scheme: slate
       toggle:
         icon: material/lightbulb-outline
-        name: Switch to system preference
+        name: Switch to light mode
 
 
 extra_css:
