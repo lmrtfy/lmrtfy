@@ -37,3 +37,24 @@
        url('../fonts/nunito-sans-v12-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
        url('../fonts/nunito-sans-v12-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
+
+[data-md-color-scheme="lmrtfy"] {
+    --md-primary-bg-color: #000000;
+    --md-primary-bg-color--light: #000000;
+    --md-primary-bg-color--dark: #000000 ;
+
+    --md-primary-fg-color: #DAFFFF;
+    --md-primary-fg-color--light: #DAFFFF;
+    --md-primary-fg-color--dark: #DAFFFF ;
+}
+
+[data-md-color-scheme="slate"] {
+    --md-primary-bg-color: #000000;
+    --md-primary-bg-color--light: #000000;
+    --md-primary-bg-color--dark: #000000 ;
+
+    --md-primary-fg-color: #DAFFFF;
+    --md-primary-fg-color--light: #DAFFFF;
+    --md-primary-fg-color--dark: #DAFFFF ;
+    --md-hue: 210;
+}
