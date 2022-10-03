@@ -52,5 +52,7 @@
     }
 })(document, window.mixpanel || []);
 
-mixpanel.init('d2830751e5157c9173ad4ac655aab934', {disable_cookie: true, });
+mixpanel.init('d2830751e5157c9173ad4ac655aab934', {disable_cookie: true});
+
+var path = window.location.pathname;
 mixpanel.track(path)
