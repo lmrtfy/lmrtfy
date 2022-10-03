@@ -16,15 +16,17 @@ theme:
   font: false
   palette:
     # Palette toggle for light mode
-    - scheme: default
+    - media: "(prefers-color-scheme: light)"
+      scheme: lmrtfy
       toggle:
-        icon: material/brightness-7 
+        icon: material/lightbulb
         name: Switch to dark mode
     # Palette toggle for dark mode
-    - scheme: slate
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
       toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+        icon: material/lightbulb-outline
+        name: Switch to system preference
 
 
 extra_css:
@@ -32,6 +34,7 @@ extra_css:
 
 extra_javascript:
   - javascript/mathjax.js
+  - javascript/mixpanel.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
@@ -89,7 +92,6 @@ markdown_extensions:
   - toc:
       baselevel: 2
       permalink: true
-
   - pymdownx.arithmatex:
       generic: true
   - pymdownx.betterem:
@@ -112,10 +114,10 @@ markdown_extensions:
   - pymdownx.tilde
 
 nav:
-  - lmrt.fyi: "https://lmrt.fyi"
-  - LMRTFY @ GitHub: "https://github.com/lmrtfy/lmrtfy"
+  - Website: "https://lmrt.fyi"
+  - GitHub Repository: "https://github.com/lmrtfy/lmrtfy"
   - Introduction: 'index.md'
-  - Quickstart: 'quickstart.md'
+  - Quick Start: 'quickstart.md'
   - Tutorial:
     - Installation: 'tutorial/installation.md'
     - Login: 'tutorial/login.md'
@@ -130,8 +132,10 @@ nav:
   - API Reference:
     - Annotation: "api_reference/annotation.md"
     - Catalog: "api_reference/catalog.md"
+  - CLI Reference: "cli_reference.md"
   - How to report an issue: "report_bugs.md"
   - Contributing: 'contributing.md'
-  #- Roadmap: 'roadmap.md'
+
+  - Roadmap: 'roadmap.md'
   - Changelog: 'CHANGELOG.md'
 

@@ -83,3 +83,6 @@ push = true
 ".github/workflows/publish_github_pages_latest.yml" = [
     'VERSION: "MAJOR.MINOR.PATCH[PYTAGNUM]"',
 ]
+"docs/javascript/mixpanel.js" = [
+    'doc_version = "MAJOR.MINOR.PATCH[PYTAGNUM]"'
+]

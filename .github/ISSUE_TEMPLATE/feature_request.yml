@@ -1,0 +1,31 @@
+name: Feature Request
+description: Request a new feature.
+title: "[Feature]: "
+labels: ["feature", "triage"]
+assignees:
+  - ""
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to request a feature.
+  - type: textarea
+    id: feature_idea
+    attributes:
+      label: What feature would you like to see?
+      description: Also tell us, what problem are you trying to solve with this feature?
+      placeholder: Tell us what you want!
+      value: "This is the feature I want."
+    validations:
+      required: true
+  - type: dropdown
+    id: lmrtfy_version
+    attributes:
+      label: lmrtfy version
+      description: What version of lmrtfy are you currently using?
+      options:
+        - "0.0.9"
+        - "0.0.8"
+        - "<0.0.8"
+    validations:
+      required: false
