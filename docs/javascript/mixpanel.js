@@ -52,10 +52,9 @@
     }
 })(document, window.mixpanel || []);
 
+var doc_version = "0.0.9b0"
 
+mixpanel.init('d2830751e5157c9173ad4ac655aab934', {disable_cookie: true, });
 
-// Enabling the debug mode flag is useful during implementation,
-// but it's recommended you remove it for production
-mixpanel.init( process.env.MIXPANEL_API_KEY, {debug: true});
-//mixpanel.init('d2830751e5157c9173ad4ac655aab934', {debug: true});
-mixpanel.track('Sign up');
+var path = window.location.pathname;
+mixpanel.track(doc_version + ": " + path)
