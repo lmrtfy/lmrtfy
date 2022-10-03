@@ -16,6 +16,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://lmrt.fyi/0.0.9b0/cli_reference/</loc>
+         <lastmod>2022-10-03</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://lmrt.fyi/0.0.9b0/contributing/</loc>
          <lastmod>2022-10-03</lastmod>
          <changefreq>daily</changefreq>
@@ -32,6 +37,11 @@
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.9b0/roadmap/</loc>
+         <lastmod>2022-10-03</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://lmrt.fyi/0.0.9b0/vision/</loc>
          <lastmod>2022-10-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
