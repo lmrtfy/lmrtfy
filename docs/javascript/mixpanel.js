@@ -52,11 +52,20 @@
     }
 })(document, window.mixpanel || []);
 
-mixpanel.init('d2830751e5157c9173ad4ac655aab934', {disable_cookie: true});
+mixpanel.init('d2830751e5157c9173ad4ac655aab934', {disable_cookie: true, ignore_dnt: true});
 
 let path = window.location.pathname.split("/");
 
 let docs_version = path[1];
-let page = path.slice(2).join("/");
+let page = "/" + path.slice(2).join("/");
+
+if (docs_version.split(".").length !== 3) {
+    docs_version = "";
+    page = "/" + path.slice(1).join("/");
+}
+
+if (page === "/") {
+    page = page + "introduction"
+}
 
 mixpanel.track(page, {"docs_version": docs_version});
