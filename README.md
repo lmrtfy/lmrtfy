@@ -7,7 +7,7 @@
 
 </p>
 
-<p style="text-align: center;">
+<p align="center">
    <a href="https://github.com/lmrtfy/lmrtfy"><img alt="repo badge" src="https://img.shields.io/badge/repository-GitHub-blue?style=for-the-badge" /></a>
    <img alt="GitHub Stars" src="https://img.shields.io/github/stars/lmrtfy/lmrtfy?style=for-the-badge" />
    <a href="https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE"><img alt="BSD-3 badge" src="https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge" /></a>
