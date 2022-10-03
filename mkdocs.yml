@@ -14,6 +14,8 @@ theme:
   icon:
     repo: fontawesome/brands/github
   font: false
+  features:
+    - navigation.sections
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
@@ -89,6 +91,7 @@ markdown_extensions:
   - admonition
   - attr_list
   - def_list
+  - md_in_html
   - toc:
       baselevel: 2
       permalink: true
@@ -114,10 +117,9 @@ markdown_extensions:
   - pymdownx.tilde
 
 nav:
-  - Website: "https://lmrt.fyi"
-  - GitHub Repository: "https://github.com/lmrtfy/lmrtfy"
   - Introduction: 'index.md'
-  - Quick Start: 'quickstart.md'
+  - Quick start: 'quickstart.md'
+  - Our vision: "vision.md"
   - Tutorial:
     - Installation: 'tutorial/installation.md'
     - Login: 'tutorial/login.md'
@@ -126,16 +128,20 @@ nav:
     - Submit a job: 'tutorial/submission.md'
     - Get results: 'tutorial/fetch_results.md'
   - Examples:
-    - Starting Example: 'examples/starting_example.md'
-    - Free Fall: 'examples/free_fall.md'
-    - Compound Interest: 'examples/compound_interest.md'
-  - API Reference:
-    - Annotation: "api_reference/annotation.md"
-    - Catalog: "api_reference/catalog.md"
-  - CLI Reference: "cli_reference.md"
-  - How to report an issue: "report_bugs.md"
-  - Contributing: 'contributing.md'
+    - Starting example: 'examples/starting_example.md'
+    - Free fall: 'examples/free_fall.md'
+    - Compound interest: 'examples/compound_interest.md'
+  - Reference:
+    - API reference:
+      - Annotation: "api_reference/annotation.md"
+      - Catalog: "api_reference/catalog.md"
+    - CLI reference: "cli_reference.md"
 
-  - Roadmap: 'roadmap.md'
-  - Changelog: 'CHANGELOG.md'
+  - Contributing:
+    - Reporting an issue: "report_bugs.md"
+    - Contributing code: 'contributing.md'
+
+  - Roadmap:
+    - Roadmap: 'roadmap.md'
+    - Changelog: 'CHANGELOG.md'
 

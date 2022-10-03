@@ -15,10 +15,13 @@ tags:
 
 ✅ Works with Python, but more languages will be added in the future.
 
+<div style="text-align: center;" markdown>
 
 [![GitHub Repository](https://img.shields.io/badge/repository-GitHub-blue?style=for-the-badge)](https://github.com/lmrtfy/lmrtfy)
 [![Badge_BSD3](https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge)](https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE)
 ![Badge_Stars](https://img.shields.io/github/stars/lmrtfy/lmrtfy?style=for-the-badge)
+
+</div>
 
 * [Quickstart Guide](quickstart.md)
 * [Tutorial](tutorial/installation.md)
