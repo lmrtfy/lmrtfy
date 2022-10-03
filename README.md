@@ -1,5 +1,5 @@
 <p align="center" width="100%">
-   [![LMRTFY logo](docs/images/lmrtfy_small.png)](https://lmrt.fyi)
+   <a href="https://lmrt.fyi"> <img src="docs/images/lmrtfy_small.png"><img></a>
 </p>
 
 [![Badge_BSD3](https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge)](https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE)
