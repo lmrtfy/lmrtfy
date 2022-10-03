@@ -54,9 +54,9 @@
 
 mixpanel.init('d2830751e5157c9173ad4ac655aab934', {disable_cookie: true});
 
-var path = window.location.pathname.split("/");
+let path = window.location.pathname.split("/");
 
-var docs_version = path[0]
-var page = path.slice(1).join("/")
+let docs_version = path[0];
+let page = path.slice(1).join("/");
 
-mixpanel.track(page, {"docs_version": docs_version})
+mixpanel.track(page, {"docs_version": docs_version});
