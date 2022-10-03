@@ -1,3 +1,12 @@
+<img
+   style="display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 30%;"
+   src="docs/images/lmrtfy_small.png"
+   alt="LMRTFY logo">
+</img>
+
 <div style="text-align: center;">
 
    [![LMRTFY logo](docs/images/lmrtfy_small.png)](https://lmrt.fyi)
