@@ -15,16 +15,24 @@ theme:
     repo: fontawesome/brands/github
   font: false
   palette:
-    # Palette toggle for light mode
-    - scheme: default
+    #- scheme: lmrtfy
+    - media: "(prefers-color-scheme)"
+      scheme: lmrtfy
       toggle:
-        icon: material/brightness-7 
+        icon: material/lightbulb-auto
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: lmrtfy
+      toggle:
+        icon: material/lightbulb
         name: Switch to dark mode
     # Palette toggle for dark mode
-    - scheme: slate
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
       toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+        icon: material/lightbulb-outline
+        name: Switch to system preference
 
 
 extra_css:
