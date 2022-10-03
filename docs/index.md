@@ -2,19 +2,19 @@
 hide:
     - tags
 tags:
-    - HTML5
+    - Introduction
 ---
 
-LMRTFY stands for _Let Me Run That For You_. 
+**LMRTFY stands for _Let Me Run That For You_.**
 
-**Create functions that run in the cloud, on your servers or even on your laptop.<br>
-Call them from code that runs somewhere else, just like a regular function.**
+✅ Create functions that run in the **cloud**, on **your servers** or even on **your laptop**.
 
-TODO:
-* Currently works in Python
-* share them with friends and track the usage
+✅ Call them from code that runs somewhere else, just **like a regular function**.
 
-[![Offical site](https://img.shields.io/badge/website-lmrt.fyi-blue?style=for-the-badge)](https://lmrt.fyi)
+✅ **Share functions** with friends and colleagues, track their usage and **monetize** their usage.
+
+✅ Works with Python, but more languages will be added in the future.
+
 
 [![GitHub Repository](https://img.shields.io/badge/repository-GitHub-blue?style=for-the-badge)](https://github.com/lmrtfy/lmrtfy)
 [![Badge_BSD3](https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge)](https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE)
