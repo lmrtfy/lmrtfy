@@ -24,15 +24,13 @@ from lmrtfy import _lmrtfy_config_dir
 
 def get_cliconfig() -> Optional[dict]:
 
-    # TODO: Cache cliconfig
-
     # TODO: What happens if LOCAL and DEV are defined?
     if "LMRTFY_LOCAL" in os.environ:
         url = "http://127.0.0.1:5000/cliconfig"
     elif "LMRTFY_DEV" in os.environ:
-        url = "https://dev-api.simulai.de/cliconfig"
+        url = "https://dev-api.lmrt.fyi/cliconfig"
     else:
-        url = "https://api.simulai.de/cliconfig"
+        url = "https://api.lmrt.fyi/cliconfig"
 
     try:
         config_file = _lmrtfy_config_dir.joinpath('cliconfig.json')
