@@ -1,8 +1,10 @@
 <p align="center" width="100%">
    <a href="https://lmrt.fyi"> <img src="docs/images/lmrtfy_small.png"><img></a>
 </p>
+<p align="center" width="100%">
+   <a href="https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge"></img></a>
+</p>
 
-[![Badge_BSD3](https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge)](https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE)
 ---
 
 ![Linter](https://github.com/lmrtfy/lmrtfy/workflows/linter/badge.svg) 
