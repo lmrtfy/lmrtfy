@@ -154,7 +154,7 @@ class LoginHandler(object):
         base_url = f"{self.cliconfig['auth_authorize_url']}?"
         url_parameters = {
             'audience': self.cliconfig['auth_audience'],
-            'scope': "profile openid offline_access",  # self.cliconfig['auth_scopes'],
+            'scope': "profile openid offline_access email",  # self.cliconfig['auth_scopes'],
             'response_type': 'code',
             'redirect_uri': self.redirect_uri,
             'client_id': self.cliconfig['auth_client_id'],
