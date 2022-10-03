@@ -58,4 +58,5 @@
 // but it's recommended you remove it for production
 mixpanel.init( process.env.MIXPANEL_API_KEY, {debug: true});
 //mixpanel.init('d2830751e5157c9173ad4ac655aab934', {debug: true});
-mixpanel.track('Sign up');
+//mixpanel.track('Sign up');
+console.log(window.location.pathname)
