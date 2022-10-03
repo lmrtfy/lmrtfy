@@ -1,4 +1,4 @@
-name: Docs
+name: "Docs - latest"
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
       - develop
 
 env:
-  VERSION: "0.0.8"
+  VERSION: "0.0.9b0"
 
 jobs:
   deploy:
@@ -16,6 +16,10 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
+      - uses: actions/cache@v2
+        with:
+          key: ${{ github.ref }}
+          path: .cache
       - run: |
           pip install -r docs/requirements.txt
           git config user.name gh_pages_bot

@@ -3,7 +3,7 @@
 
 import time
 
-from lmrtfy import catalog
+from lmrtfy.functions import catalog
 
 job = catalog.calc_velocity(time=100.0)
 

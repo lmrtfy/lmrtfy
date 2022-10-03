@@ -13,35 +13,48 @@ import urllib
 import webbrowser
 from time import sleep
 import jwt
-from flask import Flask, request
+from flask import Flask, request, redirect
 from werkzeug.serving import make_server
 from lmrtfy import _lmrtfy_auth_dir
 from typing import Optional
 import logging
+from datetime import datetime
+from lmrtfy import _lmrtfy_config_dir
 
 
-def get_cliconfig():
+def get_cliconfig() -> Optional[dict]:
+
+    # TODO: What happens if LOCAL and DEV are defined?
     if "LMRTFY_LOCAL" in os.environ:
-        try:
-            r = requests.get("http://127.0.0.1:5000/cliconfig")
-        except ConnectionError:
-            logging.error("Could not reach a local API. Make sure it is running.")
-            exit(-1)
+        url = "http://127.0.0.1:5000/cliconfig"
     elif "LMRTFY_DEV" in os.environ:
-        try:
-            r = requests.get("https://dev-api.simulai.de/cliconfig")
-        except ConnectionError:
-            logging.error("Could not reach the development API.")
-            exit(-1)
+        url = "https://dev-api.lmrt.fyi/cliconfig"
     else:
-        try:
-            r = requests.get('https://api.simulai.de/cliconfig')
-        except:
-            logging.error("Could not reach the LMRTFY API. Please try again in a few minutes. If"
-                          "the error persists please contact the lmrtfy team.")
-            exit(-1)
+        url = "https://api.lmrt.fyi/cliconfig"
 
-    return r.json()
+    try:
+        config_file = _lmrtfy_config_dir.joinpath('cliconfig.json')
+        if config_file.exists():
+            with open(config_file, 'r') as f:
+                d = json.load(f)
+                if float(d['updated']) > (float(datetime.utcnow().timestamp()) - 3600):
+                    logging.debug("Loading cached cliconfig.")
+                    return d
+
+        logging.debug("Refreshing cliconfig.")
+        r = requests.get(url).json()
+
+        r['updated'] = str(datetime.utcnow().timestamp())
+
+        with open(config_file, 'w') as f:
+            json.dump(r, f)
+
+        return r
+    # TODO: Exception clause too broad
+    except:
+        logging.error(f"Could not reach the LMRTFY API at {url}. Please try again in a few minutes."
+                      "If the error persists please contact hello@lmrt.fyi.")
+        exit(-1)
 
 
 def auth_url_encode(byte_data):
@@ -53,7 +66,6 @@ def generate_challenge(a_verifier):
 
 
 def save_token_data(token_data):
-
     try:
         with open(_lmrtfy_auth_dir.joinpath('token'), 'w') as f:
             json.dump(token_data, f)
@@ -61,7 +73,11 @@ def save_token_data(token_data):
         logging.error(f"Could not save token in {_lmrtfy_auth_dir}.")
 
 
-def load_token_data() -> Optional[dict]:
+def load_token_data() -> dict:
+
+    env_token = os.getenv("LMRTFY_ACCESS_TOKEN", None)
+    if env_token:
+        return {'access_token': env_token, 'id_token': '', 'refresh_token': ''}
 
     try:
         with open(_lmrtfy_auth_dir.joinpath('token'), 'r') as f:
@@ -97,6 +113,7 @@ class LoginHandler(object):
         self.received_state = None
 
         self.verifier = auth_url_encode(secrets.token_bytes(32))
+        # TODO: Use https for local redirects as well.
         self.redirect_uri = f"http://{self.cliconfig['auth_listener_host']}:{self.cliconfig['auth_listener_ports'][0]}/callback"
 
     def callback(self):
@@ -111,12 +128,12 @@ class LoginHandler(object):
         self.received_state = request.args['state']
         self.received_callback = True
 
-        return f"<center><h1>{message}. Please return to your application now.</h1></center>"
+        return redirect(self.cliconfig['api_login_success_url'], code=302)
 
-    def login(self):
+    def login(self) -> bool:
 
         if self.token_is_valid(load_token_data()['access_token']):
-            logging.info('Valid access token found. Login not necessary.')
+            logging.debug('Valid access token found. Login not necessary.')
             return False
 
         challenge = generate_challenge(self.verifier)
@@ -137,14 +154,14 @@ class LoginHandler(object):
         base_url = f"{self.cliconfig['auth_authorize_url']}?"
         url_parameters = {
             'audience': self.cliconfig['auth_audience'],
-            'scope': "profile openid offline_access",  #self.cliconfig['auth_scopes'],
+            'scope': "profile openid offline_access",  # self.cliconfig['auth_scopes'],
             'response_type': 'code',
             'redirect_uri': self.redirect_uri,
             'client_id': self.cliconfig['auth_client_id'],
             'code_challenge': challenge.replace('=', ''),
             'code_challenge_method': 'S256',
             'state': state
-            }
+        }
 
         logging.info('Opening browser window for authentication and login.')
         url = base_url + urllib.parse.urlencode(url_parameters)
@@ -167,7 +184,7 @@ class LoginHandler(object):
         return True
 
     def get_token(self):
-        logging.info('Fetching access token.')
+        logging.debug('Fetching access token.')
 
         headers = {'Content-Type': 'application/json'}
         body = {'grant_type': 'authorization_code',
@@ -184,7 +201,7 @@ class LoginHandler(object):
 
     def token_is_valid(self, token) -> bool:
 
-        logging.info('Validating auth token.')
+        logging.debug('Validating auth token.')
         if not token:
             return False
 
@@ -198,9 +215,10 @@ class LoginHandler(object):
                 public_keys[kid] = jwt.algorithms.RSAAlgorithm.from_jwk(json.dumps(jwk))
 
             kid = jwt.get_unverified_header(token)['kid']
-            jwt.decode(token, key=public_keys[kid], algorithms=["RS256"], audience=self.cliconfig['auth_audience'], verify=True)
+            jwt.decode(token, key=public_keys[kid], algorithms=["RS256"], audience=self.cliconfig['auth_audience'],
+                       verify=True)
 
-            logging.info('Auth token accepted.')
+            logging.debug('Auth token accepted.')
             return True
 
         except jwt.exceptions.InvalidSignatureError:
@@ -228,4 +246,23 @@ class LoginHandler(object):
 
         return False
 
+    def logout(self):
+        logging.debug("Logging out of LMRTFY.")
+        delete_token()
 
+        base_url = f"{self.cliconfig['api_logout_url']}?"
+        url_parameters = {
+            "client_id": self.cliconfig['auth_client_id']
+        }
+
+        url = base_url + urllib.parse.urlencode(url_parameters)
+        webbrowser.open_new(url)
+        logging.info("Logout successful.")
+
+
+def delete_token():
+    try:
+        _lmrtfy_auth_dir.joinpath('token').unlink(missing_ok=True)
+        logging.debug("Auth token deleted.")
+    except:
+        pass

@@ -1,6 +1,16 @@
-# LMRTFY - ![Badge_BSD3](https://img.shields.io/badge/license-BSD--3-green)
+<p align="center" width="66%">
+   <a href="https://lmrt.fyi"> <img src="docs/images/lmrtfy_small.png"><img></a>
+</p>
+<p align="center" width="100%">
+   <a href="https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge"></img></a>
+</p>
 
-![Linter](https://github.com/lmrtfy/lmrtfy/workflows/linter/badge.svg) [![Documentation](https://github.com/lmrtfy/lmrtfy/actions/workflows/publish_github_pages_stable.yml/badge.svg)](https://docs.lmrt.fyi)
+---
+
+![Linter](https://github.com/lmrtfy/lmrtfy/workflows/linter/badge.svg) 
+[![Documentation (stable)](https://github.com/lmrtfy/lmrtfy/actions/workflows/publish_github_pages_stable.yml/badge.svg)](https://docs.lmrt.fyi/stable)
+[![Documentation (latest)](https://github.com/lmrtfy/lmrtfy/actions/workflows/publish_github_pages_latest.yml/badge.svg)](https://docs.lmrt.fyi/latest)
+
 
 Turn variables into program arguments. Auto-generates a CLI interface and an API using lmrt.fyi.
 
@@ -30,11 +40,11 @@ from their own code using the [lmrtfy package](https://pypi.org/project/lmrtfy/)
 
 We strive to provide a frictionless developer experience:
 
-* Change as little code as possile to use LMRTFY
+* Change as little code as possible to use LMRTFY
 * Call deployed function like any other function provided by a local library
 
 !!! warning
-LMRTFY is currently in an early phase. Things will likely change in future releases.
+   LMRTFY is currently in an early phase. Things will likely change in future releases.
 
 
 ## Quickstart - TL;DR

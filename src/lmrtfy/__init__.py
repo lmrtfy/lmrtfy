@@ -3,7 +3,7 @@
 import os
 import pathlib
 
-__version__ = "0.0.8"
+__version__ = "0.0.9b0"
 # Don't import or use the underscored variables. These are subject to change.
 _user_home = pathlib.Path.home()
 
@@ -34,8 +34,3 @@ if not _lmrtfy_template_dir.is_dir():
 
 if not _lmrtfy_job_dir.is_dir():
     os.mkdir(_lmrtfy_job_dir)
-
-#from lmrtfy.annotation import resource
-from lmrtfy.annotation import variable
-from lmrtfy.annotation import result
-from lmrtfy.functions import catalog
