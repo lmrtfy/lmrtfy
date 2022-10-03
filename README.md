@@ -1,5 +1,8 @@
-# LMRTFY - [![Badge_BSD3](https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge)](https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE)
+<div style="text-align: center;">
+   [![LMRTFY logo](docs/images/lmrtfy_small.png)](https://lmrt.fyi)
 
+   [![Badge_BSD3](https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge)](https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE)
+</div>
 
 ![Linter](https://github.com/lmrtfy/lmrtfy/workflows/linter/badge.svg) 
 [![Documentation (stable)](https://github.com/lmrtfy/lmrtfy/actions/workflows/publish_github_pages_stable.yml/badge.svg)](https://docs.lmrt.fyi/stable)
