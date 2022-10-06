@@ -10,8 +10,7 @@ $$
 Very common formula in anything related to finance.
 
 Again, we start with the plain code, as you would implement it right away:
-```python
-# file: ci.py
+```py title="calc_compound_interest.py" linenums="1"
 def compound_interest(principal: float, annual_interest: float, years: int):
     return principal * (1. + annual_interest/100.)**years - principal
 
@@ -34,10 +33,8 @@ There are several problems with this solution:
 # Annotate with lmrtfy
 
 Using lmrtfy, you would annotate the script as follows:
-```python
-# file: calc_compound_interest.py
-from lmrtfy import variable, result
-
+```py title="calc_compound_interest_lmrtfy.py" linenums="1"
+from lmrtfy.annotation import variable, result
 
 def compound_interest(principal: float, annual_interest: float, years: int):
    """
@@ -75,13 +72,12 @@ $ lmrtfy deploy examples/compound_interest/calc_compound_interest.py --local
 
 ## Call `compound_interest` from code
 Similar to the other examples we just need to import the `catalog` and call the correct function:
-```python
-# file: examples/compound_interest/call_compound_interest.py
+```py title="call_compound_interest.py" linenums="1"
 from time import sleep
 
-from lmrtfy import catalog
+from lmrtfy.functions import catalog
 
-job = catalog.calc_compound_interest(5., 10., 5)
+job = catalog.calc_compound_interest_lmrtfy(5., 10., 5)
 
 if job:
    print(job.id, job.status)
@@ -101,7 +97,7 @@ The `<profile_id>` is important to submit jobs.
 
 
 To submit a job you are currently required to save the input parameters as JSON (e.g. `input.json`):
-```json
+```json title="input.json to calculate compound interest"
 {
   "argument_values": {
     "annual_interest": 6.0,
@@ -128,8 +124,8 @@ We need the `<job_id>` later to fetch the results from the computation.
 
 # Alternative Annotation
 A more compact but working alternative is to create the result as follows:
-```python
-from lmrtfy import variable, result
+```python title="Alternative annotation" linenums="1"
+from lmrtfy.annotation import variable, result
 
 def compound_interest(principal: float, annual_interest: float, years: int):
     return principal * (1. + annual_interest/100.)**years - principal
