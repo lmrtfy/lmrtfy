@@ -23,7 +23,8 @@ $ pip install lmrtfy
 This way you will always have the most recent release of `lmrtfy`.
 
 # Install from Source
-You can also install from git which is the best way to use the nightly features.
+You can also install [lmrtfy](https://github.com/lmrtfy/lmrtfy) from source which is the best way 
+to use the nightly features. Be aware that this might not always work. Issues are to be expected.
 
 Clone the git repository and install manually:
 ```shell 
@@ -31,9 +32,8 @@ $ git clone --branch main https://github.com/lmrtfy/lmrtfy.git
 $ cd lmrtfy
 $ pip install .
 ```
-The `main` branch is the release branch and should always work with the lmrtfy API. 
+
+The `main` branch is the release branch and should always work with the LMRTFY API. 
 
 Alternatively, you can use the `develop` branch. This should be the most up-to-date branch in the
 repository, but things might break. So be careful while using the `develop` branch.
-
-
