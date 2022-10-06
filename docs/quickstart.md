@@ -1,81 +1,104 @@
-# Installation: 
+This is our quick start guide. Everything you need to know to get started is here.
 
-We provide a [PyPI package](https://pypi.org/project/lmrtfy/)
-
-!!! note
-    We recommend installing LMRTFY into a virtual environment to keep your system clean.
-
-## Linux and MacOS
-We provide a PyPI package for Linux and MacOS which can be installed easily with `pip`:
+# Installation
+You can install the [lmrtfy package](https://pypi.org/project/lmrtfy/) just like any other package:
 
 ```shell
 $ pip install lmrtfy
 ```
 
-## Windows
-On Windows the `conda` package manager provided by 
-[miniconda and Anaconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html)
-is the best way to use Python and install Python packages.
+If you use conda you need to install `pip` in your conda environment before you can use LMRTFY. This
+is likely necessary on Windows.
 
-Right now, we only support a PyPI package which can be installed with `conda`. If you have `pip` installed
-in your conda environment you can directly install from PyPI, otherwise you need to install `pip` first:
 ```shell
 $ conda install pip
 $ pip install lmrtfy
 ```
 
-# First login 
+# Sign-Up
+To make full use of LMRTFY you need to sign up with us with `lmrtfy login`.
 
-Login/sign up to receive access token: `$ lmrtfy login`. The token is saved in `~/.lmrtfy/auth/token` but you 
-should not need to manually open the token.
+Besides an e-mail-based sign up we also provide social logins via GitHub and Google for ease of use.
+
+# Calling your first remote function
+Calling a function that is available in the cloud is as easy as calling a native function.
+
+```py title="call_example1.py" linenums="1" 
+from time import sleep
+from lmrtfy.functions import catalog 
+
+job = catalog.examples.example1(args) # (1)!
+ 
+while job and not job.ready: # (2)!
+    sleep(1.)
+
+if job:    
+    print(job.results)  # (3)!
 
 
-# Create code annotations
-Annotate the inputs and outputs of your script with `variable` and `results` and save it as `script.py`:
-```python
-# import the required things from lmrtfy
-from lmrtfy import variable, result
-# annotate an input
-time = variable(200., name="time", min=0, max=1000, unit="s")
-speed = result(9.81*time, name="speed", min=0, max=9810, unit="m/s")
 ```
 
-This calculates the velocity of an object in free fall after `time` seconds.
-
-Run `python script.py` to create the profile. This **always** works, even without access to lmrtfy. 
-
-# Deploy the script to accept jobs from the generated web API
-Run `lmrtfy deploy script.py --local` to generate the API and start the runner to listen to jobs for your script. 
-You can find the profile id to submit a job in the logs: 
-```shell
-INFO Starting deployment of examples/velocity_from_gravity/calc_velocity.py
-WARNING Deploying locally.
-INFO Profile_id to be used for requests: 7ff68a0cfd8c61122cfdaf0a835c7cd1f94e7db9
-```
-
-# Submit jobs with CLI
-Open a new terminal and submit a new job (`<profile_id>` is the profile id you received during the deployment (`7ff...` in the example above)): 
-```shell
-$ lmrtfy submit <profile_id> <input.json>
-```
-For the example above save the following in your `input.json`:
+1. This calls the function `example1` in the LMRTFY namespace `example`. The function is executed
+   on a remote resource.
+2. If `job` is not valid the call did not succeed. `job.ready` queries the job status and becomes
+   true once the results are ready.
+3. `job.results` gets the results from LMRTFY as JSON:
 ```json
 {
-  "argument_values": {
-    "time": 200.0
-  },
-  "argument_units" : {
-    "time": "s"
-  }
-}
+  "<variable name>": <value>,
+  ...
+}    
 ```
-You will receive a `job_id` which you will need to fetch the results later on:
+
+As you can see calling the function `example1` looks just like calling any other function in Python;
+however, it is actually eexcuted on a remote server, in this case on our own server as we provide the
+example.
+
+Each call to a deployed function returns a `Job` object if the submission was successful. If an error
+occurred `None` is returned. This way we can check if the submission was successful or not.
+
+To get the results from the computation we can simply call `job.results`. Depending on the size of the
+results this call will take a while. In the example, this call should at most take a few seconds.
+
+# Deploy your first function
+Deploying your own function is really easy, too.
+
+Let's say you want to calculate how fast a falling object will be after $x$ seconds:
+
+The code which can be used with LMRTFY is really simple:
+
+```py title="free_fall_lmrtfy.py" linenums="1" hl_lines="1 3 9"
+from lmrtfy.annotation import variable, result # (1)!
+
+time = variable(200., name="time", min=0, max=1000, unit="s") # (2)!
+standard_gravity = 9.81
+
+velocity = standard_gravity*time
+print(f"Velocity after {time} seconds is {velocity} m/s.") 
+
+velocity = result(velocity , name="velocity", min=0, max=9810, unit="m") # (3)!
+```
+
+1. `variable` and `result` are the imports that are needed to annotate your code to make it work 
+with LMRTFY.
+2. `variable` annotates any inputs of your script.
+3. `result` annotates a result of script. A script can have multiple results.
+
+The highlighted lines have been added or changed to let LMRTFY know about the structure of the script.
+
+Before we can deploy the function we need to run it through the Python interpreter once to create
+the annotation profile.
+
 ```shell
-INFO Job-id: 14584640-778c-4f91-a288-03cffc2b9c7a
+$ python free_fall_lmrtfy.py 
 ```
-# Fetch results
-Get the results by calling `$ lmrtfy fetch <job_id> <path>`. Currently, the results will be saved 
-in `<path>/<job_id>` as JSON files. 
 
+To deploy this function on your laptop you simply run
+```shell
+$ lmrtfy deploy free_fall_lmrtfy.py --local
+```
+This makes the function available in your catalog as `free_fall_lmrtfy` and starts a runner on your
+laptop. Nobody but you can call the function unless you share it with others. When you stop the
+runner calling this function will not yield any results.
 
-
+Calling the deployed function becomes as simple as `#!python catalog.free_fall_lmrtfy(time=200.)`.

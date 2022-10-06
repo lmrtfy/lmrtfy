@@ -1,3 +1,10 @@
+# v0.0.9 - 
+* short UUIDs for jobs and profiles
+* web app at https://app.lmrt.fyi
+* more documentation (CLI Reference)
+* examples to use
+* bug fixes
+
 
 # v0.0.8 - 16/sep/2022
 * fixed missing dependencies for installation

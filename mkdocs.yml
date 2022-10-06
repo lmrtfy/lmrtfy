@@ -16,6 +16,7 @@ theme:
   font: false
   features:
     - navigation.sections
+    - content.code.annotate
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
@@ -119,29 +120,39 @@ markdown_extensions:
 nav:
   - Introduction: 'index.md'
   - Quick start: 'quickstart.md'
-  - Our vision: "vision.md"
-  - Tutorial:
-    - Installation: 'tutorial/installation.md'
-    - Login: 'tutorial/login.md'
-    - Annotate your script: 'tutorial/annotation.md'
-    - Deploy your script/function: 'tutorial/deployment.md'
-    - Submit a job: 'tutorial/submission.md'
-    - Get results: 'tutorial/fetch_results.md'
+
+  - User Guide:
+      - Installation: "user_guide/installation.md"
+      - Sign Up/Login: "user_guide/login.md"
+      - Calling a cloud function:
+          - Call a function: "user_guide/calling_functions/submission.md"
+          - Get results: "user_guide/calling_functions/fetch_results.md"
+      - Creating your own function:
+          - Annotation: "user_guide/creating_functions/annotation.md"
+          - Variables and Results: "user_guide/creating_functions/variables_and_results.md"
+          - Deployment: "user_guide/creating_functions/deployment.md"
+      - Sharing a function: "user_guide/sharing/sharing.md"
+      - Using the web app:
+          - Overview: "user_guide/web_app/overview.md"
+          - LMRTFY catalog: "user_guide/web_app/catalog.md"
+
   - Examples:
-    - Starting example: 'examples/starting_example.md'
-    - Free fall: 'examples/free_fall.md'
-    - Compound interest: 'examples/compound_interest.md'
+      - Starting example: 'examples/starting_example.md'
+      - Free fall: 'examples/free_fall.md'
+      - Compound interest: 'examples/compound_interest.md'
+
   - Reference:
-    - API reference:
-      - Annotation: "api_reference/annotation.md"
-      - Catalog: "api_reference/catalog.md"
-    - CLI reference: "cli_reference.md"
+      - API reference:
+        - Annotation: "api_reference/annotation.md"
+        - Catalog: "api_reference/catalog.md"
+      - CLI reference: "cli_reference.md"
 
   - Contributing:
-    - Reporting an issue: "report_bugs.md"
-    - Contributing code: 'contributing.md'
+      - Reporting an issue: "report_bugs.md"
+      - Contributing code: 'contributing.md'
 
   - Roadmap:
-    - Roadmap: 'roadmap.md'
-    - Changelog: 'CHANGELOG.md'
+      - Roadmap: 'roadmap.md'
+      - Changelog: 'CHANGELOG.md'
+
 
