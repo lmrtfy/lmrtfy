@@ -57,7 +57,7 @@ JSON file that contains the input parameters.
 
 !!! attention
     This is a good way to call deployed scripts from another language as you can always build the
-    JSON file and call the `lmrtfy` CLI. **If you are using it this we, please contact us. We want to
+    JSON file and call the `lmrtfy` CLI. **If you are using it this way, please contact us. We want to
     provide more native-feeling interfaces to languages other than python as well but would love to 
     hear what you use to prioritize.**
 

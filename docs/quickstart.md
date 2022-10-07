@@ -63,7 +63,7 @@ results this call will take a while. In the example, this call should at most ta
 # Deploy your first function
 Deploying your own function is really easy, too.
 
-Let's say you want to calculate how fast a falling object will be after $x$ seconds:
+Let's say you want to calculate how fast a falling object will be after $x$ seconds.
 
 The code which can be used with LMRTFY is really simple:
 

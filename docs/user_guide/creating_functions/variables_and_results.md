@@ -44,16 +44,16 @@ thoroughly check incoming job submissions.
 
 The input type is inferred from the value that is used in the `variable` function call.
 
-| function call                                      | inferred type of `x` | accepted type with LMRTFY          |
-|----------------------------------------------------|----------------------|------------------------------------|
-| `#!py x = variable(5, name="x")`                   | `#!py int`           | `#!py int`                         |
-| `#!py x = variable(5., name="x")`                  | `#!py float`         | `#!py float`                       |
-| `#!py x = variable([5, 2], name="x")`              | `#!py int_array`     | `#!py list[int], ndarray[int] `    |
-| `#!py x = variable([5.,2.], name="x")`             | `#!py float_array`   | `#!py list[float], ndarray[float]` |
-| `#!py x = variable("abc", name="x")`               | `#!py str`           | `#!py str`                         |
-| `#!py x = variable(["abc", "def"], name="x")`      | `#!py str_array`     | `#!py list[str]`                   |
-| `#!py x = variable(["abd", 1, 1.1], name="x")`     | `#!py json`          | `#!py list[any]`                   |
-| `#!py x = variable({"a": "a", "b": 1}, name="x")`  | `#!py json`          | `#!py dict`                        |
+| function call                                     | inferred type of `x` | accepted type with LMRTFY          |
+|---------------------------------------------------|----------------------|------------------------------------|
+| `#!py x = variable(5, name="x")`                  | `#!py int`           | `#!py int`                         |
+| `#!py x = variable(5., name="x")`                 | `#!py float`         | `#!py float`                       |
+| `#!py x = variable([5, 2], name="x")`             | `#!py int_array`     | `#!py list[int], ndarray[int] `    |
+| `#!py x = variable([5.,2.], name="x")`            | `#!py float_array`   | `#!py list[float], ndarray[float]` |
+| `#!py x = variable("abc", name="x")`              | `#!py str`           | `#!py str`                         |
+| `#!py x = variable(["abc", "def"], name="x")`     | `#!py str_array`     | `#!py list[str]`                   |
+| `#!py x = variable(["abd", 1, 1.1], name="x")`    | `#!py json`          | `#!py list[any]`                   |
+| `#!py x = variable({"a": "a", "b": 1}, name="x")` | `#!py json`          | `#!py dict`                        |
 
 If the input arguments submitted via the catalog do not match the accepted type, we reject the job
 and tell the caller to fix their types. We chose a strict type checking because a type has its meaning
