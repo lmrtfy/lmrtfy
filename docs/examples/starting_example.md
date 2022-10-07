@@ -1,6 +1,6 @@
 # Example 1: Simple annotation
 This is a simple example to showcase the general usage of lmrtfy. It can be found 
-in `examples/example1/example1.py`.
+in `examples/starting_example/example1.py`.
 
 The two core concepts are the `variable` and `result` functions which annotate the inputs and
 outputs of the script. They are needed to create the profile which is used to create the API.
