@@ -36,8 +36,9 @@ def get_cliconfig() -> Optional[dict]:
         do_cache = True
 
     try:
+        config_file = _lmrtfy_config_dir.joinpath('cliconfig.json')
+
         if do_cache:
-            config_file = _lmrtfy_config_dir.joinpath('cliconfig.json')
             if config_file.exists():
                 with open(config_file, 'r') as f:
                     d = json.load(f)
