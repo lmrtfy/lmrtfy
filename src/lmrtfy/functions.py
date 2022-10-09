@@ -176,9 +176,7 @@ class Catalog(object):
         self.profiles = None
         self.update()
 
-    def __add_function(self, namespace, name, sig, res_ann, pid):
-
-        template = fetch_template(pid)
+    def __add_function(self, namespace, name, sig, res_ann, pid, template):
 
         def f(**kwargs) -> Job:
             f.pid = pid
@@ -224,7 +222,7 @@ class Catalog(object):
 
                 for func in functions:
                     func_name = unique_name(o, functions[func]['name'])
-                    self.__add_function(o, func_name, *signature_from_profile(functions[func]), pid=func)
+                    self.__add_function(o, func_name, *signature_from_profile(functions[func]), pid=func, template=functions[func])
 
             except:  # TODO: Except clause too broad!
                 logging.error(f"Could not namespace {n} function catalog.")
