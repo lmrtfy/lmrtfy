@@ -35,16 +35,21 @@ Run the script with your local python interpreter `#!shell python call_free_fall
 like a regular script but calls a remote function inside. 
 
 The output of the script looks like this:
-```shell
+```shell 
 INFO Validating auth token.
 INFO Auth token accepted.
 INFO Valid access token found. Login not necessary.
 INFO Updated function catalog.
 INFO Added function free_fall_lmrtfy.
-INFO Job CLuz1ZrpR7 created. Status is RUNNING.
-78b69e45-3d51-4734-92db-a4901ee6d02b JobStatus.RUNNING
-{'velocity': 981.0}
+INFO Job CLuz1ZrpR7 created. Status is RUNNING. # (1)!
+CLuz1ZrpR7 JobStatus.RUNNING
+{'velocity': 981.0} # (2)!
 ```
+
+1. The job ID is always a 10-character long ID. The reported status is sometimes UNKNOWN which usually
+means that the LMRTFY platform has not processed the job yet.
+2. The result of the computation is a dictionary with the variable names as keys and the actual value
+as values.
 
 The ID of the job is going to be different from the one shown in the example output. Job IDs are
 always 10 characters long.
@@ -65,12 +70,10 @@ For the example calculating the compound interest, the JSON file would look like
 ```json
 {
   "argument_values": {
-    "annual_interest": 6.0,
-    "principal": 5000.0,
-    "years": 10
+    "time": 100
   },
   "argument_units": {
-    "annual_interest": "%"
+    "time": "s"
   }
 }
 

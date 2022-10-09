@@ -1,4 +1,4 @@
-# Deploy the function (local runner)
+# Deploying the function (local runner)
 Now you can deploy the function and make it available via the LMRTFY API. This is simply done by running
 
 ```shell

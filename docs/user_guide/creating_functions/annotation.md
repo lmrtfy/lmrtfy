@@ -5,7 +5,7 @@ This requires two main steps:
 
 1. You need to [annotate](#annotate-your-script) your script to let LMRTFY know about the input 
 variables and the results of your script.
-2. The actual [deployment](deployment.md) of your script
+2. The actual [deployment](deployment.md) of your script.
 
 # Annotate your script
 

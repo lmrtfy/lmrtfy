@@ -14,12 +14,11 @@ Again, we start with the plain code, as you would implement it right away:
 def compound_interest(principal: float, annual_interest: float, years: int):
     return principal * (1. + annual_interest/100.)**years - principal
 
-if __name__ == "__main__":
-    principal = 10_000
-    interest = 6
-    years = 10
-    ci = compound_interest(principal, interest, years)
-    print(f"Compound interest after {years} years: {ci}")
+principal = 10_000
+interest = 6
+years = 10
+ci = compound_interest(principal, interest, years)
+print(f"Compound interest after {years} years: {ci}")
 ```
 
 You can run this example with `$ python ci.py` and it should print `7908.47`. Which is the compound
@@ -33,30 +32,28 @@ There are several problems with this solution:
 # Annotate with lmrtfy
 
 Using lmrtfy, you would annotate the script as follows:
-```py title="calc_compound_interest_lmrtfy.py" linenums="1"
+```py title="calc_compound_interest_lmrtfy.py" linenums="1" hl_lines="1 10-13 17"
 from lmrtfy.annotation import variable, result
 
 def compound_interest(principal: float, annual_interest: float, years: int):
-   """
-   Compute the compound interest for `years` when starting from `principal` with `annual interest`.
-
-   compound interest = principal * (1 + annual_interest)^years - principal
-
-   """
-
    return principal * (1. + annual_interest/100.)**years - principal
 
+principal = 10_000.
+interest = 6.
+years = 10
 
-if __name__ == "__main__":
-   principal = variable(10000., name="principal", min=0)
-   annual_interest = variable(6.0, name="annual_interest", min=0, max=100, unit="%")
-   years = variable(10, name="years", min=0)
+principal = variable(principal, name="principal", min=0)
+annual_interest = variable(principal, name="annual_interest", 
+                           min=0, max=100, unit="%")
+years = variable(years, name="years", min=0)
 
-   ci = result(compound_interest(principal, annual_interest, years), name="compound_interest"
+ci = compound_interest(principal, annual_interest, years)
+
+ci = result(ci, name="compound_interest")
 
 ```
 
-Now, we run `python ci_lmrtfy_1.py` to generate the profile.
+Now, we run `python calc_compound_interest_lmrtfy_1.py` to generate the profile.
 
 !!! warning
     The type annotation are not enforced when run locally. LMRTFY checks the types and units only

@@ -42,7 +42,7 @@ We strive to provide a frictionless developer experience:
 * Change as little code as possible to use LMRTFY
 * Call deployed function like any other function provided by a local library
 
-!!! warning
+!!! info
     LMRTFY is currently in an early phase. Things will likely change in future releases.
 
 

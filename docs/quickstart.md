@@ -60,7 +60,7 @@ occurred `None` is returned. This way we can check if the submission was success
 To get the results from the computation we can simply call `job.results`. Depending on the size of the
 results this call will take a while. In the example, this call should at most take a few seconds.
 
-# Deploy your first function
+# Deploying your first function
 Deploying your own function is really easy, too.
 
 Let's say you want to calculate how fast a falling object will be after $x$ seconds.

@@ -33,14 +33,14 @@ job received through the LMRTFY platform into the script. The `result` function 
 funnels the result back to the LMRTFY platform which makes it available to the caller of the function.
 
 
-# Validity check
+# Checking the validity of input arguments
 
 If you checked the [API reference](../../api_reference/annotation.md) you may have noticed that
 `variable` and `result` have some additional parameters: `min`, `max`, and `unit`. Even better, 
 through the first argument, the actual value, you also create type information that allows us to 
 thoroughly check incoming job submissions.
 
-## Type check
+## Type checking
 
 The input type is inferred from the value that is used in the `variable` function call.
 
@@ -59,7 +59,7 @@ If the input arguments submitted via the catalog do not match the accepted type,
 and tell the caller to fix their types. We chose a strict type checking because a type has its meaning
 which it might lose during automatic conversion.
 
-## Bounds check
+## Bounds checking
 
 The `min` and `max` parameters limit the range in which numeric input variables are seen as valid.
 This is especially useful if your algorithm has known and well-defined limitations. If it only works
@@ -68,7 +68,7 @@ between $0$ and $1000$ you can simply specify `#!py variable(500, name="a", min=
 When a job is submitted via the LMRTFY platform, these bounds are checked. If the input variable `a`
 is out of bounds we notify the caller and reject the job.
 
-## Unit check
+## Unit checking
 
 Another useful thing is the annotation with an actual `unit` for the variable. Currently, this is
 done via `str` but we will switch to [pint units](https://pypi.org/project/Pint/) in later releases.
