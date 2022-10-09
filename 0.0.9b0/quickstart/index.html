@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://lmrt.fyi/0.0.9b0/quickstart/">
       
       <link rel="icon" href="../images/favicon.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.5.0">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.5.3">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.2e8b5541.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.7a952b86.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
@@ -124,9 +124,9 @@
         
           
           
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
           
-            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z"/></svg>
             </label>
           
@@ -281,28 +281,62 @@
       
         <li class="md-nav__item">
   <a href="#installation" class="md-nav__link">
-    Installation
+    Installation:
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux-and-macos" class="md-nav__link">
+    Linux and MacOS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    Windows
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-login" class="md-nav__link">
+    First login
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#sign-up" class="md-nav__link">
-    Sign-Up
+  <a href="#create-code-annotations" class="md-nav__link">
+    Create code annotations
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#calling-your-first-remote-function" class="md-nav__link">
-    Calling your first remote function
+  <a href="#deploy-the-script-to-accept-jobs-from-the-generated-web-api" class="md-nav__link">
+    Deploy the script to accept jobs from the generated web API
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#deploy-your-first-function" class="md-nav__link">
-    Deploy your first function
+  <a href="#submit-jobs-with-cli" class="md-nav__link">
+    Submit jobs with CLI
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fetch-results" class="md-nav__link">
+    Fetch results
   </a>
   
 </li>
@@ -322,270 +356,10 @@
   
   
   
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3">
-          User Guide
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="User Guide" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
-          <span class="md-nav__icon md-icon"></span>
-          User Guide
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../user_guide/installation/" class="md-nav__link">
-        Installation
+      <a href="../vision/" class="md-nav__link">
+        Our vision
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../user_guide/login/" class="md-nav__link">
-        Sign Up/Login
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3_3">
-          Calling a cloud function
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Calling a cloud function" data-md-level="2">
-        <label class="md-nav__title" for="__nav_3_3">
-          <span class="md-nav__icon md-icon"></span>
-          Calling a cloud function
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../user_guide/calling_functions/submission/" class="md-nav__link">
-        Call a function
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../user_guide/calling_functions/fetch_results/" class="md-nav__link">
-        Get results
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" type="checkbox" id="__nav_3_4" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3_4">
-          Creating your own function
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Creating your own function" data-md-level="2">
-        <label class="md-nav__title" for="__nav_3_4">
-          <span class="md-nav__icon md-icon"></span>
-          Creating your own function
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../user_guide/creating_functions/annotation/" class="md-nav__link">
-        Annotation
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../user_guide/creating_functions/variables_and_results/" class="md-nav__link">
-        Variables and Results
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../user_guide/creating_functions/deployment/" class="md-nav__link">
-        Deployment
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../user_guide/sharing/sharing/" class="md-nav__link">
-        Sharing a function
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_6" type="checkbox" id="__nav_3_6" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3_6">
-          Using the web app
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Using the web app" data-md-level="2">
-        <label class="md-nav__title" for="__nav_3_6">
-          <span class="md-nav__icon md-icon"></span>
-          Using the web app
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../user_guide/web_app/overview/" class="md-nav__link">
-        Overview
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../user_guide/web_app/catalog/" class="md-nav__link">
-        LMRTFY catalog
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
     </li>
   
 
@@ -609,12 +383,132 @@
       
       
         <label class="md-nav__link" for="__nav_4">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/installation/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/login/" class="md-nav__link">
+        Login
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/annotation/" class="md-nav__link">
+        Annotate your script
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/deployment/" class="md-nav__link">
+        Deploy your script/function
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/submission/" class="md-nav__link">
+        Submit a job
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/fetch_results/" class="md-nav__link">
+        Get results
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
           Examples
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Examples" data-md-level="1">
-        <label class="md-nav__title" for="__nav_4">
+        <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
           Examples
         </label>
@@ -681,18 +575,18 @@
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_5">
+        <label class="md-nav__link" for="__nav_6">
           Reference
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_5">
+        <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           Reference
         </label>
@@ -707,18 +601,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1" type="checkbox" id="__nav_5_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_1" type="checkbox" id="__nav_6_1" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_5_1">
+        <label class="md-nav__link" for="__nav_6_1">
           API reference
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="API reference" data-md-level="2">
-        <label class="md-nav__title" for="__nav_5_1">
+        <label class="md-nav__title" for="__nav_6_1">
           <span class="md-nav__icon md-icon"></span>
           API reference
         </label>
@@ -792,18 +686,18 @@
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_6">
+        <label class="md-nav__link" for="__nav_7">
           Contributing
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Contributing" data-md-level="1">
-        <label class="md-nav__title" for="__nav_6">
+        <label class="md-nav__title" for="__nav_7">
           <span class="md-nav__icon md-icon"></span>
           Contributing
         </label>
@@ -856,18 +750,18 @@
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_7">
+        <label class="md-nav__link" for="__nav_8">
           Roadmap
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Roadmap" data-md-level="1">
-        <label class="md-nav__title" for="__nav_7">
+        <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
           Roadmap
         </label>
@@ -933,28 +827,62 @@
       
         <li class="md-nav__item">
   <a href="#installation" class="md-nav__link">
-    Installation
+    Installation:
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux-and-macos" class="md-nav__link">
+    Linux and MacOS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    Windows
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-login" class="md-nav__link">
+    First login
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#sign-up" class="md-nav__link">
-    Sign-Up
+  <a href="#create-code-annotations" class="md-nav__link">
+    Create code annotations
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#calling-your-first-remote-function" class="md-nav__link">
-    Calling your first remote function
+  <a href="#deploy-the-script-to-accept-jobs-from-the-generated-web-api" class="md-nav__link">
+    Deploy the script to accept jobs from the generated web API
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#deploy-your-first-function" class="md-nav__link">
-    Deploy your first function
+  <a href="#submit-jobs-with-cli" class="md-nav__link">
+    Submit jobs with CLI
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fetch-results" class="md-nav__link">
+    Fetch results
   </a>
   
 </li>
@@ -984,100 +912,65 @@
 
   <h1>Quick start</h1>
 
-<p>This is our quick start guide. Everything you need to know to get started is here.</p>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<p>You can install the <a href="https://pypi.org/project/lmrtfy/">lmrtfy package</a> just like any other package:</p>
+<h2 id="installation">Installation:<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<p>We provide a <a href="https://pypi.org/project/lmrtfy/">PyPI package</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We recommend installing LMRTFY into a virtual environment to keep your system clean.</p>
+</div>
+<h3 id="linux-and-macos">Linux and MacOS<a class="headerlink" href="#linux-and-macos" title="Permanent link">&para;</a></h3>
+<p>We provide a PyPI package for Linux and MacOS which can be installed easily with <code>pip</code>:</p>
 <div class="highlight"><pre><span></span><code>$ pip install lmrtfy
 </code></pre></div>
-<p>If you use conda you need to install <code>pip</code> in your conda environment before you can use LMRTFY. This
-is likely necessary on Windows.</p>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<p>On Windows the <code>conda</code> package manager provided by 
+<a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html">miniconda and Anaconda</a>
+is the best way to use Python and install Python packages.</p>
+<p>Right now, we only support a PyPI package which can be installed with <code>conda</code>. If you have <code>pip</code> installed
+in your conda environment you can directly install from PyPI, otherwise you need to install <code>pip</code> first:
 <div class="highlight"><pre><span></span><code>$ conda install pip
 $ pip install lmrtfy
+</code></pre></div></p>
+<h2 id="first-login">First login<a class="headerlink" href="#first-login" title="Permanent link">&para;</a></h2>
+<p>Login/sign up to receive access token: <code>$ lmrtfy login</code>. The token is saved in <code>~/.lmrtfy/auth/token</code> but you 
+should not need to manually open the token.</p>
+<h2 id="create-code-annotations">Create code annotations<a class="headerlink" href="#create-code-annotations" title="Permanent link">&para;</a></h2>
+<p>Annotate the inputs and outputs of your script with <code>variable</code> and <code>results</code> and save it as <code>script.py</code>:
+<div class="highlight"><pre><span></span><code><span class="c1"># import the required things from lmrtfy</span>
+<span class="kn">from</span> <span class="nn">lmrtfy</span> <span class="kn">import</span> <span class="n">variable</span><span class="p">,</span> <span class="n">result</span>
+<span class="c1"># annotate an input</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">variable</span><span class="p">(</span><span class="mf">200.</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<span class="n">speed</span> <span class="o">=</span> <span class="n">result</span><span class="p">(</span><span class="mf">9.81</span><span class="o">*</span><span class="n">time</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;speed&quot;</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">9810</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p>This calculates the velocity of an object in free fall after <code>time</code> seconds.</p>
+<p>Run <code>python script.py</code> to create the profile. This <strong>always</strong> works, even without access to lmrtfy. </p>
+<h2 id="deploy-the-script-to-accept-jobs-from-the-generated-web-api">Deploy the script to accept jobs from the generated web API<a class="headerlink" href="#deploy-the-script-to-accept-jobs-from-the-generated-web-api" title="Permanent link">&para;</a></h2>
+<p>Run <code>lmrtfy deploy script.py --local</code> to generate the API and start the runner to listen to jobs for your script. 
+You can find the profile id to submit a job in the logs: 
+<div class="highlight"><pre><span></span><code>INFO Starting deployment of examples/velocity_from_gravity/calc_velocity.py
+WARNING Deploying locally.
+INFO Profile_id to be used <span class="k">for</span> requests: 7ff68a0cfd8c61122cfdaf0a835c7cd1f94e7db9
+</code></pre></div></p>
+<h2 id="submit-jobs-with-cli">Submit jobs with CLI<a class="headerlink" href="#submit-jobs-with-cli" title="Permanent link">&para;</a></h2>
+<p>Open a new terminal and submit a new job (<code>&lt;profile_id&gt;</code> is the profile id you received during the deployment (<code>7ff...</code> in the example above)): 
+<div class="highlight"><pre><span></span><code>$ lmrtfy submit &lt;profile_id&gt; &lt;input.json&gt;
 </code></pre></div>
-<h2 id="sign-up">Sign-Up<a class="headerlink" href="#sign-up" title="Permanent link">&para;</a></h2>
-<p>To make full use of LMRTFY you need to sign up with us with <code>lmrtfy login</code>.</p>
-<p>Besides an e-mail-based sign up we also provide social logins via GitHub and Google for ease of use.</p>
-<h2 id="calling-your-first-remote-function">Calling your first remote function<a class="headerlink" href="#calling-your-first-remote-function" title="Permanent link">&para;</a></h2>
-<p>Calling a function that is available in the cloud is as easy as calling a native function.</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">call_example1.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
-<span class="kn">from</span> <span class="nn">lmrtfy.functions</span> <span class="kn">import</span> <span class="n">catalog</span> 
-
-<span class="n">job</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">example1</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="c1"># (1)!</span>
-
-<span class="k">while</span> <span class="n">job</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">job</span><span class="o">.</span><span class="n">ready</span><span class="p">:</span> <span class="c1"># (2)!</span>
-    <span class="n">sleep</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="n">job</span><span class="p">:</span>    
-    <span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">results</span><span class="p">)</span>  <span class="c1"># (3)!</span>
-</code></pre></div></td></tr></table></div>
-<ol>
-<li>This calls the function <code>example1</code> in the LMRTFY namespace <code>example</code>. The function is executed
-   on a remote resource.</li>
-<li>If <code>job</code> is not valid the call did not succeed. <code>job.ready</code> queries the job status and becomes
-   true once the results are ready.</li>
-<li><code>job.results</code> gets the results from LMRTFY as JSON:
+For the example above save the following in your <code>input.json</code>:
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;&lt;variable name&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;value&gt;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="err">...</span><span class="w"></span>
-<span class="p">}</span><span class="w">    </span>
-</code></pre></div></li>
-</ol>
-<p>As you can see calling the function <code>example1</code> looks just like calling any other function in Python;
-however, it is actually eexcuted on a remote server, in this case on our own server as we provide the
-example.</p>
-<p>Each call to a deployed function returns a <code>Job</code> object if the submission was successful. If an error
-occurred <code>None</code> is returned. This way we can check if the submission was successful or not.</p>
-<p>To get the results from the computation we can simply call <code>job.results</code>. Depending on the size of the
-results this call will take a while. In the example, this call should at most take a few seconds.</p>
-<h2 id="deploy-your-first-function">Deploy your first function<a class="headerlink" href="#deploy-your-first-function" title="Permanent link">&para;</a></h2>
-<p>Deploying your own function is really easy, too.</p>
-<p>Let's say you want to calculate how fast a falling object will be after <span class="arithmatex">\(x\)</span> seconds:</p>
-<p>The code which can be used with LMRTFY is really simple:</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">free_fall_lmrtfy.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span>
-<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="hll"><span class="kn">from</span> <span class="nn">lmrtfy.annotation</span> <span class="kn">import</span> <span class="n">variable</span><span class="p">,</span> <span class="n">result</span> <span class="c1"># (1)!</span>
-</span>
-<span class="hll"><span class="n">time</span> <span class="o">=</span> <span class="n">variable</span><span class="p">(</span><span class="mf">200.</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span> <span class="c1"># (2)!</span>
-</span><span class="n">standard_gravity</span> <span class="o">=</span> <span class="mf">9.81</span>
-
-<span class="n">velocity</span> <span class="o">=</span> <span class="n">standard_gravity</span><span class="o">*</span><span class="n">time</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Velocity after </span><span class="si">{</span><span class="n">time</span><span class="si">}</span><span class="s2"> seconds is </span><span class="si">{</span><span class="n">velocity</span><span class="si">}</span><span class="s2"> m/s.&quot;</span><span class="p">)</span> 
-
-<span class="hll"><span class="n">velocity</span> <span class="o">=</span> <span class="n">result</span><span class="p">(</span><span class="n">velocity</span> <span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;velocity&quot;</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">9810</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">)</span> <span class="c1"># (3)!</span>
-</span></code></pre></div></td></tr></table></div>
-<ol>
-<li><code>variable</code> and <code>result</code> are the imports that are needed to annotate your code to make it work 
-with LMRTFY.</li>
-<li><code>variable</code> annotates any inputs of your script.</li>
-<li><code>result</code> annotates a result of script. A script can have multiple results.</li>
-</ol>
-<p>The highlighted lines have been added or changed to let LMRTFY know about the structure of the script.</p>
-<p>Before we can deploy the function we need to run it through the Python interpreter once to create
-the annotation profile.</p>
-<div class="highlight"><pre><span></span><code>$ python free_fall_lmrtfy.py 
+<span class="w">  </span><span class="nt">&quot;argument_values&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;time&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">200.0</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;argument_units&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;time&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
-<p>To deploy this function on your laptop you simply run
-<div class="highlight"><pre><span></span><code>$ lmrtfy deploy free_fall_lmrtfy.py --local
-</code></pre></div>
-This makes the function available in your catalog as <code>free_fall_lmrtfy</code> and starts a runner on your
-laptop. Nobody but you can call the function unless you share it with others. When you stop the
-runner calling this function will not yield any results.</p>
-<p>Calling the deployed function becomes as simple as <code class="highlight"><span class="n">catalog</span><span class="o">.</span><span class="n">free_fall_lmrtfy</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mf">200.</span><span class="p">)</span></code>.</p>
+You will receive a <code>job_id</code> which you will need to fetch the results later on:
+<div class="highlight"><pre><span></span><code>INFO Job-id: <span class="m">14584640</span>-778c-4f91-a288-03cffc2b9c7a
+</code></pre></div></p>
+<h2 id="fetch-results">Fetch results<a class="headerlink" href="#fetch-results" title="Permanent link">&para;</a></h2>
+<p>Get the results by calling <code>$ lmrtfy fetch &lt;job_id&gt; &lt;path&gt;</code>. Currently, the results will be saved 
+in <code>&lt;path&gt;/&lt;job_id&gt;</code> as JSON files. </p>
 
 
 
@@ -1114,13 +1007,13 @@ runner calling this function will not yield any results.</p>
       
       
         
-        <a href="../user_guide/installation/" class="md-footer__link md-footer__link--next" aria-label="Next: Installation" rel="next">
+        <a href="../vision/" class="md-footer__link md-footer__link--next" aria-label="Next: Our vision" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Installation
+              Our vision
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -1181,10 +1074,10 @@ runner calling this function will not yield any results.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "content.code.annotate"], "search": "../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections"], "search": "../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.48f2be22.min.js"></script>
+      <script src="../assets/javascripts/bundle.37e9125f.min.js"></script>
       
         <script src="../javascript/mathjax.js"></script>
       
