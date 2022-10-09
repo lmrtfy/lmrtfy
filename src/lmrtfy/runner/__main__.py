@@ -30,7 +30,7 @@ def stop_heartbeat(stop_event: threading.Event, t):
     t.join()
 
 
-def main(script_path: Path):
+def main(script_path: Path, namespace: str):
 
     config = get_cliconfig()
     _script_path = str(Path(script_path).resolve())
@@ -38,10 +38,24 @@ def main(script_path: Path):
     _script_identifier = _script_path.replace('/', '_').replace('\\', '_').replace('.', '_')
     _lmrtfy_profile_filename = _lmrtfy_profiles_dir.joinpath(f'{_script_identifier}.yml')
 
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain',
+               "Authorization": f"Bearer {load_token_data()['access_token']}"}
+    r = requests.post(config['api_users_url'], headers=headers,
+                      data=json.dumps({'id_token': load_token_data()['id_token']}))
+    logging.info(r.json())
+    nickname = r.json()['nickname']
+
+    if not namespace:
+        namespace = nickname
+    else:
+        namespace = f"{nickname}-{namespace.replace('/','-')}"
+
+    logging.info(namespace)
+
     url = config['api_catalog_url']
     try:
         with open(_lmrtfy_profile_filename, "r") as p:
-            data = {"profile": yaml.safe_load(p)}
+            data = {"profile": yaml.safe_load(p), "namespace": namespace}
 
     except FileNotFoundError:
         logging.error(f"No profile for {script_path} found. Please run first without the lmrtfy cli.")

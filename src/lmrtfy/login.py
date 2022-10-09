@@ -197,6 +197,9 @@ class LoginHandler(object):
         data = r.json()
 
         if self.token_is_valid(data['access_token']):
+            headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {data['access_token']}"}
+            r = requests.post(self.cliconfig['api_users_url'], headers=headers, data=json.dumps({'id_token': data['id_token']}))
+            logging.info(r.json())
             save_token_data(data)
 
     def token_is_valid(self, token) -> bool:
