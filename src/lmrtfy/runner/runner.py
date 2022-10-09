@@ -287,6 +287,7 @@ class Runner(object):
                     logging.debug(r)
                     if r.status_code != 200:
                         logging.error("Results could not be uploaded")
+                        failed = True
             except FileNotFoundError:
                 failed = True
                 logging.error(f"Result file '{res_path}' not found.")
