@@ -75,7 +75,7 @@ class Runner(object):
     :type profile_path: pathlib.Path
     """
 
-    def __init__(self, broker_url: str, port: int, profile_path: pathlib.Path):
+    def __init__(self, runner_id: str, profile_id: str, broker_url: str, port: int, profile_path: pathlib.Path):
         """
         Constructor method
         """
@@ -92,7 +92,8 @@ class Runner(object):
         logging.debug(f"Running for profile-id: {self.filehash}")
 
         # TODO: client id is ideally the same a the filehash I guess. Issue #6
-        self.client_id = f"local_runner-{uuid.uuid4()}"
+        self.client_id = runner_id
+        self.profile_id = profile_id
         # TODO: runner status => Load, RAM Status, ...
         self.runner_status_topic = f"status/runner/{self.client_id}"
         self.heartbeat_topic = f"heartbeat/runner/{self.client_id}"
@@ -157,7 +158,7 @@ class Runner(object):
         if rc == 0:
             logging.info("Successfully connected to MQTT broker.")
 
-        job_topic = f"$share/{self.user_id}/{self.user_id}/{self.filehash}/job"
+        job_topic = f"$share/{self.user_id}/{self.profile_id}/{self.filehash}"
         self.client.subscribe(job_topic)
         logging.debug(f"Listen for jobs on '{job_topic}'.")
 
