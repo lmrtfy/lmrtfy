@@ -24,6 +24,8 @@ from lmrtfy import _lmrtfy_config_dir
 
 def get_cliconfig() -> Optional[dict]:
 
+    do_cache = False
+
     # TODO: What happens if LOCAL and DEV are defined?
     if "LMRTFY_LOCAL" in os.environ:
         url = "http://127.0.0.1:5000/cliconfig"
@@ -31,15 +33,17 @@ def get_cliconfig() -> Optional[dict]:
         url = "https://dev-api.lmrt.fyi/cliconfig"
     else:
         url = "https://api.lmrt.fyi/cliconfig"
+        do_cache = True
 
     try:
-        config_file = _lmrtfy_config_dir.joinpath('cliconfig.json')
-        if config_file.exists():
-            with open(config_file, 'r') as f:
-                d = json.load(f)
-                if float(d['updated']) > (float(datetime.utcnow().timestamp()) - 3600):
-                    logging.debug("Loading cached cliconfig.")
-                    return d
+        if do_cache:
+            config_file = _lmrtfy_config_dir.joinpath('cliconfig.json')
+            if config_file.exists():
+                with open(config_file, 'r') as f:
+                    d = json.load(f)
+                    if float(d['updated']) > (float(datetime.utcnow().timestamp()) - 3600):
+                        logging.debug("Loading cached cliconfig.")
+                        return d
 
         logging.debug("Refreshing cliconfig.")
         r = requests.get(url).json()
