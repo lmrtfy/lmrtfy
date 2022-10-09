@@ -178,6 +178,7 @@ class Catalog(object):
 
     def __add_function(self, namespace, name, sig, res_ann, pid, template):
 
+        template = fetch_template(pid)
         def f(**kwargs) -> Job:
             f.pid = pid
             for p in kwargs:
