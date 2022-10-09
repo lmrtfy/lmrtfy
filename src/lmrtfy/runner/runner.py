@@ -173,10 +173,11 @@ class Runner(object):
         logging.debug("on_message")
         logging.debug(f"  userdate: {userdate}")
         logging.debug(f"  msg: {msg}")
-        self.job_list.put(json.loads(msg.payload), block=False)
-        self.publish_job_status(JobStatus.ACCEPTED, "Accepted job", json.loads(msg.payload)["job_id"])
+        job = json.loads(msg.payload)
+        self.job_list.put(job, block=False)
+        self.publish_job_status(JobStatus.ACCEPTED, "Accepted job", job["user_id"], json.loads(msg.payload)["job_id"])
 
-    def publish_job_status(self, status: JobStatus, message: str, job_id: Optional[int] = None):
+    def publish_job_status(self, status: JobStatus, message: str, user_id: str, job_id: Optional[str] = None):
         """
         Publishes a status message with JobStatus and a message to MQTT.
 
@@ -191,7 +192,7 @@ class Runner(object):
         self.job_status["status"] = status
         self.job_status["message"] = message
         self.job_status["job_id"] = job_id
-        self.job_status["user_id"] = self.user_id
+        self.job_status["user_id"] = user_id
 
         job_status_topic = f"status/job/{job_id}"
         logging.info(
@@ -212,7 +213,7 @@ class Runner(object):
         self.client.publish(self.runner_status_topic, json.dumps(self.runner_status))
 
 
-    def execute(self, job_id: int, job_input: dict):
+    def execute(self, job_id: int, user_id, job_input: dict):
         """
         `execute` is responsible for the actual execution of the command with the correct input
         parameters.
@@ -251,13 +252,13 @@ class Runner(object):
 
         # Set environment variables for execution and run code
         # TODO: How safe is that?
-        self.publish_job_status(JobStatus.RUNNING, "Running script.", job_id=job_id)
+        self.publish_job_status(JobStatus.RUNNING, "Running script.", user_id=user_id, job_id=job_id)
         os.environ["LMRTFY_DEPLOY_LOCAL"] = "1"
         result_code = subprocess.run(command_args_list, capture_output=True)
 
         # check results
         if result_code.returncode != 0:
-            self.publish_job_status(JobStatus.FAILED, "FAILED!", job_id=job_id)
+            self.publish_job_status(JobStatus.FAILED, "FAILED!", user_id=user_id, job_id=job_id)
             logging.error("Execution failed for some reason.")
             logging.error(f"stderr: \n {result_code.stderr.decode()}")
         else:
@@ -281,7 +282,8 @@ class Runner(object):
                         # TODO: Fix exception and log meaningful error message
                         pass
 
-                    r = requests.post(f"{config['api_results_url']}/{job_id}", files=files, headers=headers)
+                    r = requests.post(f"{config['api_results_url']}/{job_id}", files=files,
+                                      data={"user_id": user_id}, headers=headers)
                     logging.debug(r)
                     if r.status_code != 200:
                         logging.error("Results could not be uploaded")
@@ -291,9 +293,9 @@ class Runner(object):
                 break
 
         if failed:
-            self.publish_job_status(JobStatus.FAILED, "Job failed.", job_id=job_id)
+            self.publish_job_status(JobStatus.FAILED, "Job failed.", user_id, job_id=job_id)
         else:
-            self.publish_job_status(JobStatus.RESULTS_READY, "Results ready.", job_id=job_id)
+            self.publish_job_status(JobStatus.RESULTS_READY, "Results ready.", user_id, job_id=job_id)
 
         logging.debug(results)
 
@@ -321,10 +323,10 @@ class Runner(object):
             self.publish_runner_status(RunnerStatus.IDLE, "Waiting for job in MQTT Topic.")
 
             # blocks until something is in the queue
-            job_id, _, _, job_param, _, _ = self.job_list.get().values()
+            job_id, user_id, _, job_param, _, _ = self.job_list.get().values()
             self.publish_runner_status(RunnerStatus.RUNNING, "Starting execution.")
             logging.debug(f"'{job_param}' for job_id '{job_id}'")
-            self.execute(job_id, job_param)
+            self.execute(job_id, user_id, job_param)
             self.job_list.task_done()
         #except KeyboardInterrupt:
         #    logging.info("Detected KeyboardInterrupt. Stop program.")
