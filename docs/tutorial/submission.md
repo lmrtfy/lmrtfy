@@ -97,7 +97,7 @@ the submission. The unit also has to match exactly.
 Save the JSON file es `input.json` and run:
 
 ```shell
-$ lmrtfy deploy <profile_id> input.json --local
+$ lmrtfy submit <profile_id> input.json
 ```
 
 !!! info

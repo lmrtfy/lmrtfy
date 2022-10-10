@@ -10,8 +10,8 @@ import requests
 import numpy.typing as npt
 from typing import List, Optional, Type
 import json
+import jwt
 
-import enum
 import coloredlogs
 
 from lmrtfy.login import LoginHandler, load_token_data, get_cliconfig
@@ -19,6 +19,8 @@ from lmrtfy.runner import fetch_template
 from lmrtfy.runner import JobStatus
 from lmrtfy import _lmrtfy_job_dir
 from lmrtfy.helper import NumpyEncoder
+from lmrtfy.fetch_results import fetch_results
+
 
 _log_level = logging.INFO
 if 'LMRTFY_DEBUG' in os.environ:
@@ -66,19 +68,20 @@ class Job(object):
 
     @property
     def results(self) -> Optional[dict]:
-        try:
-            config = get_cliconfig()
-            token = load_token_data()['access_token']
-            headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
-            r = requests.get(config['api_results_url'] + f"/{self.id}", headers=headers)
-            # TODO: Store results locally and delete job_file.
-            if r.status_code == 200:
-                return r.json()
-            else:
-                logging.error(f"Could not fetch results from server: {r.status_code}")
-        except ConnectionError as e:
-            logging.error("Could not access results server.")
-            logging.error(e.strerror)
+        return fetch_results(self.id)
+        #try:
+        #    config = get_cliconfig()
+        #    token = load_token_data()['access_token']
+        #    headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
+        #    r = requests.get(config['api_results_url'] + f"/user/{self.id}", headers=headers)
+        #    # TODO: Store results locally and delete job_file.
+        #    if r.status_code == 200:
+        #        return r.json()
+        #    else:
+        #        logging.error(f"Could not fetch results from server: {r.status_code}")
+        #except ConnectionError as e:
+        #    logging.error("Could not access results server.")
+        #    logging.error(e.strerror)
 
     @property
     def ready(self):
@@ -137,40 +140,16 @@ def fetch_profile(profile_id):
 
 class Namespace(object):
 
-    def __init__(self, name: str, local: bool=False):
+    def __init__(self, name):
+        self.__name__ = name
 
-        h = LoginHandler()
-        if h.login():
-            h.get_token()
 
-        self.config = get_cliconfig()
+class Function(object):
+    def __init__(self, pid):
+        self.pid = pid
 
-        self.token = load_token_data()['access_token']
-        self.headers = {'Content-type': 'application/json', 'Accept': 'text/plain',
-                        "Authorization": f"Bearer {self.token}"}
-
-        if '/' in name:
-            n = name.split('/')
-            name = n[0]
-            setattr(self, n[1], Namespace('/'.join(n[1:])))
-        # TODO: Check name is unique, if not error
-        self.name = name
-
-        # TODO: iterate and add/populate all the sub-namespaces
-
-    def add_function(self, func):
+    def __call__(self, *args, **kwargs):
         pass
-
-    def share(self, function, email: str) -> bool:
-        """
-        Share a function from your catalog to a user via email.
-        :param function: Member of catalog or a namespace to be shared.
-        :param email: Email address of the user the function is shared with.
-        :param namespace: The namespace the function is shared in.
-        :return: Return True on success and False is an error occurred.
-        """
-        # TODO: Implement
-        return False
 
 
 class Catalog(object):
@@ -192,7 +171,7 @@ class Catalog(object):
             h.get_token()
 
         self.config = get_cliconfig()
-
+        logging.info(self.config)
         self.token = load_token_data()['access_token']
         self.headers = {'Content-type': 'application/json', 'Accept': 'text/plain',
                         "Authorization": f"Bearer {self.token}"}
@@ -200,30 +179,11 @@ class Catalog(object):
         self.profiles = None
         self.update()
 
-    def update(self):
-        """
-        Call `update` to update the catalog with newly deployed functions.
-        """
-        try:
-            r = requests.get(self.config['api_catalog_url'], headers=self.headers)
-            if r.status_code == 200:
-                self.profiles = r.json()
-                logging.debug(self.profiles)
-                logging.debug("Updated function catalog.")
-                for profile in self.profiles['profiles']:
-                    pid = profile.split('/')[-1]
-                    t = fetch_profile(pid)
-                    func_name = unique_name(self, t["name"]) #t['filename'].replace('\\', '/').split('/')[-1].split('.')[0].strip())
-                    logging.debug(f"Added function {func_name}.")
-                    self.__add_function(func_name, *signature_from_profile(t), pid=pid)
-        except:  # TODO: Except clause too broad!
-            logging.error("Could not update function catalog.")
-
-    def __add_function(self, name, sig, res_ann, pid):
+    def __add_function(self, namespace, name, sig, res_ann, pid, template):
 
         template = fetch_template(pid)
-
         def f(**kwargs) -> Job:
+            f.pid = pid
             for p in kwargs:
                 template['argument_values'][p] = kwargs[p]
 
@@ -238,22 +198,109 @@ class Catalog(object):
             elif r.status_code == 404:
                 logging.error(f"{r.json()}")
 
-        setattr(self, name, create_function(sig, f, func_name=name))
+        setattr(namespace, name, create_function(sig, f, func_name=name, qualname=f"{namespace.__name__}-{pid}"))
 
-    def create_namespace(self, name: str) -> Optional[Namespace]:
+    def update(self):
+        """
+        Call `update` to update the catalog with newly deployed functions.
+        """
+        # TODO: get list of namespaces
+
+        r = requests.get(self.config['api_namespaces_url'], headers=self.headers)
+        logging.info(r.json())
+        namespaces = r.json()['namespaces']
+
+        for n in namespaces:
+            names = n.split('/')
+            o = self
+            nsn = ""
+            for name in names:
+                nsn += f"{name}/"
+                if not hasattr(o, name):
+                    setattr(o, name, Namespace(nsn[:-1]))
+                o = getattr(o, name)
+
+            try:
+                r = requests.get(f"{self.config['api_namespaces_url']}/{n.replace('/','-')}", headers=self.headers)
+                functions = r.json()['functions']
+
+                for func in functions:
+                    func_name = unique_name(o, functions[func]['name'])
+                    self.__add_function(o, func_name, *signature_from_profile(functions[func]), pid=func, template=functions[func])
+
+            except:  # TODO: Except clause too broad!
+                logging.error(f"Could not namespace {n} function catalog.")
+
+    def create_namespace(self, namespace, name: str) -> bool:
         """
         Create a unique namespace that collects functions and can be shared.
-        :param name: Name of the namespace
+        :param namespace: parent namespace
+        :param name: Name of the new namespace.
         :return: Returns the Namespace object on success and None in case of an error.
         """
         try:
-            n = Namespace(name)
-            self.update()
-            return n
+            new_name = f"{namespace.__name__}/{name}".replace('/', '-')
+            r = requests.post(f"{self.config['api_namespaces_url']}",
+                              data=json.dumps({"namespace": new_name}), headers=self.headers)
+            if r.status_code == 201:
+                self.update()
+                return True
         except:
-            logging.error(f"Could not create namespace {name}.")
+            pass
 
-        return None
+        logging.error(f"Could not create namespace {name}.")
+
+        return False
+
+    def add_function_to_namespace(self, namespace, function):
+        # PUT
+        r = requests.put(f"{self.config['api_namespaces_url']}/{namespace.__name__.replace('/', '-')}",
+                         data=json.dumps({'function': function.__qualname__.split('-')[-1]}), headers=self.headers)
+        if r.status_code == 202:
+            self.update()
+            return True
+
+        return False
+
+    def delete_namespace(self, namespace) -> bool:
+        # DELETE
+        r = requests.delete(f"{self.config['api_namespaces_url']}/{namespace.__name__.replace('/', '-')}",
+                            headers=self.headers)
+        if r.status_code == 202:
+            self.update()
+            return True
+
+        return False
+
+    def remove_function_from_namespace(self, function) -> bool:
+        # PATCH
+        namespace = function.__qualname__.split('-')[0]
+        r = requests.patch(f"{self.config['api_namespaces_url']}/{namespace.replace('/', '-')}",
+                         data=json.dumps({'function': function.__qualname__.split('-')[-1]}), headers=self.headers)
+        if r.status_code == 202:
+            self.update()
+            return True
+
+        return False
+
+    def share_namespace(self, namespace, recipient_email) -> Optional[str]:
+        id_token = load_token_data()['id_token']
+        sender_email = jwt.decode(id_token, options={"verify_signature": False})["email"]
+        r = requests.post(f"{self.config['api_invites_url']}",
+                          data=json.dumps({"namespace": namespace.__name__,
+                                           "recipient_email": recipient_email,
+                                           "sender_email": sender_email}), headers=self.headers)
+
+        if r.status_code == 202:
+            return r.json()["invite_id"]
+
+    def accept_invite(self, invite_id) -> bool:
+        r = requests.get(f"{self.config['api_invites_url']}/{invite_id}", headers=self.headers)
+        if r.status_code == 202:
+            self.update()
+            return True
+
+        return False
 
 
 catalog = Catalog()

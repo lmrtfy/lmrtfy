@@ -72,10 +72,11 @@ class LMRTFY(object):
         if self._login_handler.login():
             self._login_handler.get_token()
 
-    def deploy(self, script_path: str, local: bool = False, run_as_daemon: bool = False):
+    def deploy(self, script_path: str, local: bool = False, run_as_daemon: bool = False, namespace: str=""):
         """
         Deploy your script to accept inputs via web-api.
 
+        :param namespace:
         :param script_path: script to be deployed (full path)
         :param local: deployment on this host only (script is executed locally)
         :param run_as_daemon: run local deployment as daemon (in background)
@@ -93,7 +94,7 @@ class LMRTFY(object):
 
             logging.warning('Deploying locally.')
             with Context(working_directory='./') as c:
-                lmrtfy.runner.main(pathlib.Path(script_path).resolve())
+                lmrtfy.runner.main(pathlib.Path(script_path).resolve(), namespace)
         else:
             logging.warning('Deploying to cloud.')
             logging.error("This feature is not yet implemented. Please run 'lmrtfy deploy <script> --local' for now.")
