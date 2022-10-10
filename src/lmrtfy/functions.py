@@ -246,7 +246,7 @@ class Catalog(object):
 
         return False
 
-    def add_function_to_namespace(self, namespace: Namespace, function: Function):
+    def add_function_to_namespace(self, namespace: Namespace, function):
         """
         Add a function to an existing namespace.
 
@@ -278,7 +278,7 @@ class Catalog(object):
 
         return False
 
-    def remove_function_from_namespace(self, function: Function) -> bool:
+    def remove_function_from_namespace(self, function) -> bool:
         """
         Delete `function` from its namespace.
         """
