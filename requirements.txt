@@ -16,3 +16,5 @@ cryptography
 coloredlogs
 packaging
 python-daemon
+makefun
+shortuuid

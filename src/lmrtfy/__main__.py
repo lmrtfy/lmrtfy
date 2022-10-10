@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import fire
 import pathlib
 import requests
@@ -115,7 +116,7 @@ class LMRTFY(object):
             msg = json.dumps(template, indent=4).split('\n')
             for m in msg:
                 logging.warning(m)
-            exit(-1)
+            sys.exit(-1)
 
         try:
             with open(input_file, 'r') as f:
@@ -146,12 +147,6 @@ class LMRTFY(object):
         :param job_id: Job id of the job that you want to fetch results for.
         """
         self.login()
-
-        # TODO: These error messages should be created server-side
-        #if not check_uuid4(job_id):
-        #    logging.error(f"'{job_id}' is not a valid job_id. Please check the output of the "
-        #                  f"`lmrtfy submit` step.")
-        #    exit(-1)
 
         logging.info(f'Fetching results for job-id {job_id}')
 
