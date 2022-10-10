@@ -19,6 +19,8 @@ from lmrtfy.runner import fetch_template
 from lmrtfy.runner import JobStatus
 from lmrtfy import _lmrtfy_job_dir
 from lmrtfy.helper import NumpyEncoder
+from lmrtfy.fetch_results import fetch_results
+
 
 _log_level = logging.INFO
 if 'LMRTFY_DEBUG' in os.environ:
@@ -66,19 +68,20 @@ class Job(object):
 
     @property
     def results(self) -> Optional[dict]:
-        try:
-            config = get_cliconfig()
-            token = load_token_data()['access_token']
-            headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
-            r = requests.get(config['api_results_url'] + f"/{self.id}", headers=headers)
-            # TODO: Store results locally and delete job_file.
-            if r.status_code == 200:
-                return r.json()
-            else:
-                logging.error(f"Could not fetch results from server: {r.status_code}")
-        except ConnectionError as e:
-            logging.error("Could not access results server.")
-            logging.error(e.strerror)
+        return fetch_results(self.id)
+        #try:
+        #    config = get_cliconfig()
+        #    token = load_token_data()['access_token']
+        #    headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
+        #    r = requests.get(config['api_results_url'] + f"/user/{self.id}", headers=headers)
+        #    # TODO: Store results locally and delete job_file.
+        #    if r.status_code == 200:
+        #        return r.json()
+        #    else:
+        #        logging.error(f"Could not fetch results from server: {r.status_code}")
+        #except ConnectionError as e:
+        #    logging.error("Could not access results server.")
+        #    logging.error(e.strerror)
 
     @property
     def ready(self):
