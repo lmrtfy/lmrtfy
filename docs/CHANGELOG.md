@@ -1,3 +1,6 @@
+#0.0.10 - 10/oct/2022
+* minor bug fixes
+
 # v0.0.9 - 10/oct/2022
 * short UUIDs for jobs and profiles
 * examples to use
