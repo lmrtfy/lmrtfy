@@ -213,7 +213,7 @@ class Runner(object):
         self.client.publish(self.runner_status_topic, json.dumps(self.runner_status))
 
 
-    def execute(self, job_id: int, user_id, job_input: dict):
+    def execute(self, job_id: str, user_id: str, job_input: dict):
         """
         `execute` is responsible for the actual execution of the command with the correct input
         parameters.
@@ -282,8 +282,8 @@ class Runner(object):
                         # TODO: Fix exception and log meaningful error message
                         pass
 
-                    r = requests.post(f"{config['api_results_url']}/{job_id}", files=files,
-                                      data={"user_id": user_id}, headers=headers)
+                    r = requests.post(f"{config['api_results_url']}/{user_id}/{job_id}", files=files,
+                                      headers=headers)
                     logging.debug(r)
                     if r.status_code != 200:
                         logging.error("Results could not be uploaded")
