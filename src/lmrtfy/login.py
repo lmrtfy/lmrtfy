@@ -24,6 +24,8 @@ from lmrtfy import _lmrtfy_config_dir
 
 def get_cliconfig() -> Optional[dict]:
 
+    do_cache = False
+
     # TODO: What happens if LOCAL and DEV are defined?
     if "LMRTFY_LOCAL" in os.environ:
         url = "http://127.0.0.1:5000/cliconfig"
@@ -31,15 +33,18 @@ def get_cliconfig() -> Optional[dict]:
         url = "https://dev-api.lmrt.fyi/cliconfig"
     else:
         url = "https://api.lmrt.fyi/cliconfig"
+        do_cache = True
 
     try:
         config_file = _lmrtfy_config_dir.joinpath('cliconfig.json')
-        if config_file.exists():
-            with open(config_file, 'r') as f:
-                d = json.load(f)
-                if float(d['updated']) > (float(datetime.utcnow().timestamp()) - 3600):
-                    logging.debug("Loading cached cliconfig.")
-                    return d
+
+        if do_cache:
+            if config_file.exists():
+                with open(config_file, 'r') as f:
+                    d = json.load(f)
+                    if float(d['updated']) > (float(datetime.utcnow().timestamp()) - 3600):
+                        logging.debug("Loading cached cliconfig.")
+                        return d
 
         logging.debug("Refreshing cliconfig.")
         r = requests.get(url).json()
@@ -154,7 +159,7 @@ class LoginHandler(object):
         base_url = f"{self.cliconfig['auth_authorize_url']}?"
         url_parameters = {
             'audience': self.cliconfig['auth_audience'],
-            'scope': "profile openid offline_access",  # self.cliconfig['auth_scopes'],
+            'scope': "profile openid offline_access email",  # self.cliconfig['auth_scopes'],
             'response_type': 'code',
             'redirect_uri': self.redirect_uri,
             'client_id': self.cliconfig['auth_client_id'],
@@ -197,6 +202,9 @@ class LoginHandler(object):
         data = r.json()
 
         if self.token_is_valid(data['access_token']):
+            headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {data['access_token']}"}
+            r = requests.post(self.cliconfig['api_users_url'], headers=headers, data=json.dumps({'id_token': data['id_token']}))
+            logging.info(r.json())
             save_token_data(data)
 
     def token_is_valid(self, token) -> bool:
