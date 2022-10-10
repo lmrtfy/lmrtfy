@@ -1,1 +1,1 @@
-::: src.lmrtfy.functions
+::: lmrtfy.functions

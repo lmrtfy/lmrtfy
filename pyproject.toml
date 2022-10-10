@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "lmrtfy"
-version = "0.0.9b0"
+version = "0.0.9"
 description = "Turn variables into program arguments. Auto-generates a CLI interface and an API using lmrtfy.de."
 readme = "README.md"
 authors = [{ name = "lmrtfy.de", email = "hello@lmrtfy.de" }]
@@ -47,7 +47,8 @@ dependencies = [
         "coloredlogs",
         "packaging",
         "python-daemon",
-        "makefun"
+        "makefun",
+        "shortuuid"
 ]
 requires-python = ">=3.7"
 
@@ -63,7 +64,7 @@ documentation = "https://lmrtfy.github.io/lmrtfy"
 lmrtfy = "lmrtfy.__main__:main"
 
 [tool.bumpver]
-current_version = "0.0.9b0"
+current_version = "0.0.9"
 version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true 
@@ -82,7 +83,4 @@ push = true
 ]
 ".github/workflows/publish_github_pages_latest.yml" = [
     'VERSION: "MAJOR.MINOR.PATCH[PYTAGNUM]"',
-]
-"docs/javascript/mixpanel.js" = [
-    'doc_version = "MAJOR.MINOR.PATCH[PYTAGNUM]"'
 ]

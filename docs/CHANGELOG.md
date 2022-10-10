@@ -1,3 +1,13 @@
+# v0.0.9 - 10/oct/2022
+* short UUIDs for jobs and profiles
+* examples to use
+* bug fixes
+* revised documentation (structure, content, ...)
+* sharing
+
+# v0.0.8 - 16/sep/2022
+* fixed missing dependencies for installation
+
 # v0.0.7 - 16/sep/2022
 * **introduced `catalog` feature to call 'cloud' functions directly from code.**
 * enhanced documentation (API reference, links, quickstart, structure, ...)

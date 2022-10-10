@@ -14,6 +14,9 @@ theme:
   icon:
     repo: fontawesome/brands/github
   font: false
+  features:
+    - navigation.sections
+    - content.code.annotate
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
@@ -26,7 +29,7 @@ theme:
       scheme: slate
       toggle:
         icon: material/lightbulb-outline
-        name: Switch to system preference
+        name: Switch to light mode
 
 
 extra_css:
@@ -50,24 +53,6 @@ extra:
       link: https://www.linkedin.com/company/lmrt-fyi
     - icon: fontawesome/brands/medium
       link: https://medium.com/lmrt-fyi
-#  consent:
-#    title: Cookie consent
-#    description: |
-#        We use cookies to recognize your repeated visits and preferences, as well
-#        as to measure the effectiveness of our documentation and whether users
-#        find what they're searching for. With your consent, you're helping us to
-#        make our documentation better.
-#    cookies:
-#      analytics:
-#        name: Google Analytics
-#        checked: true
-#      github:
-#        name: github
-#        checked: true
-#    actions:
-#      - accept
-#      - reject
-#      - manage
 
 copyright:
   Copyright &copy; 2022 LMRTFY #– <a href="#__consent">Change cookie settings</a>
@@ -77,9 +62,11 @@ plugins:
   - mike
   - tags
   - mkdocstrings:
+      watch: [src]
       handlers:
         python:
           options:
+            #show_root_heading: true
             docstring_style: sphinx
 
 markdown_extensions:
@@ -89,6 +76,7 @@ markdown_extensions:
   - admonition
   - attr_list
   - def_list
+  - md_in_html
   - toc:
       baselevel: 2
       permalink: true
@@ -114,28 +102,41 @@ markdown_extensions:
   - pymdownx.tilde
 
 nav:
-  - Website: "https://lmrt.fyi"
-  - GitHub Repository: "https://github.com/lmrtfy/lmrtfy"
   - Introduction: 'index.md'
-  - Quick Start: 'quickstart.md'
-  - Tutorial:
-    - Installation: 'tutorial/installation.md'
-    - Login: 'tutorial/login.md'
-    - Annotate your script: 'tutorial/annotation.md'
-    - Deploy your script/function: 'tutorial/deployment.md'
-    - Submit a job: 'tutorial/submission.md'
-    - Get results: 'tutorial/fetch_results.md'
-  - Examples:
-    - Starting Example: 'examples/starting_example.md'
-    - Free Fall: 'examples/free_fall.md'
-    - Compound Interest: 'examples/compound_interest.md'
-  - API Reference:
-    - Annotation: "api_reference/annotation.md"
-    - Catalog: "api_reference/catalog.md"
-  - CLI Reference: "cli_reference.md"
-  - How to report an issue: "report_bugs.md"
-  - Contributing: 'contributing.md'
+  - Quick start: 'quickstart.md'
 
-  - Roadmap: 'roadmap.md'
-  - Changelog: 'CHANGELOG.md'
+  - User Guide:
+      - Installation: "user_guide/installation.md"
+      - Sign Up/Login: "user_guide/login.md"
+      - Calling a cloud function:
+          - Call a function: "user_guide/calling_functions/submission.md"
+          - Get results: "user_guide/calling_functions/fetch_results.md"
+      - Creating your own function:
+          - Annotation: "user_guide/creating_functions/annotation.md"
+          - Variables and Results: "user_guide/creating_functions/variables_and_results.md"
+          - Deployment: "user_guide/creating_functions/deployment.md"
+      - Sharing a function: "user_guide/sharing/sharing.md"
+      - Using the web app:
+          - Overview: "user_guide/web_app/overview.md"
+          - LMRTFY catalog: "user_guide/web_app/catalog.md"
+
+  - Examples:
+      - Starting example: 'examples/starting_example.md'
+      - Free fall: 'examples/free_fall.md'
+      - Compound interest: 'examples/compound_interest.md'
+
+  - Reference:
+      - API reference:
+        - Annotation: "api_reference/annotation.md"
+        - Catalog: "api_reference/catalog.md"
+      - CLI reference: "cli_reference.md"
+
+  - Contributing:
+      - Reporting an issue: "report_bugs.md"
+      - Contributing code: 'contributing.md'
+
+  - Roadmap:
+      - Roadmap: 'roadmap.md'
+      - Changelog: 'CHANGELOG.md'
+
 

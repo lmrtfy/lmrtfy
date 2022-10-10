@@ -1,9 +1,30 @@
 <p align="center" width="66%">
-   <a href="https://lmrt.fyi"> <img src="docs/images/lmrtfy_small.png"><img></a>
+   <a href="https://lmrt.fyi"><img alt="Logo" src="docs/images/lmrtfy_small.png" /></a>
 </p>
+
 <p align="center" width="100%">
-   <a href="https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge"></img></a>
+   <a href="https://app.lmrt.fyi"></a><img alt="web app" src="https://img.shields.io/badge/LMRTFY-WebApp-blue?style=for-the-badge" /></a>
 </p>
+
+<p align="center" width="100%">
+   <a href="https://lmrt.fyi"><img alt="Website badge" src="https://img.shields.io/badge/website-lmrt.fyi-blue?style=for-the-badge"/></a>
+</p>
+
+<p align="center">
+   <a href="https://github.com/lmrtfy/lmrtfy"><img alt="repo badge" src="https://img.shields.io/badge/repository-GitHub-blue?style=for-the-badge" /></a>
+   <img alt="GitHub Stars" src="https://img.shields.io/github/stars/lmrtfy/lmrtfy?style=for-the-badge" />
+   <a href="https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE"><img alt="BSD-3 badge" src="https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge" /></a>
+</p>
+
+**LMRTFY stands for _Let Me Run That For You_.**
+
+✅ Create functions that run in the **cloud**, on **your servers** or even on **your laptop**.
+
+✅ Call them from code that runs somewhere else, just **like a regular function**.
+
+✅ **Share functions** with friends and colleagues, track their usage and **monetize** their usage.
+
+✅ Works with Python, but more languages will be added in the future.
 
 ---
 
@@ -12,19 +33,7 @@
 [![Documentation (latest)](https://github.com/lmrtfy/lmrtfy/actions/workflows/publish_github_pages_latest.yml/badge.svg)](https://docs.lmrt.fyi/latest)
 
 
-Turn variables into program arguments. Auto-generates a CLI interface and an API using lmrt.fyi.
 
-
-LMRTFY stands for _Let Me Run That For You_.
-
-**Create functions that run in the cloud, on your servers or even on your laptop.<br>
-Call them from code, anywhere, just like a regular function.**
-
-[![Offical site](https://img.shields.io/badge/website-lmrt.fyi-blue?style=for-the-badge)](https://lmrt.fyi)
-
-[![GitHub Repository](https://img.shields.io/badge/repository-GitHub-blue?style=for-the-badge)](https://github.com/lmrtfy/lmrtfy)
-[![Badge_BSD3](https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge)](https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE)
-![Badge_Stars](https://img.shields.io/github/stars/lmrtfy/lmrtfy?style=for-the-badge)
 
 * [Quickstart Guide](quickstart.md)
 * [Tutorial](tutorial/installation.md)
@@ -42,9 +51,6 @@ We strive to provide a frictionless developer experience:
 
 * Change as little code as possible to use LMRTFY
 * Call deployed function like any other function provided by a local library
-
-!!! warning
-   LMRTFY is currently in an early phase. Things will likely change in future releases.
 
 
 ## Quickstart - TL;DR
