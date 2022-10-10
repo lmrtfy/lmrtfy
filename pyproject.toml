@@ -47,7 +47,8 @@ dependencies = [
         "coloredlogs",
         "packaging",
         "python-daemon",
-        "makefun"
+        "makefun",
+        "shortuuid"
 ]
 requires-python = ">=3.7"
 
