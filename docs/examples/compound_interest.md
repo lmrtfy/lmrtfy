@@ -10,17 +10,15 @@ $$
 Very common formula in anything related to finance.
 
 Again, we start with the plain code, as you would implement it right away:
-```python
-# file: ci.py
+```py title="calc_compound_interest.py" linenums="1"
 def compound_interest(principal: float, annual_interest: float, years: int):
     return principal * (1. + annual_interest/100.)**years - principal
 
-if __name__ == "__main__":
-    principal = 10_000
-    interest = 6
-    years = 10
-    ci = compound_interest(principal, interest, years)
-    print(f"Compound interest after {years} years: {ci}")
+principal = 10_000
+interest = 6
+years = 10
+ci = compound_interest(principal, interest, years)
+print(f"Compound interest after {years} years: {ci}")
 ```
 
 You can run this example with `$ python ci.py` and it should print `7908.47`. Which is the compound
@@ -34,32 +32,28 @@ There are several problems with this solution:
 # Annotate with lmrtfy
 
 Using lmrtfy, you would annotate the script as follows:
-```python
-# file: calc_compound_interest.py
-from lmrtfy import variable, result
-
+```py title="calc_compound_interest_lmrtfy.py" linenums="1" hl_lines="1 10-13 17"
+from lmrtfy.annotation import variable, result
 
 def compound_interest(principal: float, annual_interest: float, years: int):
-   """
-   Compute the compound interest for `years` when starting from `principal` with `annual interest`.
-
-   compound interest = principal * (1 + annual_interest)^years - principal
-
-   """
-
    return principal * (1. + annual_interest/100.)**years - principal
 
+principal = 10_000.
+interest = 6.
+years = 10
 
-if __name__ == "__main__":
-   principal = variable(10000., name="principal", min=0)
-   annual_interest = variable(6.0, name="annual_interest", min=0, max=100, unit="%")
-   years = variable(10, name="years", min=0)
+principal = variable(principal, name="principal", min=0)
+annual_interest = variable(principal, name="annual_interest", 
+                           min=0, max=100, unit="%")
+years = variable(years, name="years", min=0)
 
-   ci = result(compound_interest(principal, annual_interest, years), name="compound_interest"
+ci = compound_interest(principal, annual_interest, years)
+
+ci = result(ci, name="compound_interest")
 
 ```
 
-Now, we run `python ci_lmrtfy_1.py` to generate the profile.
+Now, we run `python calc_compound_interest_lmrtfy_1.py` to generate the profile.
 
 !!! warning
     The type annotation are not enforced when run locally. LMRTFY checks the types and units only
@@ -75,13 +69,12 @@ $ lmrtfy deploy examples/compound_interest/calc_compound_interest.py --local
 
 ## Call `compound_interest` from code
 Similar to the other examples we just need to import the `catalog` and call the correct function:
-```python
-# file: examples/compound_interest/call_compound_interest.py
+```py title="call_compound_interest.py" linenums="1"
 from time import sleep
 
-from lmrtfy import catalog
+from lmrtfy.functions import catalog
 
-job = catalog.calc_compound_interest(5., 10., 5)
+job = catalog.<your_namespace>.calc_compound_interest_lmrtfy(5., 10., 5) # (1)!
 
 if job:
    print(job.id, job.status)
@@ -91,6 +84,9 @@ if job:
    print(job.results)
 ```
 
+1. `<your_namespace>` is your private namespace on LMRTFY, which is typically your nickname.
+Available namespaces are shown when importing `catalog` or when calling `catalog.update()`.
+ 
 ## Call `compound_interest` from the CLI
 The output should be similar to this:
 ```text
@@ -101,7 +97,7 @@ The `<profile_id>` is important to submit jobs.
 
 
 To submit a job you are currently required to save the input parameters as JSON (e.g. `input.json`):
-```json
+```json title="input.json to calculate compound interest"
 {
   "argument_values": {
     "annual_interest": 6.0,
@@ -128,8 +124,8 @@ We need the `<job_id>` later to fetch the results from the computation.
 
 # Alternative Annotation
 A more compact but working alternative is to create the result as follows:
-```python
-from lmrtfy import variable, result
+```python title="Alternative annotation" linenums="1"
+from lmrtfy.annotation import variable, result
 
 def compound_interest(principal: float, annual_interest: float, years: int):
     return principal * (1. + annual_interest/100.)**years - principal

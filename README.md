@@ -3,8 +3,11 @@
 </p>
 
 <p align="center" width="100%">
-   <a href="https://lmrt.fyi"><img alt="Website badge" src="https://img.shields.io/badge/website-lmrt.fyi-blue?style=for-the-badge"/></a>
+   <a href="https://app.lmrt.fyi"></a><img alt="web app" src="https://img.shields.io/badge/LMRTFY-WebApp-blue?style=for-the-badge" /></a>
+</p>
 
+<p align="center" width="100%">
+   <a href="https://lmrt.fyi"><img alt="Website badge" src="https://img.shields.io/badge/website-lmrt.fyi-blue?style=for-the-badge"/></a>
 </p>
 
 <p align="center">

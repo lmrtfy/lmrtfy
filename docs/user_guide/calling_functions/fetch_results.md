@@ -11,8 +11,8 @@ while not job.ready:
 print(job.results)
 ```
 
-Currently, the while loop is necessary to wait for the results. This isn't the most ergonomic way
-to do this. 
+Currently, the while loop is necessary to wait for the results. If the job has not been submitted 
+for some reason the `job.ready` query triggers automatic resubmission.
 
 This could easily become a future (in the sense of concurrent programming) later on. **We are also 
 looking for feedback, what would work best for you.**
@@ -35,6 +35,3 @@ file with the following format:
 ```
 
 Each variable has its own file. 
-
-!!! warning
-    This will very likely change in the future to be more ergonomic.

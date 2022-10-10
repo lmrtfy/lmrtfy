@@ -59,13 +59,19 @@ let path = window.location.pathname.split("/");
 let docs_version = path[1];
 let page = "/" + path.slice(2).join("/");
 
+let local = false;
+
 if (docs_version.split(".").length !== 3) {
-    docs_version = "";
+    docs_version = "local docs";
     page = "/" + path.slice(1).join("/");
+
+    local = true
 }
 
 if (page === "/") {
     page = page + "introduction"
 }
 
-mixpanel.track(page, {"docs_version": docs_version});
+if (local === false) {
+    mixpanel.track(page, {"docs_version": docs_version});
+}

@@ -5,7 +5,7 @@ import time
 
 from lmrtfy.functions import catalog
 
-job = catalog.calc_velocity(time=100.0)
+job = catalog.free_fall_lmrtfy(time=100.0)
 
 if job:
     while not job.ready:
