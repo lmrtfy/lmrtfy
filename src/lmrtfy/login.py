@@ -20,6 +20,7 @@ from typing import Optional
 import logging
 from datetime import datetime
 from lmrtfy import _lmrtfy_config_dir
+import sys
 
 
 def get_cliconfig() -> Optional[dict]:
@@ -59,7 +60,7 @@ def get_cliconfig() -> Optional[dict]:
     except:
         logging.error(f"Could not reach the LMRTFY API at {url}. Please try again in a few minutes."
                       "If the error persists please contact hello@lmrt.fyi.")
-        exit(-1)
+        sys.exit(-1)
 
 
 def auth_url_encode(byte_data):
@@ -179,11 +180,11 @@ class LoginHandler(object):
 
         if state != self.received_state:
             logging.error("Inconsistency occurred during login. Please log out of all connections.")
-            exit(-1)
+            sys.exit(-1)
 
         if self.error_message:
             logging.error(f'Login not successful: {self.error_message}')
-            exit(-1)
+            sys.exit(-1)
 
         logging.info('Login successful.')
         return True
