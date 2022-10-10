@@ -84,19 +84,6 @@ class Job(object):
         ```
         """
         return fetch_results(self.id)
-        #try:
-        #    config = get_cliconfig()
-        #    token = load_token_data()['access_token']
-        #    headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
-        #    r = requests.get(config['api_results_url'] + f"/user/{self.id}", headers=headers)
-        #    # TODO: Store results locally and delete job_file.
-        #    if r.status_code == 200:
-        #        return r.json()
-        #    else:
-        #        logging.error(f"Could not fetch results from server: {r.status_code}")
-        #except ConnectionError as e:
-        #    logging.error("Could not access results server.")
-        #    logging.error(e.strerror)
 
     @property
     def ready(self):
@@ -106,22 +93,6 @@ class Job(object):
         if self.status == JobStatus.RESULTS_READY:
             return True
         return False
-
-
-def unique_name(o, name):
-    new_name = name
-
-    if hasattr(o, new_name):
-        logging.warning(f"Function {new_name} already exists in catalog!")
-        suffix = 1
-
-        while True:
-            new_name = name + str(suffix)
-            if not hasattr(o, new_name):
-                break
-            suffix += 1
-
-    return new_name
 
 
 def signature_from_profile(profile):
@@ -162,14 +133,6 @@ class Namespace(object):
         self.__name__ = name
 
 
-class Function(object):
-    def __init__(self, pid):
-        self.pid = pid
-
-    def __call__(self, *args, **kwargs):
-        pass
-
-
 class Catalog(object):
     """
     The Catalog object provides an interface to deployed functions that you can run from your code.
@@ -179,7 +142,7 @@ class Catalog(object):
 
     If you want to retrieve newly deployed function, call `catalog.update()`.
 
-    To run a deployed function from the catalog call `catalog.<deployed_function>(*args, **kwargs)`.
+    To run a deployed function from the catalog call `catalog.<namespace>.<deployed_function>(*args, **kwargs)`.
 
     Each function that has been pulled into the catalog is available via the `help()` command.
     """
@@ -200,6 +163,7 @@ class Catalog(object):
     def __add_function(self, namespace, name, sig, res_ann, pid, template):
 
         template = fetch_template(pid)
+
         def f(**kwargs) -> Job:
             f.pid = pid
             for p in kwargs:
@@ -222,11 +186,16 @@ class Catalog(object):
         """
         Call `update` to update the catalog with newly deployed functions.
         """
-        # TODO: get list of namespaces
 
         r = requests.get(self.config['api_namespaces_url'], headers=self.headers)
         logging.info(r.json())
         namespaces = r.json()['namespaces']
+
+        for n in namespaces:
+            try:
+                delattr(self, n.split('/')[0])
+            except:
+                pass
 
         for n in namespaces:
             names = n.split('/')
@@ -243,8 +212,9 @@ class Catalog(object):
                 functions = r.json()['functions']
 
                 for func in functions:
-                    func_name = unique_name(o, functions[func]['name'])
-                    self.__add_function(o, func_name, *signature_from_profile(functions[func]), pid=func, template=functions[func])
+                    func_name = functions[func]['name']
+                    if not hasattr(o, func_name):
+                        self.__add_function(o, func_name, *signature_from_profile(functions[func]), pid=func, template=functions[func])
 
             except:  # TODO: Except clause too broad!
                 logging.error(f"Could not namespace {n} function catalog.")
