@@ -36,11 +36,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://lmrt.fyi/0.0.10/rtd/</loc>
-         <lastmod>2022-10-10</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://lmrt.fyi/0.0.10/api_reference/annotation/</loc>
          <lastmod>2022-10-10</lastmod>
          <changefreq>daily</changefreq>
@@ -62,6 +57,11 @@
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.10/examples/starting_example/</loc>
+         <lastmod>2022-10-10</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://lmrt.fyi/0.0.10/rtd/</loc>
          <lastmod>2022-10-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
