@@ -4,7 +4,7 @@ repo_url: https://github.com/lmrtfy/lmrtfy
 site_author: lmrtfy
 repo_name: lmrtfy/lmrtfy
 
-docs_dir: 'docs'
+docs_dir: 'docs/rtd'
 
 theme:
   name: readthedocs
@@ -57,4 +57,4 @@ markdown_extensions:
 
 nav:
   - GitHub repository: "https://github.com/lmrtfy/lmrtfy"
-  - LMRTFY: 'rtd.md'
+  - LMRTFY: 'index.md'

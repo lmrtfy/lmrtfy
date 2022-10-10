@@ -1,6 +1,6 @@
 ---
 
-The official documentation can be found here: [Documenation](https://docs.lmrt.fyi)
+# The official documentation can be found here: [Documenation](https://docs.lmrt.fyi)
 
 ---
 
@@ -23,11 +23,11 @@ The official documentation can be found here: [Documenation](https://docs.lmrt.f
 
 
 
-* [Quickstart Guide](quickstart.md)
+* [Quickstart Guide](../quickstart.md)
 * [Tutorial](tutorial/installation.md)
-* [Examples](examples/starting_example.md)
-* [API Reference](api_reference/annotation.md)
-* [How to report issues](report_bugs.md) and [how to contribute](contributing.md)
+* [Examples](../examples/starting_example.md)
+* [API Reference](../api_reference/annotation.md)
+* [How to report issues](../report_bugs.md) and [how to contribute](../contributing.md)
 
 ## Introduction
 
@@ -55,7 +55,7 @@ As you can see in step 5, it's as simple as calling a regular function from any 
 you have installed locally.
 
 ## Examples
-The [examples](examples/starting_example.md) are provided in the `examples/` directory. They are **work in progress**. As lmrtfy
+The [examples](../examples/starting_example.md) are provided in the `examples/` directory. They are **work in progress**. As lmrtfy
 matures, more and more examples will be added.
 
 If you miss an example for a specific use case, please let us know, and we will add one!
