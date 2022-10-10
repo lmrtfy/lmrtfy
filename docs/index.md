@@ -5,7 +5,7 @@ tags:
     - Introduction
 ---
 
-**LMRTFY stands for _Let Me Run That For You_.**
+**Let Me Run That For You.**
 
 ✅ Create functions that run in the **cloud**, on **your servers** or even on **your laptop**.
 
@@ -17,6 +17,8 @@ tags:
 
 <div style="text-align: center;" markdown>
 
+[![Web App](https://img.shields.io/badge/LMRTFY-WebApp-blue?style=for-the-badge)](https://app.lmrt.fyi)<br>
+[![Website](https://img.shields.io/badge/website-lmrt.fyi-blue?style=for-the-badge)](https://lmrt.fyi)<br>
 [![GitHub Repository](https://img.shields.io/badge/repository-GitHub-blue?style=for-the-badge)](https://github.com/lmrtfy/lmrtfy)
 [![Badge_BSD3](https://img.shields.io/badge/license-BSD--3-green?style=for-the-badge)](https://github.com/lmrtfy/lmrtfy/blob/main/LICENSE)
 ![Badge_Stars](https://img.shields.io/github/stars/lmrtfy/lmrtfy?style=for-the-badge)
@@ -24,7 +26,7 @@ tags:
 </div>
 
 * [Quickstart Guide](quickstart.md)
-* [Tutorial](tutorial/installation.md)
+* [Tutorial](user_guide/installation.md)
 * [Examples](examples/starting_example.md)
 * [API Reference](api_reference/annotation.md)
 * [How to report issues](report_bugs.md) and [how to contribute](contributing.md)
@@ -40,7 +42,7 @@ We strive to provide a frictionless developer experience:
 * Change as little code as possible to use LMRTFY
 * Call deployed function like any other function provided by a local library
 
-!!! warning
+!!! info
     LMRTFY is currently in an early phase. Things will likely change in future releases.
 
 

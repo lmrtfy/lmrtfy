@@ -1,3 +1,8 @@
+# v0.0.9 - 
+* short UUIDs for jobs and profiles
+* examples to use
+* bug fixes
+* revised documentation (structure, content, ...)
 
 # v0.0.8 - 16/sep/2022
 * fixed missing dependencies for installation

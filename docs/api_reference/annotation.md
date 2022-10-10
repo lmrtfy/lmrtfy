@@ -1,1 +1,1 @@
-::: src.lmrtfy.annotation
+::: lmrtfy.annotation

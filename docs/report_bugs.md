@@ -15,7 +15,7 @@ The clearer the description of the bug is and the more information you provide, 
 ## Request a feature
 
 This is the best choice if there is a feature you are missing. Each feature request will be reviewed.
-If the feature aligns with our [vision](vision.md) of LMRTFY.
+If the feature aligns with our vision of LMRTFY.
 
 If we are going to implement the feature it will be added to the roadmap.
 

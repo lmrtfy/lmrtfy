@@ -37,7 +37,7 @@ to take jobs.
 The CLI allows you to submit jobs for a specific `profile_id` which is returned by the `deploy` step.
 
 `<argument.json>` needs to contain valid input data, otherwise the job is rejected. The structure
-of the JSON file can be found [here](tutorial/submission.md#using-the-cli).
+of the JSON file can be found [here](user_guide/calling_functions/submission.md#using-the-cli).
 
 ## `fetch <job_id> <path>`
 

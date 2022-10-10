@@ -10,7 +10,7 @@ v = g \cdot t
 $$
 
 In regular python code that you run locally it would look like this:
-```python
+```python title="free_fall.py" linenums="1"
 standard_gravity = 9.81
 time = 200.
 
@@ -21,8 +21,7 @@ print(f"Velocity after {time} seconds is {velocity} m/s.")
 Now we want to be able to share that functionality via the lmrtfy web API. All we have to do is decide
 which variables are considered to be an input and a result of the computation:
 
-```python
-# file: examples/free_fall/calc_velocity.py
+```python title="free_fall_lmrtfy.py" linenums="1" 
 from lmrtfy import variable, result
 
 standard_gravity = 9.81
@@ -41,12 +40,12 @@ To deploy, you simply run `$ lmrtfy deploy examples/velocity_from_gravity/calc_v
 Do not stop that process, because than you will not be able to submit a job.
 
 ## Calling from code
-Calling `calc_velocity` by code as easy as it was for the [first example](starting_example.md). 
-```python
+Calling `free_fall_lmrtfy` by code as easy as it was for the [first example](starting_example.md). 
+```python title="calc_free_fall.py" linenums="1"
 import time
-from lmrtfy import catalog
+from lmrtfy.functions import catalog
 
-job = catalog.calc_velocity(time=100.0)
+job = catalog.<your_namespace>.free_fall_lmrtfy(time=100.0) # (1)!
 
 if job:
     while not job.ready:
@@ -55,8 +54,11 @@ if job:
     print(job.results)
 ```
 
+1. `<your_namespace>` is your private namespace on LMRTFY, which is typically your nickname.
+Available namespaces are shown when importing `catalog` or when calling `catalog.update()`.
+
 !!! note
-    You can also run `help(calc_velocity)` to see the corresponding help. Right now, only the 
+    You can also run `help(free_fall_lmrtfy)` to see the corresponding help. Right now, only the 
     function signature is shown but in the future you will also be able to see the docstrings.
 
 ## Calling from CLI
