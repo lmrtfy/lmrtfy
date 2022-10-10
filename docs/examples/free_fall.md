@@ -45,7 +45,7 @@ Calling `free_fall_lmrtfy` by code as easy as it was for the [first example](sta
 import time
 from lmrtfy.functions import catalog
 
-job = catalog.free_fall_lmrtfy(time=100.0)
+job = catalog.<your_namespace>.free_fall_lmrtfy(time=100.0) # (1)!
 
 if job:
     while not job.ready:
@@ -53,6 +53,9 @@ if job:
 
     print(job.results)
 ```
+
+1. `<your_namespace>` is your private namespace on LMRTFY, which is typically your nickname.
+Available namespaces are shown when importing `catalog` or when calling `catalog.update()`.
 
 !!! note
     You can also run `help(free_fall_lmrtfy)` to see the corresponding help. Right now, only the 

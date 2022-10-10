@@ -47,8 +47,14 @@ class Job(object):
         self.id = job_id
         logging.info(f"Job {self.id} created. Status is {self.status}.")
 
+
     @property
     def status(self):
+        """
+        Queries the job status.
+
+        If it returns `JobStatus.UNKNOWN` the job is likely in failed state.
+        """
         try:
             token = load_token_data()['access_token']
             headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}
@@ -68,6 +74,15 @@ class Job(object):
 
     @property
     def results(self) -> Optional[dict]:
+        """
+        Returns the results if they are ready and `None` otherwise.
+        Results are returned as a dictionary:
+        ```json
+        {
+            "<results_name>": result_value
+        }
+        ```
+        """
         return fetch_results(self.id)
         #try:
         #    config = get_cliconfig()
@@ -85,6 +100,9 @@ class Job(object):
 
     @property
     def ready(self):
+        """
+        Returns `True` if the job has finished successfully and the results are ready to be fetched.
+        """
         if self.status == JobStatus.RESULTS_READY:
             return True
         return False
@@ -231,12 +249,18 @@ class Catalog(object):
             except:  # TODO: Except clause too broad!
                 logging.error(f"Could not namespace {n} function catalog.")
 
-    def create_namespace(self, namespace, name: str) -> bool:
+    def create_namespace(self, namespace: Namespace, name: str) -> bool:
         """
         Create a unique namespace that collects functions and can be shared.
+
+        Example:
+        ```python
+        catalog.create_namespace(catalog.<namespace>, "new_namespace")
+        ```
+
         :param namespace: parent namespace
         :param name: Name of the new namespace.
-        :return: Returns the Namespace object on success and None in case of an error.
+        :return: Returns the `True` on success and `False` in case of an error.
         """
         try:
             new_name = f"{namespace.__name__}/{name}".replace('/', '-')
@@ -252,7 +276,15 @@ class Catalog(object):
 
         return False
 
-    def add_function_to_namespace(self, namespace, function):
+    def add_function_to_namespace(self, namespace: Namespace, function: Function):
+        """
+        Add a function to an existing namespace.
+
+        Example:
+        ```python
+        catalog.add_function_to_namespace(catalog.<namespace>, catalog.<namespace>.<function>
+        ```
+        """
         # PUT
         r = requests.put(f"{self.config['api_namespaces_url']}/{namespace.__name__.replace('/', '-')}",
                          data=json.dumps({'function': function.__qualname__.split('-')[-1]}), headers=self.headers)
@@ -262,7 +294,11 @@ class Catalog(object):
 
         return False
 
-    def delete_namespace(self, namespace) -> bool:
+    def delete_namespace(self, namespace: Namespace) -> bool:
+        """
+        Deletes the entire namespace. Deletion will fail if there are still functions in the
+        namespace.
+        """
         # DELETE
         r = requests.delete(f"{self.config['api_namespaces_url']}/{namespace.__name__.replace('/', '-')}",
                             headers=self.headers)
@@ -272,7 +308,10 @@ class Catalog(object):
 
         return False
 
-    def remove_function_from_namespace(self, function) -> bool:
+    def remove_function_from_namespace(self, function: Function) -> bool:
+        """
+        Delete `function` from its namespace.
+        """
         # PATCH
         namespace = function.__qualname__.split('-')[0]
         r = requests.patch(f"{self.config['api_namespaces_url']}/{namespace.replace('/', '-')}",
@@ -283,7 +322,14 @@ class Catalog(object):
 
         return False
 
-    def share_namespace(self, namespace, recipient_email) -> Optional[str]:
+    def share_namespace(self, namespace: Namespace, recipient_email: str) -> Optional[str]:
+        """
+        Share a namespace with someone else by email. The invite email will be sent to `recipient_email`.
+        This does not have to be the email address associated with the account of the person you
+        want to share the namespace with.
+
+        Invites only work once.
+        """
         id_token = load_token_data()['id_token']
         sender_email = jwt.decode(id_token, options={"verify_signature": False})["email"]
         r = requests.post(f"{self.config['api_invites_url']}",

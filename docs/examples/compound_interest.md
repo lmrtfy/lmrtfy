@@ -74,7 +74,7 @@ from time import sleep
 
 from lmrtfy.functions import catalog
 
-job = catalog.calc_compound_interest_lmrtfy(5., 10., 5)
+job = catalog.<your_namespace>.calc_compound_interest_lmrtfy(5., 10., 5) # (1)!
 
 if job:
    print(job.id, job.status)
@@ -84,6 +84,9 @@ if job:
    print(job.results)
 ```
 
+1. `<your_namespace>` is your private namespace on LMRTFY, which is typically your nickname.
+Available namespaces are shown when importing `catalog` or when calling `catalog.update()`.
+ 
 ## Call `compound_interest` from the CLI
 The output should be similar to this:
 ```text

@@ -7,18 +7,19 @@ outputs of the script. They are needed to create the profile which is used to cr
 
 ```python title="example1.py" linenums="1"
 import numpy as np
-from lmrtfy.annotation import variable, result # 1
+from lmrtfy.annotation import variable, result # (1)!
 
 
-x = variable(5, name="x", min=1, max=10) # 2
-y = variable(np.linspace(0., 1., 101, dtype=np.float64), name="y", min=-1., max=11., unit="m") # 3
+x = variable(5, name="x", min=1, max=10) # (2)!
+y = variable(np.linspace(0., 1., 101, dtype=np.float64), name="y", 
+             min=-1., max=11., unit="m") # (3)!
 z = variable("abc", name="z")
 
-z1 = variable(["abc", "def"], name="z1")  # 4
+z1 = variable(["abc", "def"], name="z1")  # (4)!
 z2 = variable(["abc", 1, 1.1], name="z2") 
 z3 = variable({'a': "abc", 'b': 1}, name="z3") 
 
-a = result(x * y, name="a") # 5
+a = result(x * y, name="a") # (5)!
 b = result(x * z, name="b")
 ```
 
@@ -40,21 +41,23 @@ import time
 
 from lmrtfy.functions import catalog
 
-job = catalog.example1(x=1,
+job = catalog.<your_namespace>example1(x=1,   # (1)!
                        y=[1, 2.0, 3.0],
                        z="foobar",
                        z1=["bar", "foo"],
                        z2=["foo", 1, 42],
                        z3={"foo": "bar", "bar": "foo"}
                        )
-#help(catalog.example1)
-
+                      
 if job:
     while not job.ready:
         time.sleep(1)
 
     print(job.results)
 ```
+
+1. `<your_namespace>` is your private namespace on LMRTFY, which is typically your nickname.
+Available namespaces are shown when importing `catalog` or when calling `catalog.update()`. 
 
 `if job:` is currently required to ensure that you actually got a job object back from the function 
 which would not be the case if the submission failed.
