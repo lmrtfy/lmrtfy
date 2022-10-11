@@ -57,8 +57,6 @@ def on_subscribe(client, userdata, flags, rc, properties=None):
     logging.debug(f"  properties: {properties}")
 
 
-
-
 class Runner(object):
     """
     The Runner class is responsible for listening to incoming jobs and the execution of the
@@ -93,23 +91,27 @@ class Runner(object):
         self.filehash = self.profile["filehash"]
         logging.debug(f"Running for profile-id: {self.filehash}")
 
-        # TODO: client id is ideally the same a the filehash I guess. Issue #6
         self.client_id = runner_id
         self.profile_id = profile_id
         # TODO: runner status => Load, RAM Status, ...
         self.runner_status_topic = f"status/runner/{self.client_id}"
-        self.heartbeat_topic = f"heartbeat/runner/{self.client_id}"
         self.job_status_topic = f"status/job/"
-        # TODO: second status topic for job status
 
+        config = get_cliconfig()
         access_token = load_token_data()['access_token']
+        headers = {"Authorization": f"Bearer {access_token}"}
         if access_token.startswith('LMRTFY'):
             try:
-                fenc = Fernet(os.getenv("LMRTFY_TOKEN_KEY").encode())
-                d = json.loads(fenc.decrypt(access_token).decode())
-                user_id = d["user_id"]
-            except:
-                logging.error("Token faulty.")
+                r = requests.get(config["api_token_url"], headers=headers)
+                if r.status_code == 200:
+                    user_id = r.json()["user_id"]
+                else:
+                    logging.error("Could not get user_id from token.")
+                    sys.exit(-1)
+
+            except Exception as e:
+                logging.error("Something is wrong with the token.")
+                logging.error(e)
                 sys.exit(-1)
         else:
             user_id = jwt.decode(access_token, options={"verify_signature": False})["sub"]
