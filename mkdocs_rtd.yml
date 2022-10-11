@@ -4,7 +4,7 @@ repo_url: https://github.com/lmrtfy/lmrtfy
 site_author: lmrtfy
 repo_name: lmrtfy/lmrtfy
 
-docs_dir: 'docs'
+docs_dir: 'docs/rtd'
 
 theme:
   name: readthedocs
@@ -58,16 +58,3 @@ markdown_extensions:
 nav:
   - GitHub repository: "https://github.com/lmrtfy/lmrtfy"
   - LMRTFY: 'index.md'
-  - Tutorial:
-    - Installation: 'tutorial/installation.md'
-    - Annotate your script: 'tutorial/annotation.md'
-    - Deploy your script/function: 'tutorial/deployment.md'
-    - Submit a job: 'tutorial/submission.md'
-    - Get results: 'tutorial/fetch_results.md'
-  - Examples:
-    - Starting Example: 'examples/starting_example.md'
-    - Free Fall: 'examples/free_fall.md'
-    - Compound Interest: 'examples/compound_interest.md'
-  - About: 'about.md'
-  - Changelog: 'CHANGELOG.md'
-
