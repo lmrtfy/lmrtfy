@@ -22,14 +22,10 @@ If you sign up with email/password you will be required to verify your email add
 # Login
 
 When you run an LMRTFY actions that require a token you will automatically be asked to login. Each 
-token is valid for 24 hours before you need to login again. If you allow cookies our authentication 
+token is valid for 10 hours before you need to login again. If you allow cookies our authentication 
 provider Auth0 will recognize you.
 
-!!! info
-    Tokens are currently valid for 24 hours. After that you will be requested to login again. That also means
-    that you cannot have scripts deployed more than 24 hours right now. This will change soon so that you
-    can deploy scripts longer than that.
-
-    Just run `lmrtfy deploy <script> --local`again after 24h and you are fine if you need longer running
-    deployments right now.)
-
+If you use a headless setup (server, google colab or other web-based tools) or if you have 
+long-term deployments you should use our token-based authentication for 
+[deployment](creating_functions/deployment_tokens.md) and 
+[job submission](calling_functions/submission_tokens.md)
