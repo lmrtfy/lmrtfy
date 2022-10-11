@@ -43,15 +43,17 @@ def main(script_path: Path, namespace: str):
 
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain',
                "Authorization": f"Bearer {load_token_data()['access_token']}"}
-    r = requests.post(config['api_users_url'], headers=headers,
-                      data=json.dumps({'id_token': load_token_data()['id_token']}))
-    logging.info(r.json())
-    nickname = r.json()['nickname']
 
-    if not namespace:
-        namespace = nickname
-    else:
-        namespace = f"{nickname}-{namespace.replace('/','-')}"
+    if load_token_data()['id_token']:
+        r = requests.post(config['api_users_url'], headers=headers,
+                          data=json.dumps({'id_token': load_token_data()['id_token']}))
+        logging.info(r.json())
+        nickname = r.json()['nickname']
+
+        if not namespace:
+            namespace = nickname
+        else:
+            namespace = f"{nickname}-{namespace.replace('/','-')}"
 
     logging.info(namespace)
 
