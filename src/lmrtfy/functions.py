@@ -322,7 +322,6 @@ class Catalog(object):
 
     def issue_deploy_token(self, function, token_type='deploy') -> Optional[dict]:
         data = {"token_type": token_type, "profile_id": function.__qualname__.split('-')[-1]}
-        print(data)
         r = requests.post(f"{self.config['api_token_url']}", data=json.dumps(data), headers=self.headers)
         if r.status_code == 200:
             return r.json()
@@ -332,7 +331,7 @@ class Catalog(object):
 
     def revoke_token(self, token_id) -> bool:
         data = {"token_id": token_id}
-        r = requests.post(f"{self.config['api_token_url']}", data=json.dumps(data), headers=self.headers)
+        r = requests.delete(f"{self.config['api_token_url']}", data=json.dumps(data), headers=self.headers)
         if r.status_code == 201:
             return True
 
