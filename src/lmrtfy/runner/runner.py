@@ -9,7 +9,9 @@ import subprocess
 import tempfile
 import time
 import uuid
+import sys
 from typing import Optional
+from cryptography.fernet import Fernet
 
 import certifi
 import jwt
@@ -101,7 +103,16 @@ class Runner(object):
         # TODO: second status topic for job status
 
         access_token = load_token_data()['access_token']
-        user_id = jwt.decode(access_token, options={"verify_signature": False})["sub"]
+        if access_token.startswith('LMRTFY'):
+            try:
+                fenc = Fernet(os.getenv("LMRTFY_TOKEN_KEY").encode())
+                d = json.loads(fenc.decrypt(access_token).decode())
+                user_id = d["user_id"]
+            except:
+                logging.error("Token faulty.")
+                sys.exit(-1)
+        else:
+            user_id = jwt.decode(access_token, options={"verify_signature": False})["sub"]
         self.user_id = user_id.replace('|','-----')
         # job_topic =  f"$share/{user_id}/{user_id}/{self.filehash}/job"
         # self.client.subscribe(job_topic, qos=2)
