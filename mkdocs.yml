@@ -111,14 +111,18 @@ nav:
       - Calling a cloud function:
           - Call a function: "user_guide/calling_functions/submission.md"
           - Get results: "user_guide/calling_functions/fetch_results.md"
+          - Using a submit token: "user_guide/calling_functions/submission_tokens.md"
       - Creating your own function:
           - Annotation: "user_guide/creating_functions/annotation.md"
-          - Variables and Results: "user_guide/creating_functions/variables_and_results.md"
+          - Variables and results: "user_guide/creating_functions/variables_and_results.md"
           - Deployment: "user_guide/creating_functions/deployment.md"
+          - Using deploy tokens: "user_guide/creating_functions/deployment_tokens.md"
+      - Namespaces: "user_guide/namespaces.md"
       - Sharing a function: "user_guide/sharing/sharing.md"
       - Using the web app:
           - Overview: "user_guide/web_app/overview.md"
           - LMRTFY catalog: "user_guide/web_app/catalog.md"
+      - Troubleshooting: "user_guide/troubleshooting.md"
 
   - Examples:
       - Starting example: 'examples/starting_example.md'

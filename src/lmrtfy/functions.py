@@ -300,20 +300,39 @@ class Catalog(object):
 
         Invites only work once.
         """
-        id_token = load_token_data()['id_token']
-        sender_email = jwt.decode(id_token, options={"verify_signature": False})["email"]
-        r = requests.post(f"{self.config['api_invites_url']}",
+        try:
+            id_token = load_token_data()['id_token']
+            sender_email = jwt.decode(id_token, options={"verify_signature": False})["email"]
+            r = requests.post(f"{self.config['api_invites_url']}",
                           data=json.dumps({"namespace": namespace.__name__,
                                            "recipient_email": recipient_email,
                                            "sender_email": sender_email}), headers=self.headers)
-
-        if r.status_code == 202:
-            return r.json()["invite_id"]
+            if r.status_code == 202:
+                return r.json()["invite_id"]
+        except:
+            pass
 
     def accept_invite(self, invite_id) -> bool:
         r = requests.get(f"{self.config['api_invites_url']}/{invite_id}", headers=self.headers)
         if r.status_code == 202:
             self.update()
+            return True
+
+        return False
+
+    def issue_deploy_token(self, function, token_type='deploy') -> Optional[dict]:
+        data = {"token_type": token_type, "profile_id": function.__qualname__.split('-')[-1]}
+        r = requests.post(f"{self.config['api_token_url']}", data=json.dumps(data), headers=self.headers)
+        if r.status_code == 200:
+            return r.json()
+
+    def issue_submit_token(self, function):
+        return self.issue_deploy_token(function, token_type='submit')
+
+    def revoke_token(self, token_id) -> bool:
+        data = {"token_id": token_id}
+        r = requests.delete(f"{self.config['api_token_url']}", data=json.dumps(data), headers=self.headers)
+        if r.status_code == 201:
             return True
 
         return False
