@@ -83,6 +83,7 @@ def load_token_data() -> dict:
 
     env_token = os.getenv("LMRTFY_ACCESS_TOKEN", None)
     if env_token:
+        logging.info("Using 'LMRTFY_ACCESS_TOKEN'.")
         return {'access_token': env_token, 'id_token': '', 'refresh_token': ''}
 
     try:
