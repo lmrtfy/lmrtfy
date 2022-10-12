@@ -65,7 +65,7 @@ if not _run_deployed:
         _lmrtfy_profile_filename.touch()
 
 if not _run_deployed and _script_path:
-    with open(_lmrtfy_profile_filename,'w') as f:
+    with open(_lmrtfy_profile_filename, 'w') as f:
         yaml.dump(profile, f)
         logging.info(f"Wrote profile to {str(_lmrtfy_profile_filename)}.")
         logging.info(f"Using function name: {profile['name']}")

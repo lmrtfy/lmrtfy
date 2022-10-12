@@ -8,7 +8,6 @@ from sys import exit
 from lmrtfy.login import load_token_data, get_cliconfig
 
 
-
 def fetch_results(job_id: str) -> Optional[dict]:
     try:
         config = get_cliconfig()

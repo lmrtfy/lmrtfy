@@ -67,7 +67,7 @@ class Job(object):
         try:
             with open(_lmrtfy_job_dir.joinpath(f"{self.id}.job"), "w") as f:
                 json.dump({"id": self.id, "status": status}, f)
-        except:
+        except:  # TODO: Too broad exception clause
             logging.error(f"Could not write local job-file for job {self.id}.")
 
         return status
@@ -239,8 +239,8 @@ class Catalog(object):
             if r.status_code == 201:
                 self.update()
                 return True
-        except:
-            pass
+        except Exception as e:  # TODO: Except clause too broad.
+            logging.error(str(e))
 
         logging.error(f"Could not create namespace {name}.")
 
@@ -309,8 +309,9 @@ class Catalog(object):
                                            "sender_email": sender_email}), headers=self.headers)
             if r.status_code == 202:
                 return r.json()["invite_id"]
-        except:
-            pass
+        except Exception as e:  # TODO: Except clause too broad
+            logging.error(e)
+            logging.error(f"Could not share namespace {namespace} with {recipient_email}.")
 
     def accept_invite(self, invite_id) -> bool:
         r = requests.get(f"{self.config['api_invites_url']}/{invite_id}", headers=self.headers)
