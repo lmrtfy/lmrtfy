@@ -25,7 +25,7 @@ Calling a function that is available in the cloud is as easy as calling a native
 
 ```py title="IPython listing - Best way to call jobs interactively" linenums="1" 
 $ ipython
-In [1]: from lmrtfy.functins import catalog
+In [1]: from lmrtfy.functions import catalog
 # information regarding the configuration
 2022-10-12 12:14:28 [36627] INFO {'namespaces': ['examples', 
 '<user_namespace>' ]} # (1)!
