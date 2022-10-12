@@ -15,10 +15,10 @@ $ conda install pip
 $ pip install lmrtfy
 ```
 
-# Sign-Up
-To make full use of LMRTFY you need to sign up with us with `lmrtfy login`.
+# Sign-Up 
+To make full use of LMRTFY you need to [sign up](https://app.lmrt.fyi) with us with `lmrtfy login`.
 
-Besides an e-mail-based sign up we also provide social logins via GitHub and Google for ease of use.
+_You can sign up with GitHub to streamline the process._
 
 # Calling your first remote function
 Calling a function that is available in the cloud is as easy as calling a native function.
