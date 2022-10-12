@@ -1055,7 +1055,7 @@ $ pip install lmrtfy
 <p>Besides an e-mail-based sign up we also provide social logins via GitHub and Google for ease of use.</p>
 <h2 id="calling-your-first-remote-function">Calling your first remote function<a class="headerlink" href="#calling-your-first-remote-function" title="Permanent link">&para;</a></h2>
 <p>Calling a function that is available in the cloud is as easy as calling a native function.</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">call_example1.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">IPython listing - Best way to call jobs interactively</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
 <span class="normal"> 4</span>
@@ -1064,22 +1064,34 @@ $ pip install lmrtfy
 <span class="normal"> 7</span>
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
-<span class="normal">10</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
-<span class="kn">from</span> <span class="nn">lmrtfy.functions</span> <span class="kn">import</span> <span class="n">catalog</span> 
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="err">$</span> <span class="n">ipython</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">lmrtfy.functins</span> <span class="kn">import</span> <span class="n">catalog</span>
+<span class="c1"># information regarding the configuration</span>
+<span class="mi">2022</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">12</span> <span class="mi">12</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">28</span> <span class="p">[</span><span class="mi">36627</span><span class="p">]</span> <span class="n">INFO</span> <span class="p">{</span><span class="s1">&#39;namespaces&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;examples&#39;</span><span class="p">,</span> 
+<span class="s1">&#39;&lt;user_namespace&gt;&#39;</span> <span class="p">]}</span> <span class="c1"># (1)!</span>
 
-<span class="n">job</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">example1</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="c1"># (1)!</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">job</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">free_fall_lmrtfy</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mf">100.</span><span class="p">)</span> <span class="c1"># (2)!</span>
+<span class="mi">2022</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">12</span> <span class="mi">12</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">08</span> <span class="p">[</span><span class="mi">36627</span><span class="p">]</span> <span class="n">INFO</span> <span class="n">Job</span> <span class="mi">8</span><span class="n">GXvA6JREr</span> <span class="n">created</span><span class="o">.</span> 
+<span class="n">Status</span> <span class="ow">is</span> <span class="n">ACCEPTED</span><span class="o">.</span> <span class="c1"># (3)!</span>
 
-<span class="k">while</span> <span class="n">job</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">job</span><span class="o">.</span><span class="n">ready</span><span class="p">:</span> <span class="c1"># (2)!</span>
-    <span class="n">sleep</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">job</span><span class="o">.</span><span class="n">ready</span> <span class="c1"># (4)!</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="kc">True</span>
 
-<span class="k">if</span> <span class="n">job</span><span class="p">:</span>    
-    <span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">results</span><span class="p">)</span>  <span class="c1"># (3)!</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">job</span><span class="o">.</span><span class="n">results</span>  <span class="c1"># (5)!</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="p">{</span><span class="s1">&#39;velocity&#39;</span><span class="p">:</span> <span class="mf">981.0</span><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <ol>
-<li>This calls the function <code>example1</code> in the LMRTFY namespace <code>example</code>. The function is executed
-   on a remote resource.</li>
-<li>If <code>job</code> is not valid the call did not succeed. <code>job.ready</code> queries the job status and becomes
-   true once the results are ready.</li>
+<li>If you want to know more about namespaces go <a href="../user_guide/namespaces/">here</a>.</li>
+<li>This calls the function <code>free_fall_lmrtfy</code> in the LMRTFY namespace <code>example</code>. The function is executed
+   on a remote resource that has been provided by us.</li>
+<li>The job is created and that status is <code>ACCEPTED</code>. Sometimes the computation is so quick that it 
+immediately returns <code>RESULTS_READY</code>.</li>
+<li><code>job.ready</code> checks if the results are computed and ready to be fetched with <code>job.results</code></li>
 <li><code>job.results</code> gets the results from LMRTFY as JSON:
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="nt">&quot;&lt;variable name&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;value&gt;</span><span class="p">,</span><span class="w"></span>
@@ -1087,11 +1099,13 @@ $ pip install lmrtfy
 <span class="p">}</span><span class="w">    </span>
 </code></pre></div></li>
 </ol>
-<p>As you can see calling the function <code>example1</code> looks just like calling any other function in Python;
-however, it is actually eexcuted on a remote server, in this case on our own server as we provide the
+<p>As you can see calling the function <code>free_fall_lmrtfy</code> looks just like calling any other function in Python;
+however, it is actually executed on a remote server, in this case on our own server as we provide the
 example.</p>
 <p>Each call to a deployed function returns a <code>Job</code> object if the submission was successful. If an error
-occurred <code>None</code> is returned. This way we can check if the submission was successful or not.</p>
+occurred <code>None</code> is returned. This way we can check if the submission was successful or not. </p>
+<p><em>If you get an error here, please let us know via <a href="mailto:hello@lmrt.fyi">hello@lmrt.fyi</a> or open an 
+<a href="https://github.com/lmrtfy/lmrtfy/issues">issue</a>.</em></p>
 <p>To get the results from the computation we can simply call <code>job.results</code>. Depending on the size of the
 results this call will take a while. In the example, this call should at most take a few seconds.</p>
 <h2 id="deploying-your-first-function">Deploying your first function<a class="headerlink" href="#deploying-your-first-function" title="Permanent link">&para;</a></h2>
@@ -1130,10 +1144,9 @@ the annotation profile.</p>
 <p>To deploy this function on your laptop you simply run
 <div class="highlight"><pre><span></span><code>$ lmrtfy deploy free_fall_lmrtfy.py --local
 </code></pre></div>
-This makes the function available in your catalog as <code>free_fall_lmrtfy</code> and starts a runner on your
-laptop. Nobody but you can call the function unless you share it with others. When you stop the
-runner calling this function will not yield any results.</p>
-<p>Calling the deployed function becomes as simple as <code class="highlight"><span class="n">catalog</span><span class="o">.</span><span class="n">free_fall_lmrtfy</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mf">200.</span><span class="p">)</span></code>.</p>
+This makes the function available in your catalog as <code>catatlog.&lt;user_namespace&gt;.free_fall_lmrtfy</code> 
+and starts a runner on your laptop. Nobody but you can call the function unless you 
+<a href="../user_guide/sharing/sharing/">share it</a> with others. If no runner is deployed the </p>
 
 
 
