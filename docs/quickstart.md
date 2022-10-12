@@ -105,7 +105,12 @@ To deploy this function on your laptop you simply run
 ```shell
 $ lmrtfy deploy free_fall_lmrtfy.py --local
 ```
-This makes the function available in your catalog as `catatlog.<user_namespace>.free_fall_lmrtfy` 
-and starts a runner on your laptop. Nobody but you can call the function unless you 
-[share it](user_guide/sharing/sharing.md) with others. If no runner is deployed the 
+This makes the function available in your catalog as 
+```catatlog.<user_namespace>.free_fall_lmrtfy```
+and starts a runner on your laptop. 
+
+Nobody but you can call the function unless you 
+[share it](user_guide/sharing/sharing.md) with others. 
+
+If no runner is deployed an error will be returned.
 
