@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#src.lmrtfy.annotation" class="md-skip">
+        <a href="#src.lmrtfy.annotation.result" class="md-skip">
           Skip to content
         </a>
       
@@ -762,13 +762,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#src.lmrtfy.annotation" class="md-nav__link">
-    src.lmrtfy.annotation
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#src.lmrtfy.annotation.result" class="md-nav__link">
     result()
   </a>
@@ -985,13 +978,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#src.lmrtfy.annotation" class="md-nav__link">
-    src.lmrtfy.annotation
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#src.lmrtfy.annotation.result" class="md-nav__link">
     result()
   </a>
@@ -1033,7 +1019,7 @@
 <div class="doc doc-object doc-module">
 
 
-<a id="src.lmrtfy.annotation"></a>
+
   <div class="doc doc-contents first">
 
   
@@ -1145,65 +1131,6 @@ python interpreter <code>r1</code> is equal to <code>5*v1</code></p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>src/lmrtfy/annotation/__init__.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">190</span>
-<span class="normal">191</span>
-<span class="normal">192</span>
-<span class="normal">193</span>
-<span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span>
-<span class="normal">199</span>
-<span class="normal">200</span>
-<span class="normal">201</span>
-<span class="normal">202</span>
-<span class="normal">203</span>
-<span class="normal">204</span>
-<span class="normal">205</span>
-<span class="normal">206</span>
-<span class="normal">207</span>
-<span class="normal">208</span>
-<span class="normal">209</span>
-<span class="normal">210</span>
-<span class="normal">211</span>
-<span class="normal">212</span>
-<span class="normal">213</span>
-<span class="normal">214</span>
-<span class="normal">215</span>
-<span class="normal">216</span>
-<span class="normal">217</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">supported_object_type</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">min</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">max</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-           <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">supported_object_type</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">    `result` defines an input parameter of the script. It is used to create the profile for the</span>
-<span class="sd">    code.</span>
-
-<span class="sd">    `r1 = result(5*v1, name=&#39;res1&#39;)` creates a result named &#39;res1&#39; in the profile. If run with the</span>
-<span class="sd">    python interpreter `r1` is equal to `5*v1`</span>
-
-<span class="sd">    :param value: Value that is used if script is run with the python interpreter. Can be any expression.</span>
-<span class="sd">    :param name: Name of the variable used by the API for job submission.</span>
-<span class="sd">    :param min: [optional] Minimum value that a numeric result takes. Currently not checked.</span>
-<span class="sd">    :param max: [optional] Maximum value that a numeric result takes. Currently not checked.</span>
-<span class="sd">    :param unit: [optional] A string declaring the unit. This will likely change to support ´pynt` units.</span>
-<span class="sd">        This is currently not checked and saved but will be used in the future.</span>
-<span class="sd">    :return: `value`</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">_add_to_api_definition</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;result&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">_get_type</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">unit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="nb">max</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">_run_deployed</span> <span class="ow">and</span> <span class="n">_tmp_dir</span> <span class="ow">and</span> <span class="n">_script_path</span><span class="p">:</span>
-        <span class="c1"># TODO: warn and except if something fails.</span>
-        <span class="k">with</span> <span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_tmp_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;lmrtfy_result_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.json&#39;</span><span class="p">)),</span> <span class="s1">&#39;w&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="n">name</span><span class="p">:</span> <span class="n">value</span><span class="p">},</span> <span class="n">f</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">NumpyEncoder</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running: Saved result &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; with value &#39;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">value</span>
-</code></pre></div></td></tr></table></div>
-      </details>
   </div>
 
 </div>
@@ -1306,67 +1233,6 @@ any other variable.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>src/lmrtfy/annotation/__init__.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">158</span>
-<span class="normal">159</span>
-<span class="normal">160</span>
-<span class="normal">161</span>
-<span class="normal">162</span>
-<span class="normal">163</span>
-<span class="normal">164</span>
-<span class="normal">165</span>
-<span class="normal">166</span>
-<span class="normal">167</span>
-<span class="normal">168</span>
-<span class="normal">169</span>
-<span class="normal">170</span>
-<span class="normal">171</span>
-<span class="normal">172</span>
-<span class="normal">173</span>
-<span class="normal">174</span>
-<span class="normal">175</span>
-<span class="normal">176</span>
-<span class="normal">177</span>
-<span class="normal">178</span>
-<span class="normal">179</span>
-<span class="normal">180</span>
-<span class="normal">181</span>
-<span class="normal">182</span>
-<span class="normal">183</span>
-<span class="normal">184</span>
-<span class="normal">185</span>
-<span class="normal">186</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">variable</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">supported_object_type</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">min</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">max</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-             <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">supported_object_type</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    `variable` defines an input parameter of the script. It is used to create the profile for the</span>
-<span class="sd">    code.</span>
-
-<span class="sd">    `v1 = variable(5, name=&#39;var1&#39;)` create a variable named &#39;var1&#39; in the profile. If run with the</span>
-<span class="sd">    python interpreter `v1` takes the value 5 and can be used in the rest of the code just like</span>
-<span class="sd">    any other variable.</span>
-
-<span class="sd">    :param value: Value that is used if script is run with the python interpreter. Can be any expression.</span>
-<span class="sd">    :param name: Name of the variable used by the API for job submission.</span>
-<span class="sd">    :param min: [optional] Minimum value that a numeric variable takes. Checked by API.</span>
-<span class="sd">    :param max: [optional] Maximum value that a numeric variable takes. Checked by API.</span>
-<span class="sd">    :param unit: [optional] A string declaring the unit. This will likely change to support ´pynt` units.</span>
-<span class="sd">    :return: `value`</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">_add_to_api_definition</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;variable&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">_get_type</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="nb">min</span><span class="o">=</span><span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="nb">max</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">_run_deployed</span> <span class="ow">and</span> <span class="n">_tmp_dir</span> <span class="ow">and</span> <span class="n">_script_path</span><span class="p">:</span>
-        <span class="c1"># TODO: warn and except if something fails.</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_tmp_dir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;lmrtfy_variable_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.json&#39;</span><span class="p">)),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">tmp</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-            <span class="c1"># TODO: Make it work for numpy dtypes.</span>
-            <span class="n">dtype</span> <span class="o">=</span> <span class="n">_inverse_type_map</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)]</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running: Loaded variable &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; of type &#39;</span><span class="si">{</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&#39; and value &#39;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">value</span>
-</code></pre></div></td></tr></table></div>
-      </details>
   </div>
 
 </div>
