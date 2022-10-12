@@ -8,10 +8,8 @@ import queue
 import subprocess
 import tempfile
 import time
-import uuid
 import sys
 from typing import Optional
-from cryptography.fernet import Fernet
 
 import certifi
 import jwt
@@ -22,6 +20,7 @@ import yaml
 from lmrtfy.helper import NumpyEncoder
 from lmrtfy.login import load_token_data, get_cliconfig
 from lmrtfy.runner.timer import every
+
 
 class RunnerStatus(str, enum.Enum):
     IDLE = "IDLE"
@@ -109,9 +108,9 @@ class Runner(object):
                     logging.error("Could not get user_id from token.")
                     sys.exit(-1)
 
-            except Exception as e:
+            except Exception as ex:
                 logging.error("Something is wrong with the token.")
-                logging.error(e)
+                logging.error(str(ex))
                 sys.exit(-1)
         else:
             user_id = jwt.decode(access_token, options={"verify_signature": False})["sub"]
@@ -128,9 +127,9 @@ class Runner(object):
         access_token = ''
         try:
             access_token = load_token_data()['access_token']
-        except Exception:
+        except Exception as ex:
             # Todo: give error
-            pass
+            logging.error(ex)
 
         self.client.tls_set(certifi.where())
         # self.client.enable_logger()
@@ -225,7 +224,6 @@ class Runner(object):
         self.runner_status["message"] = message
         self.client.publish(self.runner_status_topic, json.dumps(self.runner_status))
 
-
     def execute(self, job_id: str, user_id: str, job_input: dict):
         """
         `execute` is responsible for the actual execution of the command with the correct input
@@ -245,7 +243,7 @@ class Runner(object):
         # TODO: Techdebt. Ignoring the cleanup errors is due to a python uptream bug in tempfile. bugs.python.org #43153
         try:
             tempdir = tempfile.TemporaryDirectory(ignore_cleanup_errors=True)  # pylint: disable=consider-using-with
-        except:
+        except:  # TODO: Here we need no logging, because the problem is captured, known and documented.
             tempdir = tempfile.TemporaryDirectory()  # pylint: disable=consider-using-with
         # TODO: Add job_id to path
         os.environ["LMRTFY_TMP_DIR"] = tempdir.name
@@ -291,9 +289,9 @@ class Runner(object):
                     try:
                         token = load_token_data()['access_token']
                         headers = {"Authorization": f"Bearer {token}"}
-                    except Exception:
-                        # TODO: Fix exception and log meaningful error message
-                        pass
+                    except Exception as ex:
+                        logging.error(str(ex))
+                        # TODO: Exception too broad
 
                     r = requests.post(f"{config['api_results_url']}/{user_id}/{job_id}", files=files,
                                       headers=headers)
@@ -315,8 +313,8 @@ class Runner(object):
 
         try:
             tempdir.cleanup()
-        except:
-            pass
+        except Exception as ex:
+            logging.error(str(ex))
 
         self.busy = False
 

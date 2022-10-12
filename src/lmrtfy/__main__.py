@@ -38,8 +38,8 @@ def check_version():
 
         if installed_version < recent_version:
             logging.warning(f"A new version ({recent_version}) is available. Please run: 'pip install --upgrade lmrtfy'")
-    except:
-        logging.warning("Version check failed")
+    except Exception as e:
+        logging.warning("Version check failed:" + str(e))
 
 
 class LMRTFY(object):

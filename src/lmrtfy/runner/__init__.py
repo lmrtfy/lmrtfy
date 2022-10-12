@@ -20,8 +20,9 @@ def fetch_template(profile_id):
             return rr.json()
         else:
             logging.error('Could not fetch template from server.')
-    except:
+    except Exception as e:
         logging.error('Fetch template request failed.')
+        logging.error(str(e))
 
 
 def save_json_template(profile_id, template):
@@ -29,8 +30,9 @@ def save_json_template(profile_id, template):
     try:
         with open(_lmrtfy_template_dir.joinpath(f'{profile_id}.json'), 'w') as f:
             json.dump(template, f)
-    except Exception:
+    except Exception as e:
         logging.error(f"Could not save template for profile {profile_id} in {_lmrtfy_template_dir}.")
+        logging.error(str(e))
 
 
 def load_json_template(profile_id) -> Optional[dict]:

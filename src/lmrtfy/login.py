@@ -75,7 +75,7 @@ def save_token_data(token_data):
     try:
         with open(_lmrtfy_auth_dir.joinpath('token'), 'w') as f:
             json.dump(token_data, f)
-    except Exception:
+    except Exception as e:  # TODO: Except clause too broad
         logging.error(f"Could not save token in {_lmrtfy_auth_dir}.")
 
 
@@ -83,6 +83,7 @@ def load_token_data() -> dict:
 
     env_token = os.getenv("LMRTFY_ACCESS_TOKEN", None)
     if env_token:
+        logging.info("Using 'LMRTFY_ACCESS_TOKEN'.")
         return {'access_token': env_token, 'id_token': '', 'refresh_token': ''}
 
     try:
@@ -253,8 +254,8 @@ class LoginHandler(object):
             logging.error('Invalid token.')
         except jwt.exceptions.InvalidTokenError:
             logging.error('Invalid token.')
-        except Exception:
-            logging.error('Unspecified token validation error accored.')
+        except Exception as e:
+            logging.error('Unspecified token validation error occurred:' + str(e))
 
         return False
 
@@ -276,5 +277,5 @@ def delete_token():
     try:
         _lmrtfy_auth_dir.joinpath('token').unlink(missing_ok=True)
         logging.debug("Auth token deleted.")
-    except:
-        pass
+    except Exception as e:  # TODO: Except clause too broad
+        logging.error("Could not delete token:" + str(e))

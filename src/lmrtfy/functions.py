@@ -67,7 +67,7 @@ class Job(object):
         try:
             with open(_lmrtfy_job_dir.joinpath(f"{self.id}.job"), "w") as f:
                 json.dump({"id": self.id, "status": status}, f)
-        except:
+        except:  # TODO: Too broad exception clause
             logging.error(f"Could not write local job-file for job {self.id}.")
 
         return status
@@ -239,8 +239,8 @@ class Catalog(object):
             if r.status_code == 201:
                 self.update()
                 return True
-        except:
-            pass
+        except Exception as e:  # TODO: Except clause too broad.
+            logging.error(str(e))
 
         logging.error(f"Could not create namespace {name}.")
 
@@ -309,10 +309,16 @@ class Catalog(object):
                                            "sender_email": sender_email}), headers=self.headers)
             if r.status_code == 202:
                 return r.json()["invite_id"]
-        except:
-            pass
+        except Exception as e:  # TODO: Except clause too broad
+            logging.error(e)
+            logging.error(f"Could not share namespace {namespace} with {recipient_email}.")
 
     def accept_invite(self, invite_id) -> bool:
+        """
+        Accept an invitation with `invite_id`. This only works once for each ID.
+
+        Returns `True` if acceptance was successful, `False` otherwise.
+        """
         r = requests.get(f"{self.config['api_invites_url']}/{invite_id}", headers=self.headers)
         if r.status_code == 202:
             self.update()
@@ -321,15 +327,45 @@ class Catalog(object):
         return False
 
     def issue_deploy_token(self, function, token_type='deploy') -> Optional[dict]:
+        """
+        This function creates a deploy token for `function`. It can only be used for this function.
+
+        To use the token, you need to set the environment variable `LMRTFY_ACCESS_TOKEN` with the
+        token before deployment.
+
+        If you deploy with a token, you need to specify the namespace of the function with the
+        `--namespace="..."` argument of `lmrtfy deploy`.
+
+        Returns a `token` with a `token_id`. The `token_id` is needed for token revocation.
+        """
         data = {"token_type": token_type, "profile_id": function.__qualname__.split('-')[-1]}
         r = requests.post(f"{self.config['api_token_url']}", data=json.dumps(data), headers=self.headers)
         if r.status_code == 200:
             return r.json()
 
     def issue_submit_token(self, function):
+        """
+        This function creates a submit token for `function`. It can only be used for this function.
+
+        To use the token, you need to set the environment variable `LMRTFY_ACCESS_TOKEN` with the
+        token before you submit a job:
+
+        ```shell
+        LMRTFY_ACCESS_TOKEN="LMRTFY...." ipython
+        In [0]: from lmrtfy.functions import catalog
+
+        In [1]: job = catatlog.<namespace>.<function>(...)
+        ```
+        Returns a `token` with a `token_id`. The `token_id` is needed for token revocation.
+
+        """
         return self.issue_deploy_token(function, token_type='submit')
 
     def revoke_token(self, token_id) -> bool:
+        """
+        With this function you can revoke a token when you don't need it anymore. All you need is
+        the `token_id` of the token which was returned to you when the token was issued.
+        """
         data = {"token_id": token_id}
         r = requests.delete(f"{self.config['api_token_url']}", data=json.dumps(data), headers=self.headers)
         if r.status_code == 201:

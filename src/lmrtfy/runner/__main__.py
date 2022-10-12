@@ -76,8 +76,9 @@ def main(script_path: Path, namespace: str):
             h.get_token()
         try:
             token = load_token_data()['access_token']
-        except Exception:
+        except Exception as e:
             logging.error('No auth token found. Authentication failed.')
+            logging.error(str(e))
             exit(-1)
 
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain', "Authorization": f"Bearer {token}"}

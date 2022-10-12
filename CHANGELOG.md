@@ -1,4 +1,4 @@
-# 0.0.11 - 11/oct/2022
+# 0.0.11 - 12/oct/2022
 * added LMRTFY_ACCESS_TOKEN to deploy and submit jobs
 * `catalog.issue_deploy_token(<function>)` and `catalog.issue_submit_token(<function>)`
 
