@@ -13,7 +13,7 @@ serve your function only one of them will receive the same call. The next call t
 will be routed to the next runner in the line.
 
 ### The job status is reported `UNKNOWN`
-If that is the case, please let us know at [hello@lmrt.fyi](mailtohello@lmrt.fyi) or in the GitHub issues. 
+If that is the case, please let us know at [hello@lmrt.fyi](mailto:hello@lmrt.fyi) or in the GitHub issues. 
 This is likely a problem on our side.
 
 # I need help to implement a specific use case
