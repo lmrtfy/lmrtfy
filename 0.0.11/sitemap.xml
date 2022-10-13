@@ -2,137 +2,137 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://lmrt.fyi/0.0.11/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/CHANGELOG/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/cli_reference/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/contributing/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/quickstart/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/report_bugs/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/roadmap/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/api_reference/annotation/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/api_reference/catalog/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/examples/compound_interest/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/examples/free_fall/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/examples/starting_example/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/rtd/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/installation/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/login/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/namespaces/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/troubleshooting/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/calling_functions/fetch_results/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/calling_functions/submission/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/calling_functions/submission_tokens/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/creating_functions/annotation/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/creating_functions/deployment/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/creating_functions/deployment_tokens/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/creating_functions/variables_and_results/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/sharing/sharing/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/web_app/catalog/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lmrt.fyi/0.0.11/user_guide/web_app/overview/</loc>
-         <lastmod>2022-10-12</lastmod>
+         <lastmod>2022-10-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
