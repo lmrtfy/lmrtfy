@@ -19,13 +19,13 @@ theme:
     - content.code.annotate
   palette:
     # Palette toggle for light mode
-    - media: "(prefers-color-scheme: light)"
+    - media: "light"
       scheme: lmrtfy
       toggle:
         icon: material/lightbulb
         name: Switch to dark mode
     # Palette toggle for dark mode
-    - media: "(prefers-color-scheme: dark)"
+    - media: "dark"
       scheme: slate
       toggle:
         icon: material/lightbulb-outline
