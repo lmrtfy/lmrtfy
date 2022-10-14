@@ -103,6 +103,7 @@ markdown_extensions:
   - pymdownx.tilde
 
 nav:
+  - LMRTFY web app: 'https://app.lmrt.fyi'
   - Introduction: 'index.md'
   - Quick start: 'quickstart.md'
 
