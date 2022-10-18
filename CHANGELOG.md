@@ -25,7 +25,7 @@
 * general bug fixes for better stability
 
 # v0.0.6 - 08/sep/2022
-* changed input formats for json as follow:
+* changed input formats for json as follows:
 ```json
 {
   "profile_id": "<profile_id>",
