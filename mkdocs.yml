@@ -16,7 +16,12 @@ theme:
   font: false
   features:
     - navigation.sections
+    - navigation.top
+    #- navigation.tabs
+    #- navigation.tabs.sticky
     - content.code.annotate
+    - content.tabs.link
+    - toc.integrate
   palette:
     # Palette toggle for light mode
     - media: "light"
@@ -103,9 +108,12 @@ markdown_extensions:
   - pymdownx.tilde
 
 nav:
-  - LMRTFY web app: 'https://app.lmrt.fyi'
-  - Introduction: 'index.md'
-  - Quick start: 'quickstart.md'
+  - LMRTFY Web App 🔗: 'https://app.lmrt.fyi'
+  #- Pricing 🔗: 'https://lmrt.fyi'
+
+  - Get Started:
+      - Introduction: 'index.md'
+      - Quick start: 'quickstart.md'
 
   - User Guide:
       - Installation: "user_guide/installation.md"
