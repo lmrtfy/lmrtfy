@@ -56,15 +56,12 @@ We strive to provide a frictionless developer experience:
 ## Quickstart - TL;DR
 1. install with `pip install lmrtfy`
 2. login/sign up with `lmrtfy login`
-3. annotate your code's inputs with `variable` and its outputs with `result`
-4. deploy the script:
-    5.  `lmrtfy deploy examples/deployment/calc_compound_interest.py --local`
-5. Use the deployed function (from another terminal, or another computer!):
-    6. open `examples/calling_cloud_functions/call_function.py`
-    7. run `python examples/call_deployed_function.py` to call the deployed function and get the results.
+3. run `$ ipython` and `from lmrtfy.functions import catalog`
+4. call the provided example with `job = catalog.examples.free_fall_lmrtfy(100.)`
+5. get the results with `job.results`
 
-As you can see in step 5, it's as simple as calling a regular function from any other library
-you have installed locally.
+As you can see in step 4, it's as simple as calling a regular function from any other library
+you have installed locally. 
 
 ## Examples
 The [examples](examples/starting_example.md) are provided in the `examples/` directory. They are **work in progress**. As lmrtfy

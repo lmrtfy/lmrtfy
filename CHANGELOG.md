@@ -1,3 +1,7 @@
+# 0.0.12 - 18/oct/2022
+* output of `lmrtfy` is more precise and cleaner
+* added PMF example which can be used [here](https://toys.lmrt.fyi).
+
 # 0.0.11 - 12/oct/2022
 * added LMRTFY_ACCESS_TOKEN to deploy and submit jobs
 * `catalog.issue_deploy_token(<function>)` and `catalog.issue_submit_token(<function>)`
@@ -21,7 +25,7 @@
 * general bug fixes for better stability
 
 # v0.0.6 - 08/sep/2022
-* changed input formats for json as follow:
+* changed input formats for json as follows:
 ```json
 {
   "profile_id": "<profile_id>",
