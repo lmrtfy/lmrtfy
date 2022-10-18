@@ -15,34 +15,39 @@ $ conda install pip
 $ pip install lmrtfy
 ```
 
-# Sign-Up
-To make full use of LMRTFY you need to sign up with us with `lmrtfy login`.
+# Sign-Up 
+To make full use of LMRTFY you need to [sign up](https://app.lmrt.fyi) with us with `lmrtfy login`.
 
-Besides an e-mail-based sign up we also provide social logins via GitHub and Google for ease of use.
+_You can sign up with GitHub to streamline the process._
 
 # Calling your first remote function
 Calling a function that is available in the cloud is as easy as calling a native function.
 
-```py title="call_example1.py" linenums="1" 
-from time import sleep
-from lmrtfy.functions import catalog 
+```py title="IPython listing - Best way to call jobs interactively" linenums="1" 
+$ ipython
+In [1]: from lmrtfy.functions import catalog
+# information regarding the configuration
+2022-10-12 12:14:28 [36627] INFO {'namespaces': ['examples', 
+'<user_namespace>' ]} # (1)!
 
-job = catalog.examples.example1(args) # (1)!
- 
-while job and not job.ready: # (2)!
-    sleep(1.)
+In [2]: job = catalog.examples.free_fall_lmrtfy(time=100.) # (2)!
+2022-10-12 12:16:08 [36627] INFO Job 8GXvA6JREr created. 
+Status is ACCEPTED. # (3)!
 
-if job:    
-    print(job.results)  # (3)!
+In [3]: job.ready # (4)!
+Out[3]: True
 
-
+In [4]: job.results  # (5)!
+Out[5]: {'velocity': 981.0}
 ```
 
-1. This calls the function `example1` in the LMRTFY namespace `example`. The function is executed
-   on a remote resource.
-2. If `job` is not valid the call did not succeed. `job.ready` queries the job status and becomes
-   true once the results are ready.
-3. `job.results` gets the results from LMRTFY as JSON:
+1. If you want to know more about namespaces go [here](user_guide/namespaces.md).
+2. This calls the function `free_fall_lmrtfy` in the LMRTFY namespace `example`. The function is executed
+   on a remote resource that has been provided by us.
+3. The job is created and that status is `ACCEPTED`. Sometimes the computation is so quick that it 
+immediately returns `RESULTS_READY`.
+4. `job.ready` checks if the results are computed and ready to be fetched with `job.results`
+5. `job.results` gets the results from LMRTFY as JSON:
 ```json
 {
   "<variable name>": <value>,
@@ -50,12 +55,15 @@ if job:
 }    
 ```
 
-As you can see calling the function `example1` looks just like calling any other function in Python;
-however, it is actually eexcuted on a remote server, in this case on our own server as we provide the
+As you can see calling the function `free_fall_lmrtfy` looks just like calling any other function in Python;
+however, it is actually executed on a remote server, in this case on our own server as we provide the
 example.
 
 Each call to a deployed function returns a `Job` object if the submission was successful. If an error
-occurred `None` is returned. This way we can check if the submission was successful or not.
+occurred `None` is returned. This way we can check if the submission was successful or not. 
+
+_If you get an error here, please let us know via [hello@lmrt.fyi](mailto:hello@lmrt.fyi) or open an 
+[issue](https://github.com/lmrtfy/lmrtfy/issues)._
 
 To get the results from the computation we can simply call `job.results`. Depending on the size of the
 results this call will take a while. In the example, this call should at most take a few seconds.
@@ -97,8 +105,12 @@ To deploy this function on your laptop you simply run
 ```shell
 $ lmrtfy deploy free_fall_lmrtfy.py --local
 ```
-This makes the function available in your catalog as `free_fall_lmrtfy` and starts a runner on your
-laptop. Nobody but you can call the function unless you share it with others. When you stop the
-runner calling this function will not yield any results.
+This makes the function available in your catalog as 
+```catatlog.<user_namespace>.free_fall_lmrtfy```
+and starts a runner on your laptop. 
 
-Calling the deployed function becomes as simple as `#!python catalog.free_fall_lmrtfy(time=200.)`.
+Nobody but you can call the function unless you 
+[share it](user_guide/sharing/sharing.md) with others. 
+
+If no runner is deployed an error will be returned.
+

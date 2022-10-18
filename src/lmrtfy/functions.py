@@ -152,7 +152,6 @@ class Catalog(object):
             h.get_token()
 
         self.config = get_cliconfig()
-        logging.info(self.config)
         self.token = load_token_data()['access_token']
         self.headers = {'Content-type': 'application/json', 'Accept': 'text/plain',
                         "Authorization": f"Bearer {self.token}"}
@@ -188,8 +187,9 @@ class Catalog(object):
         """
 
         r = requests.get(self.config['api_namespaces_url'], headers=self.headers)
-        logging.info(r.json())
         namespaces = r.json()['namespaces']
+
+        logging.info('Available namespaces: ' + str(namespaces))
 
         for n in namespaces:
             try:
@@ -215,9 +215,10 @@ class Catalog(object):
                     func_name = functions[func]['name']
                     if not hasattr(o, func_name):
                         self.__add_function(o, func_name, *signature_from_profile(functions[func]), pid=func, template=functions[func])
+                        logging.info("Added function: catalog." + str(nsn).replace('/', '.') + str(func_name))
 
             except:  # TODO: Except clause too broad!
-                logging.error(f"Could not namespace {n} function catalog.")
+                logging.error(f"Could not access namespace {n} in function catalog.")
 
     def create_namespace(self, namespace: Namespace, name: str) -> bool:
         """
