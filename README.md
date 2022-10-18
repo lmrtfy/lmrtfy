@@ -56,9 +56,9 @@ We strive to provide a frictionless developer experience:
 ## Quickstart - TL;DR
 1. install with `pip install lmrtfy`
 2. login/sign up with `lmrtfy login`
-3. run `$ ipython` and `#!py from lmrtfy.functions import catalog`
-4. call the provided example with `#!py job = catalog.examples.free_fall_lmrtfy(100.)`
-5. get the results with `#!py job.results`
+3. run `$ ipython` and `from lmrtfy.functions import catalog`
+4. call the provided example with `job = catalog.examples.free_fall_lmrtfy(100.)`
+5. get the results with `job.results`
 
 As you can see in step 4, it's as simple as calling a regular function from any other library
 you have installed locally. 
