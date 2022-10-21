@@ -3,3 +3,4 @@ mkdocstrings[python]
 markdown-include
 mkdocs-material
 mike
+mkdocs-glightbox

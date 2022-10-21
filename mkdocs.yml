@@ -66,6 +66,8 @@ plugins:
   - search
   - mike
   - tags
+  - glightbox:
+      width: 95%
   - mkdocstrings:
       handlers:
         python:
@@ -129,15 +131,16 @@ nav:
           - Using deploy tokens: "user_guide/creating_functions/deployment_tokens.md"
       - Namespaces: "user_guide/namespaces.md"
       - Sharing a function: "user_guide/sharing/sharing.md"
-      - Using the web app:
-          - Overview: "user_guide/web_app/overview.md"
-          - LMRTFY catalog: "user_guide/web_app/catalog.md"
+      #- Using the web app:
+      - Using the LMRTFY web app 🆕: "user_guide/web_app/overview.md"
+      ##    - LMRTFY catalog: "user_guide/web_app/catalog.md"
       - Troubleshooting: "user_guide/troubleshooting.md"
 
   - Examples:
       - Starting example: 'examples/starting_example.md'
       - Free fall: 'examples/free_fall.md'
       - Compound interest: 'examples/compound_interest.md'
+      #- PMF: "examples/finding_PMF.md"
 
   - Reference:
       - API reference:
