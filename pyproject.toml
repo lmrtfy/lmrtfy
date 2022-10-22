@@ -8,7 +8,7 @@ name = "lmrtfy"
 version = "0.0.12"
 description = "Turn variables into program arguments. Auto-generates a CLI interface and an API using lmrtfy.de."
 readme = "README.md"
-authors = [{ name = "lmrtfy.de", email = "hello@lmrtfy.de" }]
+authors = [{ name = "lmrt.fyi", email = "hello@lmrt.fyi" }]
 license = { file = "LICENSE" }
 classifiers = [
     "License :: OSI Approved :: BSD License",
