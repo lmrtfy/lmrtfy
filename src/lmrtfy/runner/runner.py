@@ -18,7 +18,7 @@ import requests
 import yaml
 
 from lmrtfy.helper import NumpyEncoder
-from lmrtfy.login import load_token_data, get_cliconfig
+from lmrtfy.login import load_token_data, get_cliconfig, load_deploy_token
 from lmrtfy.runner.timer import every
 
 
@@ -80,6 +80,7 @@ class Runner(object):
         """
         self.job_list = queue.Queue()
         self.busy = False
+        self.profile_id = profile_id
 
         # TODO: test if profile is available
         with open(profile_path, "r") as p:
@@ -97,26 +98,28 @@ class Runner(object):
         self.job_status_topic = f"status/job/"
 
         config = get_cliconfig()
-        access_token = load_token_data()['access_token']
-        headers = {"Authorization": f"Bearer {access_token}"}
-        if access_token.startswith('LMRTFY'):
-            try:
-                r = requests.get(config["api_token_url"], headers=headers)
-                if r.status_code == 200:
-                    user_id = r.json()["user_id"]
-                else:
-                    logging.error("Could not get user_id from token.")
-                    sys.exit(-1)
+        try:
+            access_token = load_deploy_token(profile_id)
+        except Exception as ex:
+            # Todo: give error
+            logging.error(ex)
+            sys.exit(-1)
 
-            except Exception as ex:
-                logging.error("Something is wrong with the token.")
-                logging.error(str(ex))
+        headers = {"Authorization": f"Bearer {access_token}"}
+
+        try:
+            r = requests.get(config["api_token_url"], headers=headers)
+            if r.status_code == 200:
+                user_id = r.json()["user_id"]
+                self.user_id = user_id.replace('|','-----')
+            else:
+                logging.error("Could not get user_id from token.")
                 sys.exit(-1)
-        else:
-            user_id = jwt.decode(access_token, options={"verify_signature": False})["sub"]
-        self.user_id = user_id.replace('|','-----')
-        # job_topic =  f"$share/{user_id}/{user_id}/{self.filehash}/job"
-        # self.client.subscribe(job_topic, qos=2)
+
+        except Exception as ex:
+            logging.error("Something is wrong with the token.")
+            logging.error(str(ex))
+            sys.exit(-1)
 
         self.client = mqtt.Client(
             client_id=self.client_id,
@@ -124,16 +127,9 @@ class Runner(object):
             transport="websockets"
         )
 
-        access_token = ''
-        try:
-            access_token = load_token_data()['access_token']
-        except Exception as ex:
-            # Todo: give error
-            logging.error(ex)
-
         self.client.tls_set(certifi.where())
         # self.client.enable_logger()
-        self.client.username_pw_set(self.client_id, access_token)
+        self.client.username_pw_set(access_token, "")
         self.client.on_connect = self.on_mqtt_connect
         self.client.on_disconnect = on_mqtt_disconnect
         self.client.on_subscribe = on_subscribe
@@ -287,7 +283,7 @@ class Runner(object):
                     files = {'results_file': open(res_path, 'rb')}
 
                     try:
-                        token = load_token_data()['access_token']
+                        token = load_deploy_token(self.profile_id)
                         headers = {"Authorization": f"Bearer {token}"}
                     except Exception as ex:
                         logging.error(str(ex))

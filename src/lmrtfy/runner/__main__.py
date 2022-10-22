@@ -64,7 +64,7 @@ def main(script_path: Path, namespace: str):
         exit(-1)
 
     # TODO: This has been caught elsewhere and can be removed/rewritten.
-    token = ''
+    token = ""
     try:
         token = load_token_data()['access_token']
     except Exception:
