@@ -18,14 +18,10 @@ body:
       value: "This is the feature I want."
     validations:
       required: true
-  - type: dropdown
+  - type: input
     id: lmrtfy_version
     attributes:
       label: lmrtfy version
       description: What version of lmrtfy are you currently using?
-      options:
-        - "0.0.9"
-        - "0.0.8"
-        - "<0.0.8"
     validations:
       required: false
