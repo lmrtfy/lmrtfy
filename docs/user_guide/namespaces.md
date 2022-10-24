@@ -8,14 +8,18 @@ You can see available namespace when you import the catalog. The best way to man
 to start an `ipython` session.
 
 For me the output is the following:
-```python title="Importing catalog" linenums="1" hl_lines="3"
+```python title="Importing catalog" linenums="1" hl_lines="2"
 In [1]: from lmrtfy.functions import catalog
-2022-10-11 17:22:16 [58002] INFO < API info >
-2022-10-11 17:22:17 [58002] INFO {'namespaces': ['orgarten_gh']}
+2022-10-11 16:57:03 [58002] INFO Available namespaces: ['examples', 'orgarten_gh']
+2022-10-11 16:57:04 [58002] INFO Added function: catalog.examples.free_fall_lmrtfy
+2022-10-11 16:57:05 [58002] INFO Added function: catalog.orgarten_gh.calc_compound_interest
+2022-10-11 16:57:05 [58002] INFO Added function: catalog.orgarten_gh.free_fall_lmrtfy
 ```
 
-The only namespace available to me is `orgarten_gh`. To use a deployed function inside of the 
-namespace I would simply call
+Namespaces available to me are my private one `orgarten_gh` and the example namespace `examples`. 
+Also shown are the available functions in my catalog. 
+
+To use a deployed function inside the namespace I would simply call
 
 ```python title="Using a function in a namespace" linenums="1"
 catalog.orgarten_gh.<function>(...)

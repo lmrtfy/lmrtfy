@@ -33,14 +33,10 @@ body:
         - Other
     validations:
       required: false
-  - type: dropdown
+  - type: input
     id: lmrtfy_version
     attributes:
       label: lmrtfy version
       description: What version of lmrtfy are you running?
-      options:
-        - "0.0.9"
-        - "0.0.8"
-        - "<0.0.8"
     validations:
       required: false

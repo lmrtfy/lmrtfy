@@ -79,7 +79,7 @@ _inverse_type_map = {type(1): int, type(True): bool, type("abc"): str, type(1.1)
 
 
 # a type definition in order to have type hint for variable and result function
-supported_object_type = Union[int, float, complex, bool, np.ndarray, list, dict]
+supported_object_type = Union[int, float, complex, bool, np.ndarray, list, dict, str]
 
 
 def _add_to_api_definition(name: str, kind: str, dtype: str, min = None, max = None,

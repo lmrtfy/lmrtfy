@@ -28,3 +28,4 @@ six==1.16.0
 urllib3==1.26.12
 verspec==0.1.0
 watchdog==2.1.9
+mkdocs-glightbox==0.3.0

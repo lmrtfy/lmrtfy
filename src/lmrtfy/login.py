@@ -94,6 +94,72 @@ def load_token_data() -> dict:
         return {'access_token': '', 'id_token': '', 'refresh_token': ''}
 
 
+def load_deploy_token(script_profile) -> str:
+
+    config = get_cliconfig()
+
+    try:
+        with open(_lmrtfy_auth_dir.joinpath(script_profile), 'r') as f:
+            token = f.readline()
+    except Exception as e1:
+        try:
+            auth_token = load_token_data()['access_token']
+            if auth_token.startswith('LMRTFY'):
+                token = auth_token
+            else:
+                raise Exception("Deploying with auth token.")
+        except Exception as e2:
+            h = LoginHandler()
+            if h.login():
+                h.get_token()
+            try:
+                auth_token = load_token_data()['access_token']
+
+                headers = {'Content-type': 'application/json', 'Accept': 'text/plain',
+                 "Authorization": f"Bearer {auth_token}"}
+                # TODO: Get new deploy token
+                data = {"token_type": 'deploy', "profile_id": script_profile}
+                try:
+                    r = requests.post(f"{config['api_token_url']}", data=json.dumps(data), headers=headers)
+                    if r.status_code == 200:
+                        token = r.json()["token"]
+
+                        save_deploy_token(script_profile, token)
+                    else:
+                        raise Exception("Could not get deploy token")
+                except Exception as e:
+                    raise e
+            except Exception as e3:
+                logging.error('No auth token found. Authentication failed.')
+                logging.error(str(e1))
+                logging.error(str(e2))
+                logging.error(str(e3))
+                sys.exit(-1)
+
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        r = requests.get(config["api_token_url"], headers=headers)
+        if r.status_code != 200:
+            logging.error("Token invalid.")
+            _lmrtfy_auth_dir.joinpath(script_profile).unlink(missing_ok=True)
+            sys.exit(-1)
+    except Exception as ex:
+        logging.error("Token invalid.")
+        logging.error(str(ex))
+        _lmrtfy_auth_dir.joinpath(script_profile).unlink(missing_ok=True)
+        sys.exit(-1)
+
+    return token
+
+
+def save_deploy_token(script_profile, token):
+    try:
+        with open(_lmrtfy_auth_dir.joinpath(script_profile), 'w') as f:
+            f.write(token)
+    except Exception as e:
+        logging.error(str(e))
+
+
 class ServerThread(threading.Thread):
 
     def __init__(self, app, host: str, port: int):

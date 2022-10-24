@@ -16,7 +16,12 @@ theme:
   font: false
   features:
     - navigation.sections
+    - navigation.top
+    #- navigation.tabs
+    #- navigation.tabs.sticky
     - content.code.annotate
+    - content.tabs.link
+    - toc.integrate
   palette:
     # Palette toggle for light mode
     - media: "light"
@@ -61,6 +66,8 @@ plugins:
   - search
   - mike
   - tags
+  - glightbox:
+      width: 95%
   - mkdocstrings:
       handlers:
         python:
@@ -103,9 +110,12 @@ markdown_extensions:
   - pymdownx.tilde
 
 nav:
-  - LMRTFY web app: 'https://app.lmrt.fyi'
-  - Introduction: 'index.md'
-  - Quick start: 'quickstart.md'
+  - LMRTFY Web App 🔗: 'https://app.lmrt.fyi'
+  #- Pricing 🔗: 'https://lmrt.fyi'
+
+  - Get Started:
+      - Introduction: 'index.md'
+      - Quick start: 'quickstart.md'
 
   - User Guide:
       - Installation: "user_guide/installation.md"
@@ -121,15 +131,16 @@ nav:
           - Using deploy tokens: "user_guide/creating_functions/deployment_tokens.md"
       - Namespaces: "user_guide/namespaces.md"
       - Sharing a function: "user_guide/sharing/sharing.md"
-      - Using the web app:
-          - Overview: "user_guide/web_app/overview.md"
-          - LMRTFY catalog: "user_guide/web_app/catalog.md"
+      #- Using the web app:
+      - Using the LMRTFY web app 🆕: "user_guide/web_app/overview.md"
+      ##    - LMRTFY catalog: "user_guide/web_app/catalog.md"
       - Troubleshooting: "user_guide/troubleshooting.md"
 
   - Examples:
       - Starting example: 'examples/starting_example.md'
       - Free fall: 'examples/free_fall.md'
       - Compound interest: 'examples/compound_interest.md'
+      #- PMF: "examples/finding_PMF.md"
 
   - Reference:
       - API reference:

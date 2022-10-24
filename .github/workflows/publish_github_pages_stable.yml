@@ -3,7 +3,7 @@ on:
   release
 
 env:
-  VERSION: "0.0.12"
+  VERSION: "0.0.13"
 
 jobs:
   deploy:
