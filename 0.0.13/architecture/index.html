@@ -9,7 +9,7 @@
 <link href="https://lmrt.fyi/0.0.13/architecture/" rel="canonical"/>
 <link href="../images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.4.1, mkdocs-material-8.5.6" name="generator"/>
-<title>System Architecture - LMRTFY</title>
+<title>Working Principle - LMRTFY</title>
 <link href="../assets/stylesheets/main.20d9efc8.min.css" rel="stylesheet"/>
 <link href="../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
 <link href="../assets/_mkdocstrings.css" rel="stylesheet"/>
@@ -56,7 +56,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              System Architecture
+              Working Principle
             
           </span>
 </div>
@@ -193,11 +193,11 @@
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          System Architecture
+          Working Principle
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        System Architecture
+        Working Principle
       </a>
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -314,13 +314,13 @@
 <li class="md-nav__item md-nav__item--section md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4">
-          Examples
+          Code Examples
           <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-label="Examples" class="md-nav" data-md-level="1">
+<nav aria-label="Code Examples" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
-          Examples
+          Code Examples
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
@@ -446,8 +446,14 @@
 <a class="md-content__button md-icon" href="https://github.com/lmrtfy/lmrtfy/edit/master/docs/architecture.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
 </a>
-<h1>System Architecture</h1>
-<p>The overall system architecture is straight-forward:</p>
+<h1>Working Principle</h1>
+<p>The overall system architecture is straight-forward and consists of three parts:</p>
+<ul>
+<li>the LMRTFY catalog (2) keeping track of all available functions</li>
+<li>a function that is made available to the catalog</li>
+<li>the end-user who calls functions available in the catalog</li>
+</ul>
+<p>How these three parts play together can is shown here:</p>
 <p><a class="glightbox" data-desc-position="bottom" data-description="" data-height="auto" data-title="" data-width="95%" href="../images/arch_top_level_annotated.png"><img alt="Architecture" src="../images/arch_top_level_annotated.png"/></a></p>
 <h4 id="1-end-user-code">(1) End-User Code<a class="headerlink" href="#1-end-user-code" title="Permanent link">¶</a></h4>
 <p>The end-user writes code that looks just like any other code. However, the red and green functions 
