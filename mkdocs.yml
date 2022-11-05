@@ -102,7 +102,11 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.mark
   - pymdownx.smartsymbols
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          #format:!!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.tasklist:
@@ -120,6 +124,7 @@ nav:
   - User Guide:
       - Installation: "user_guide/installation.md"
       - Sign Up/Login: "user_guide/login.md"
+      - Working Principle: "working_principle.md"
       - Calling a cloud function:
           - Call a function: "user_guide/calling_functions/submission.md"
           - Get results: "user_guide/calling_functions/fetch_results.md"
@@ -136,7 +141,14 @@ nav:
       ##    - LMRTFY catalog: "user_guide/web_app/catalog.md"
       - Troubleshooting: "user_guide/troubleshooting.md"
 
-  - Examples:
+  #- Examples:
+  #    - Run on your system: ""
+  #    - Run with docker: ""
+  #    - Deploy on a server: ""
+  #    - Run on AWS: ""
+
+
+  - Code Examples:
       - Starting example: 'examples/starting_example.md'
       - Free fall: 'examples/free_fall.md'
       - Compound interest: 'examples/compound_interest.md'
