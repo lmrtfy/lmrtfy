@@ -216,8 +216,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#3-worker">
-    (3) Worker
+<a class="md-nav__link" href="#3-the-workers">
+    (3) The Workers
   </a>
 </li>
 </ul>
@@ -455,37 +455,38 @@
 </ul>
 <p>How these three parts play together can is shown here:</p>
 <p><a class="glightbox" data-desc-position="bottom" data-description="" data-height="auto" data-title="" data-width="95%" href="../images/arch_top_level_annotated.png"><img alt="Architecture" src="../images/arch_top_level_annotated.png"/></a></p>
-<h4 id="1-end-user-code">(1) End-User Code<a class="headerlink" href="#1-end-user-code" title="Permanent link">¶</a></h4>
+<h3 id="1-end-user-code">(1) End-User Code<a class="headerlink" href="#1-end-user-code" title="Permanent link">¶</a></h3>
 <p>The end-user writes code that looks just like any other code. However, the red and green functions 
 are imported from the LMRTFY catalog.</p>
 <p>The user executes their script just like any other script and the functions from the catalog are
 automatically dispatched to via the LMRTFY catalog.</p>
-<h4 id="2-lmrtfy-catalog">(2) LMRTFY Catalog<a class="headerlink" href="#2-lmrtfy-catalog" title="Permanent link">¶</a></h4>
+<h3 id="2-lmrtfy-catalog">(2) LMRTFY Catalog<a class="headerlink" href="#2-lmrtfy-catalog" title="Permanent link">¶</a></h3>
 <p>The LMRTFY catalog is a registry of all available functions. It also manages authentication for you.</p>
 <p>Each user has their own private catalog but functions can be shared with others. All you need is 
 an e-mail address.</p>
-<p>You can ...</p>
+<p>The functions in the catalog are not actual functions, because their <strong>code itself is not uploaded</strong>
+to the catalog. Only the interface that is needed to call the function is uploaded. This way you
+can protect your code if you want to while still sharing its functionality. </p>
+<p>The catalog currently allows you to</p>
 <ul>
-<li>register functions and workers at the catalog</li>
-<li><strong>call functions</strong> available in the catalog</li>
-<li><strong>share functions</strong> with colleagues and collaborators</li>
+<li>... register functions and workers at the catalog.</li>
+<li>... <strong>call functions</strong> available in the catalog.</li>
+<li>... <strong>share functions</strong> with colleagues and collaborators.</li>
 </ul>
 <p>When an end-user calls an available function, the catalog automatically dispatches the call to a 
 worker. If no worker is available for the corresponding function an error will be returned. This is
 the case if you haven't started a runner. </p>
 <p>If the function has been shared with you, it's the responsibility
 of the owner of the function to make sure that a runner is available.</p>
-<h4 id="3-worker">(3) Worker<a class="headerlink" href="#3-worker" title="Permanent link">¶</a></h4>
-<p>A worker, sometimes also called runner, is a unit of various components:</p>
+<h3 id="3-the-workers">(3) The Workers<a class="headerlink" href="#3-the-workers" title="Permanent link">¶</a></h3>
+<p>A worker, sometimes also called runner, is a unit of three components:</p>
 <ul>
 <li>the actual implementation of the function</li>
 <li>the environment including all environment variables and dependencies</li>
 <li>(special) compute resource the function runs on </li>
 </ul>
-<p>Each worker connects to the catalog and waits for function calls which are executed by the worker. </p>
-<p>If multiple workers serve the function, a round-robin system is used to distribute the compute load.</p>
-<div class="admonition note">
-<p class="admonition-title">Where to run a worker</p>
+<details class="question">
+<summary>Where can I run a worker?</summary>
 <p>A worker can run on any system that you want:</p>
 <ul>
 <li>your laptop</li>
@@ -494,7 +495,14 @@ of the owner of the function to make sure that a runner is available.</p>
 <li>a raspberry pi</li>
 <li>...</li>
 </ul>
-</div>
+</details>
+<p>Each worker connects to the catalog and waits for function calls which are executed by the worker. </p>
+<p>If multiple workers serve the function, a round-robin system is used to distribute the compute load.</p>
+<p>The fact that a worker can run anywhere you want, as long as an internet connection is available is
+really powerful and enables some interesting use-cases. The implementation of an algorithm may never 
+leaver your laptop or your own servers as long as you don't choose to do so. Only the interface is
+made available to via the catalog. Technically, this creates a black box around your code. However, 
+others can still use it perfectly fine.</p>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
