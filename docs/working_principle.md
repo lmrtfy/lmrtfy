@@ -63,7 +63,7 @@ If multiple workers serve the function, a round-robin system is used to distribu
 
 The fact that a worker can run anywhere you want, as long as an internet connection is available is
 really powerful and enables some interesting use-cases. The implementation of an algorithm may never 
-leaver your laptop or your own servers as long as you don't choose to do so. Only the interface is
+leave your laptop or your own servers as long as you don't choose to do so. Only the interface is
 made available to via the catalog. Technically, this creates a black box around your code. However, 
 others can still use it perfectly fine.
 

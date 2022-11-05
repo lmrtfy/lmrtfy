@@ -64,8 +64,8 @@ As you can see in step 4, it's as simple as calling a regular function from any 
 you have installed locally. 
 
 ## Examples
-The [examples](examples/starting_example.md) are provided in the `examples/` directory. They are **work in progress**. As lmrtfy
-matures, more and more examples will be added.
+The [examples](examples/starting_example.md) are provided in the `examples/` directory. They are 
+**work in progress**. As LMRTFY matures, more and more examples will be added.
 
 If you miss an example for a specific use case, please let us know, and we will add one!
 
