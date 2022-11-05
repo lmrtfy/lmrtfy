@@ -1,4 +1,4 @@
-<p align="center" width="66%">
+<p align="center" width="40%">
    <a href="https://lmrt.fyi"><img alt="Logo" src="docs/images/lmrtfy_small.png" /></a>
 </p>
 
