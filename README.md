@@ -1,5 +1,5 @@
 <p align="center" width="40%">
-   <a href="https://lmrt.fyi"><img alt="Logo" src="docs/images/lmrtfy_small.png" /></a>
+   <a href="https://lmrt.fyi"><img alt="Logo" src="docs/images/lmrtfy_small_gh.png" /></a>
 </p>
 
 <p align="center" width="100%">
