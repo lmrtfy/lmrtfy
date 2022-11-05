@@ -6,16 +6,16 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="lmrtfy" name="author"/>
-<link href="https://lmrt.fyi/0.0.13/user_guide/calling_functions/submission/" rel="canonical"/>
-<link href="../../../images/favicon.png" rel="icon"/>
+<link href="https://lmrt.fyi/0.0.13/architecture/" rel="canonical"/>
+<link href="../images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.4.1, mkdocs-material-8.5.6" name="generator"/>
-<title>Call a function - LMRTFY</title>
-<link href="../../../assets/stylesheets/main.20d9efc8.min.css" rel="stylesheet"/>
-<link href="../../../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
-<link href="../../../assets/_mkdocstrings.css" rel="stylesheet"/>
-<link href="../../../stylesheets/extra.css" rel="stylesheet"/>
-<script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-<link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+<title>System Architecture - LMRTFY</title>
+<link href="../assets/stylesheets/main.20d9efc8.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.cbb835fc.min.css" rel="stylesheet"/>
+<link href="../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
             html.glightbox-open { overflow: initial; height: 100%; }
             .gdesc-inner { font-size: 0.75rem; }
             .gslide-title { margin-top: 0px; user-select: text; }
@@ -23,14 +23,14 @@
             .gslide-image img { background: white; }
             
                 .gscrollbar-fixer { padding-right: 15px; }
-                </style><script src="../../../assets/javascripts/glightbox.min.js"></script></head>
+                </style><script src="../assets/javascripts/glightbox.min.js"></script></head>
 <body data-md-color-accent="" data-md-color-primary="" data-md-color-scheme="lmrtfy" dir="ltr">
 <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#calling-a-function-from-code">
+<a class="md-skip" href="#1-end-user-code">
           Skip to content
         </a>
 </div>
@@ -41,7 +41,7 @@
 <header class="md-header" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
 <a aria-label="LMRTFY" class="md-header__button md-logo" data-md-component="logo" href="https://lmrt.fyi" title="LMRTFY">
-<img alt="logo" src="../../../images/lmrtfy_small.png"/>
+<img alt="logo" src="../images/lmrtfy_small.png"/>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
@@ -56,7 +56,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Call a function
+              System Architecture
             
           </span>
 </div>
@@ -123,7 +123,7 @@
 <nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--integrated" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
 <a aria-label="LMRTFY" class="md-nav__button md-logo" data-md-component="logo" href="https://lmrt.fyi" title="LMRTFY">
-<img alt="logo" src="../../../images/lmrtfy_small.png"/>
+<img alt="logo" src="../images/lmrtfy_small.png"/>
 </a>
     LMRTFY
   </label>
@@ -156,12 +156,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../..">
+<a class="md-nav__link" href="..">
         Introduction
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../quickstart/">
+<a class="md-nav__link" href="../quickstart/">
         Quick start
       </a>
 </li>
@@ -181,22 +181,50 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../installation/">
+<a class="md-nav__link" href="../user_guide/installation/">
         Installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../login/">
+<a class="md-nav__link" href="../user_guide/login/">
         Sign Up/Login
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../architecture/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          System Architecture
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         System Architecture
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-end-user-code">
+    (1) End-User Code
+  </a>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-lmrtfy-catalog">
+    (2) LMRTFY Catalog
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-worker">
+    (3) Worker
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" id="__nav_3_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3_4">
           Calling a cloud function
           <span class="md-nav__icon md-icon"></span>
@@ -207,41 +235,18 @@
           Calling a cloud function
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          Call a function
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../user_guide/calling_functions/submission/">
         Call a function
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#calling-a-function-from-code">
-    Calling a function from code
-  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#using-the-cli">
-    Using the CLI
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../fetch_results/">
+<a class="md-nav__link" href="../user_guide/calling_functions/fetch_results/">
         Get results
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../submission_tokens/">
+<a class="md-nav__link" href="../user_guide/calling_functions/submission_tokens/">
         Using a submit token
       </a>
 </li>
@@ -261,22 +266,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../creating_functions/annotation/">
+<a class="md-nav__link" href="../user_guide/creating_functions/annotation/">
         Annotation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../creating_functions/variables_and_results/">
+<a class="md-nav__link" href="../user_guide/creating_functions/variables_and_results/">
         Variables and results
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../creating_functions/deployment/">
+<a class="md-nav__link" href="../user_guide/creating_functions/deployment/">
         Deployment
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../creating_functions/deployment_tokens/">
+<a class="md-nav__link" href="../user_guide/creating_functions/deployment_tokens/">
         Using deploy tokens
       </a>
 </li>
@@ -284,22 +289,22 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../namespaces/">
+<a class="md-nav__link" href="../user_guide/namespaces/">
         Namespaces
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../sharing/sharing/">
+<a class="md-nav__link" href="../user_guide/sharing/sharing/">
         Sharing a function
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../web_app/overview/">
+<a class="md-nav__link" href="../user_guide/web_app/overview/">
         Using the LMRTFY web app 🆕
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../troubleshooting/">
+<a class="md-nav__link" href="../user_guide/troubleshooting/">
         Troubleshooting
       </a>
 </li>
@@ -319,17 +324,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../examples/starting_example/">
+<a class="md-nav__link" href="../examples/starting_example/">
         Starting example
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../examples/free_fall/">
+<a class="md-nav__link" href="../examples/free_fall/">
         Free fall
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../examples/compound_interest/">
+<a class="md-nav__link" href="../examples/compound_interest/">
         Compound interest
       </a>
 </li>
@@ -361,12 +366,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../api_reference/annotation/">
+<a class="md-nav__link" href="../api_reference/annotation/">
         Annotation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../api_reference/catalog/">
+<a class="md-nav__link" href="../api_reference/catalog/">
         Catalog
       </a>
 </li>
@@ -374,7 +379,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../cli_reference/">
+<a class="md-nav__link" href="../cli_reference/">
         CLI reference
       </a>
 </li>
@@ -394,12 +399,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../report_bugs/">
+<a class="md-nav__link" href="../report_bugs/">
         Reporting an issue
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../contributing/">
+<a class="md-nav__link" href="../contributing/">
         Contributing code
       </a>
 </li>
@@ -419,12 +424,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../roadmap/">
+<a class="md-nav__link" href="../roadmap/">
         Roadmap
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../CHANGELOG/">
+<a class="md-nav__link" href="../CHANGELOG/">
         Changelog
       </a>
 </li>
@@ -438,106 +443,52 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/lmrtfy/lmrtfy/edit/master/docs/user_guide/calling_functions/submission.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/lmrtfy/lmrtfy/edit/master/docs/architecture.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"></path></svg>
 </a>
-<h1>Call a function</h1>
-<h3 id="calling-a-function-from-code">Calling a function from code<a class="headerlink" href="#calling-a-function-from-code" title="Permanent link">¶</a></h3>
-<p>Our goal is to provide an interface to deployed functions that works just like any other function in 
-any other library that you have locally installed.</p>
-<p>We provide an example <code>call_free_fall.py</code> in the same directory as the <code>free_fall_lmrtfy.py</code>
-script. </p>
-<p>As you can see, calling a remote function via LMRTFY feels just like calling a native function.</p>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">call_free_fall.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
-<span class="kn">from</span> <span class="nn">lmrtfy</span> <span class="kn">import</span> <span class="n">catalog</span>  <span class="c1"># (1)!</span>
-
-<span class="n">job</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">free_fall_lmrtfy</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mf">100.</span><span class="p">)</span> <span class="c1"># (2)!</span>
-
-<span class="k">if</span> <span class="n">job</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">job</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
-
-    <span class="k">while</span> <span class="ow">not</span> <span class="n">job</span><span class="o">.</span><span class="n">ready</span><span class="p">:</span> <span class="c1"># (3)!</span>
-        <span class="n">sleep</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">results</span><span class="p">)</span> <span class="c1"># (4)!</span>
-</code></pre></div></td></tr></table></div>
-<ol>
-<li>Importing the catalog triggers the catalog update to get newly deployed functions every time you
-run the code. Our examples are all part of the catalog in the <code>catalog.examples</code> namespace.</li>
-<li>The function <code>free_fall_lmrtfy</code> is now part of the catalog and can be called just like a
-normal function in your code. The function is not executed in the same context as your Python
-interpreter. Instead it is run in one of the runners.</li>
-<li>Loop until the job is ready. In this context <code>ready</code> means that the results are ready to be fetched.</li>
-<li>Fetching the results is as simple as calling <code>job.results</code>. The return value is a dictionary with the keys
-corresponding to the names of the results and the values are the actual values of the result</li>
-</ol>
-<p>Run the script with your local python interpreter <code class="highlight">python call_free_fall.py</code>. It runs just
-like a regular script but calls a remote function inside. </p>
-<p>The output of the script looks like this:
-<div class="highlight"><pre><span></span><code>INFO Validating auth token.
-INFO Auth token accepted.
-INFO Valid access token found. Login not necessary.
-INFO Updated <span class="k">function</span> catalog.
-INFO Added <span class="k">function</span> free_fall_lmrtfy.
-INFO Job CLuz1ZrpR7 created. Status is RUNNING. <span class="c1"># (1)!</span>
-CLuz1ZrpR7 JobStatus.RUNNING
-<span class="o">{</span><span class="s1">'velocity'</span>: <span class="m">981</span>.0<span class="o">}</span> <span class="c1"># (2)!</span>
-</code></pre></div></p>
-<ol>
-<li>The job ID is always a 10-character long ID. The reported status is sometimes UNKNOWN which usually
-means that the LMRTFY platform has not processed the job yet.</li>
-<li>The result of the computation is a dictionary with the variable names as keys and the actual value
-as values.</li>
-</ol>
-<p>The ID of the job is going to be different from the one shown in the example output. Job IDs are
-always 10 characters long.</p>
-<h3 id="using-the-cli">Using the CLI<a class="headerlink" href="#using-the-cli" title="Permanent link">¶</a></h3>
-<p>LMRTFY also provides a way to submit jobs with the <code>lmrtfy</code> CLI tool. All you need for this
-is a <code>profile_id</code> (7 characters long) which is provided by you during the deployment and a 
-JSON file that contains the input parameters.</p>
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p>This is a good way to call deployed scripts from another language as you can always build the
-JSON file and call the <code>lmrtfy</code> CLI. <strong>If you are using it this way, please contact us. We want to
-provide more native-feeling interfaces to languages other than python as well but would love to 
-hear what you use to prioritize.</strong></p>
+<h1>System Architecture</h1>
+<p>The overall system architecture is straight-forward:</p>
+<p><a class="glightbox" data-desc-position="bottom" data-description="" data-height="auto" data-title="" data-width="95%" href="../images/arch_top_level_annotated.png"><img alt="Architecture" src="../images/arch_top_level_annotated.png"/></a></p>
+<h4 id="1-end-user-code">(1) End-User Code<a class="headerlink" href="#1-end-user-code" title="Permanent link">¶</a></h4>
+<p>The end-user writes code that looks just like any other code. However, the red and green functions 
+are imported from the LMRTFY catalog.</p>
+<p>The user executes their script just like any other script and the functions from the catalog are
+automatically dispatched to via the LMRTFY catalog.</p>
+<h4 id="2-lmrtfy-catalog">(2) LMRTFY Catalog<a class="headerlink" href="#2-lmrtfy-catalog" title="Permanent link">¶</a></h4>
+<p>The LMRTFY catalog is a registry of all available functions. It also manages authentication for you.</p>
+<p>Each user has their own private catalog but functions can be shared with others. All you need is 
+an e-mail address.</p>
+<p>You can ...</p>
+<ul>
+<li>register functions and workers at the catalog</li>
+<li><strong>call functions</strong> available in the catalog</li>
+<li><strong>share functions</strong> with colleagues and collaborators</li>
+</ul>
+<p>When an end-user calls an available function, the catalog automatically dispatches the call to a 
+worker. If no worker is available for the corresponding function an error will be returned. This is
+the case if you haven't started a runner. </p>
+<p>If the function has been shared with you, it's the responsibility
+of the owner of the function to make sure that a runner is available.</p>
+<h4 id="3-worker">(3) Worker<a class="headerlink" href="#3-worker" title="Permanent link">¶</a></h4>
+<p>A worker, sometimes also called runner, is a unit of various components:</p>
+<ul>
+<li>the actual implementation of the function</li>
+<li>the environment including all environment variables and dependencies</li>
+<li>(special) compute resource the function runs on </li>
+</ul>
+<p>Each worker connects to the catalog and waits for function calls which are executed by the worker. </p>
+<p>If multiple workers serve the function, a round-robin system is used to distribute the compute load.</p>
+<div class="admonition note">
+<p class="admonition-title">Where to run a worker</p>
+<p>A worker can run on any system that you want:</p>
+<ul>
+<li>your laptop</li>
+<li>a server under your control</li>
+<li>an EC2 instance</li>
+<li>a raspberry pi</li>
+<li>...</li>
+</ul>
 </div>
-<p>For the example calculating the compound interest, the JSON file would look like this:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">"argument_values"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">"argument_units"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s"</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</code></pre></div></p>
-<p><code>argument_values</code> and <code>argument_units</code> contain a key-value pair each for each of the inputs in the
-annotation profile. The types need to match exactly. No implicit type casting in performed during
-the submission. The unit also has to match exactly.</p>
-<p>Save the JSON file es <code>input.json</code> and run:</p>
-<div class="highlight"><pre><span></span><code>$ lmrtfy submit &lt;profile_id&gt; input.json
-</code></pre></div>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-<p>Later on, we might perform automatic conversion in case of a unit mismatch, e.g. if the profile
-requires <code>s</code> (as in seconds) but the input is given as <code>h</code> (as in hours).</p>
-<p>There will be an option to enable/disable the function. If you have any opinions about that, 
-please let us know</p>
-</div>
-<p>When you submit your job you will receive a <code>job_id</code> which is needed to fetch the results as you
-will see in the next part of this guide.</p>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
@@ -549,7 +500,7 @@ will see in the next part of this guide.</p>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: System Architecture" class="md-footer__link md-footer__link--prev" href="../../../architecture/" rel="prev">
+<a aria-label="Previous: Sign Up/Login" class="md-footer__link md-footer__link--prev" href="../user_guide/login/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
 </div>
@@ -558,17 +509,17 @@ will see in the next part of this guide.</p>
 <span class="md-footer__direction">
                 Previous
               </span>
-              System Architecture
+              Sign Up/Login
             </div>
 </div>
 </a>
-<a aria-label="Next: Get results" class="md-footer__link md-footer__link--next" href="../fetch_results/" rel="next">
+<a aria-label="Next: Call a function" class="md-footer__link md-footer__link--next" href="../user_guide/calling_functions/submission/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Get results
+              Call a function
             </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -601,10 +552,10 @@ will see in the next part of this guide.</p>
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.sections", "navigation.top", "content.code.annotate", "content.tabs.link", "toc.integrate"], "search": "../../../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
-<script src="../../../assets/javascripts/bundle.078830c0.min.js"></script>
-<script src="../../../javascript/mathjax.js"></script>
-<script src="../../../javascript/mixpanel.js"></script>
+<script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.top", "content.code.annotate", "content.tabs.link", "toc.integrate"], "search": "../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../assets/javascripts/bundle.078830c0.min.js"></script>
+<script src="../javascript/mathjax.js"></script>
+<script src="../javascript/mixpanel.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom"});})</script></body>
