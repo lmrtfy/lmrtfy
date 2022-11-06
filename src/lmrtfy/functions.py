@@ -37,6 +37,7 @@ typemap['string'] = str
 typemap['float_array'] = npt.NDArray[float]
 typemap['int_array'] = npt.NDArray[int]
 typemap['string_array'] = List[str]
+typemap['complex_array'] = npt.NDArray[complex]
 typemap['json'] = dict
 typemap['bool'] = bool
 
@@ -217,8 +218,9 @@ class Catalog(object):
                         self.__add_function(o, func_name, *signature_from_profile(functions[func]), pid=func, template=functions[func])
                         logging.info("Added function: catalog." + str(nsn).replace('/', '.') + str(func_name))
 
-            except:  # TODO: Except clause too broad!
-                logging.error(f"Could not access namespace {n} in function catalog.")
+            except Exception as e:  # TODO: Except clause too broad!
+                logging.error(str(e))
+                logging.error(f"Could not access namespace {n} in function catalog")
 
     def create_namespace(self, namespace: Namespace, name: str) -> bool:
         """
@@ -237,7 +239,8 @@ class Catalog(object):
             new_name = f"{namespace.__name__}/{name}".replace('/', '-')
             r = requests.post(f"{self.config['api_namespaces_url']}",
                               data=json.dumps({"namespace": new_name}), headers=self.headers)
-            if r.status_code == 201:
+            logging.error(r.status_code)
+            if r.status_code == 201 or r.status_code == 200:
                 self.update()
                 return True
         except Exception as e:  # TODO: Except clause too broad.
